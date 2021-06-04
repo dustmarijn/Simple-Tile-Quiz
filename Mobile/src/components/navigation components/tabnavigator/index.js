@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import HomeScreen from "../../../screens/HomeScreen";
+import StackNavigator from "../../stacknavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,28 +23,21 @@ export default function TabNavigator() {
             showLabel: false,
             style: {
                 position: 'absolute',
-                bottom: 0,
-                right: 0,
-                left: 0,
-                shadowColor: '#111',
-                shadowOffset: {
-                    width: -30,
-                    height: -10,
-                },
+                backgroundColor: 'white',
                 height: 70,
-                shadowOpacity: 1,
-                shadowRadius: 3.5,
-                elevation: 5,
-            }
+            },
         }}>
-            <Tab.Screen name={'Home'} component={HomeScreen} options={{
+            <Tab.Screen name={'Home'} options={{
                 tabBarIcon: ({focused}) => (
-                    <View style={{alignItems: 'center', justifyContent: 'center', top: 0, backgroundColor: 'transparent'}}>
-                        <Icon name={'home'} type='material' color={'black'}/>
-                        <Text>Home</Text>
+                    <View style={{borderRadius: 50, alignItems: 'center', justifyContent: 'center', padding: 3, top: -25, backgroundColor: '#F6227D'}}>
+                        <View style={{borderRadius: 50, alignItems: 'center', justifyContent: 'center', padding: 3, top: -3, backgroundColor: '#4A2485'}}>
+                            <View style={{borderRadius: 50, alignItems: 'center', justifyContent: 'center', padding: 5, top: -3, backgroundColor: '#0551D8'}}>
+                                <Icon name={'home'} size={35} type='material' color={focused ? 'white' : 'black'}/>
+                            </View>
+                        </View>
                     </View>
                 )
-            }}/>
+            }}>{props => <StackNavigator defaultRoute={'Home'}/>}</Tab.Screen>
         </Tab.Navigator>
     )
 }
