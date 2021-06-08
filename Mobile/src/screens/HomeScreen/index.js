@@ -6,14 +6,14 @@ import {
     ScrollView,
     View,
     Text,
-    StatusBar,
+    StatusBar
 } from 'react-native';
 
 export default function HomeScreen() {
     return (
         <View>
             <Tile/>
-            <Text>Testje</Text>
+            <Text style={{fontFamily: "GraviolaSoft-Medium", fontSize: 50 }}>Testje</Text>
         </View>
     )
 }
