@@ -1,4 +1,5 @@
 import React from 'react';
+import Tile from '../../components/Tiles';
 import {
     SafeAreaView,
     StyleSheet,
@@ -11,6 +12,7 @@ import {
 export default function HomeScreen() {
     return (
         <View>
+            <Tile/>
             <Text>Testje</Text>
         </View>
     )
