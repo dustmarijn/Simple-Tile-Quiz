@@ -11,9 +11,8 @@ import {
 
 export default function HomeScreen() {
     return (
-        <View>
+        <View style = {{flex:1}}>
             <Tile/>
-            <Text style={{fontFamily: "GraviolaSoft-Medium", fontSize: 50 }}>Testje</Text>
         </View>
     )
 }
