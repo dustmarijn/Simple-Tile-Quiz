@@ -1,6 +1,8 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
 
+import './index.scss';
+
 export default function Tile({title, illustration, path}) {
     const history = useHistory()
     return (

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 
-// Import components for this page
+// Import components for this adminpage
 import Page from "../../default components/page";
 import Tile from "../../default components/tile";
 
@@ -25,7 +25,7 @@ export default function Home({title, tiles}) {
             <div className="content">
                 <h1>{loading ? <Skeleton count={1} width={40 + 'vw'} /> : title}</h1>
 
-                {/* This will return you back to the previous page */}
+                {/* This will return you back to the previous adminpage */}
                 {lastPartUrl !== '' ?
                     <button className={'back'} onClick={() => history.goBack()}>Terug</button>
                     : null}

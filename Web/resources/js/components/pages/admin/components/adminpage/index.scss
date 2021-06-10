@@ -1,0 +1,16 @@
+.adminpage {
+    position: absolute;
+    top: 110px;
+    left: 290px;
+    width: calc(100vw - 290px);
+    height: auto;
+    background-color: #f6f5fb;
+    animation: glow-in 0.3s;
+    z-index: 100;
+}
+
+@keyframes glow-in {
+    0% {
+        opacity: 0
+    }
+}
