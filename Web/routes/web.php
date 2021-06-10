@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/{all}', function () {
     return view('welcome');
+})->where('all', '^(?!login|admin|register|dashboard|home|user|logout).*$');
+
+Route::get('/admin/{any?}/{all?}/{all2?}', function() {
+    return view('/admin');
+})->where('all', '.*')->where('all2', '.*');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/logout', function () {
+   Auth::logout();
+
+   return redirect()->to('/admin');
 });

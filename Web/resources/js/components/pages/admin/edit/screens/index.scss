@@ -1,0 +1,203 @@
+.pages {
+    position: relative;
+    width: calc(100% - 5vw);
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    padding: 0 2.5vw;
+}
+
+.page {
+    position: relative;
+    width: calc(100% - 20px);
+    padding: 10px;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+    background-color: white;
+    margin-top: 25px;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+.page h1 {
+    font-size: 20px;
+    margin: 5px 0px;
+}
+
+.page p {
+    color: black;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.page p span {
+    font-weight: bold;
+}
+
+.page .tiles {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+
+.page .tiles .tile {
+    position: relative;
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.page .tiles .new-tile {
+    position: relative;
+    min-width: 250px;
+    width: 100%;
+    min-height: 250px;
+    height: 100%;
+    max-width: 250px;
+    max-height: 250px;
+    border: 1px solid #e5e5e5;
+    margin: 25px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.page .tiles .new-tile .plus {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    border-radius: 75px;
+    border: 3px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.page .tiles .new-tile h1 {
+    position: absolute;
+    bottom: 25px;
+}
+
+.page .tiles .new-tile .plus .line {
+    position: absolute;
+    width: 35px;
+    height: 3px;
+    background-color: black;
+    border-radius: 5px;
+    transform: rotate(0deg);
+}
+
+.page .tiles .new-tile .plus .line:nth-child(2) {
+    transform: rotate(90deg);
+}
+
+.popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 20px);
+    padding: 10px;
+    height: calc(100% - 20px);
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    z-index: 99999;
+}
+
+.popup h1 {
+    margin: 5px 0px;
+    font-size: 20px;
+}
+
+.popup form {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.popup form label p {
+    margin-top: 20px;
+}
+
+.popup form label {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.popup form label input {
+    position: relative;
+    width: 50%;
+    height: 30px;
+    padding: 5px 10px;
+    background-color: white;
+    box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+.popup form label input[type="file"] {
+    background-color: transparent;
+    box-shadow: 0 0 0 0 black;
+    border: 0;
+    padding: 0;
+    width: auto;
+}
+
+.popup form .btns {
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    margin-top: 25px;
+}
+
+.popup form .btns .btn {
+    position: relative;
+    width: auto;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border: 0;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.popup form .btns .btn.save {
+    background-color: #f6227d;
+    color: white;
+    margin-right: 25px;
+}
