@@ -13,9 +13,18 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/user', function() {
+    $user = \Illuminate\Support\Facades\Auth::user();
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+    if($user) {
+        return response(['user' => $user]);
+    } else {
+        return response(['error' => 'Not logged in']);
+    }
+})->middleware('auth:api');
+
+Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
+
+Route::get('/users', 'App\Http\Controllers\UserController@Users');
 
 Route::get('/pages', 'App\Http\Controllers\PageController@index'); // Returns all created pages.
