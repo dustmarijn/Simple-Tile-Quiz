@@ -5,10 +5,13 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 // Import pages
 import Home from "./components/pages/home";
 import axios from "axios";
+import Admin from "./components/pages/admin";
 
 export default function App() {
     const [loading, setLoading] = useState(true);
     const [pages, setPages] = useState([]);
+
+
     useEffect(() => {
         axios.get('/api/pages')
             .then(response => {
@@ -22,9 +25,7 @@ export default function App() {
             .catch(error => {
                 console.log(error);
             })
-    }, [loading]);
-
-    // Test Pages (Would normally import from database.)
+    }, []);
 
     return (
         <>
@@ -32,16 +33,18 @@ export default function App() {
                 <Switch>
                     {/*This will render all routes given from the database */}
                     {pages.map((page, index) => {
-                        return (
-                            <Route key={index} exact path={page.path}><Home title={page.title} tiles={page.tiles}/></Route>
-                        )
+                        if(page.path !== '/admin') {
+                            return (
+                                <Route key={index} exact path={page.path}><Home title={page.title} tiles={page.tiles}/></Route>
+                            )
+                        }
                     })}
-                    {/*This will render a 404 not found page*/}
-                    <Route key={'wo-3i4u508tjifnew34567832'} path={'/'}><Home title={loading ? '' : 'Pagina niet gevonden'} tiles={[]}/></Route>
 
-                    {loading ?
-                        <Route key={'wo-3i4u508tjifnew34567832'} path={'/'}><Home title={loading ? 'Aan het laden ...' : ''} tiles={[]}/></Route>
-                    : null }
+                    {/* Admin route */}
+                    <Route key={'w3456y9hugjfoire56905843eokrfgijy8'} exact path={'/admin'} component={Admin}/>
+
+                    {/*This will render a 404 not found adminpage*/}
+                    <Route key={'wo-3i4u508tjifnew34567832'} path={'/'}><Home title={loading ? '' : 'Pagina niet gevonden'} tiles={[]}/></Route>
                 </Switch>
             </Router>
         </>
@@ -49,4 +52,4 @@ export default function App() {
 }
 
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('application'));
