@@ -16,7 +16,3 @@ export default function HomeScreen() {
         </View>
     )
 }
-
-const styles = StyleSheet({
-    basecolor_blue = color: blue,
-})
