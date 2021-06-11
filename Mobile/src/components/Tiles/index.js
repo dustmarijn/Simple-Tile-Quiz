@@ -1,34 +1,53 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, ScrollView, Button, Alert, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 export default function Tile(){
     var indicationWord = 'steekwoord';
+    const tilePress = () => alert(indicationWord);
 
     return(
-        <View style={{flex:1}}>
+        <ScrollView>
             <Text style={styles.header}>Ik zoek voor</Text>
-            <View style={styles.button}>
-                <Image
-                    style={styles.image}
-                    source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
-                />
-                <Text style={styles.indicationWord}>{indicationWord}</Text>
+            <View>
+                <TouchableOpacity style={styles.appButtonContainer} onPress={tilePress}>
+                    <Image
+                        style={styles.image}
+                        source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
+                    />
+                    <Text style={styles.appButtonText}>{indicationWord}</Text>
+                </TouchableOpacity>
             </View>
-            <View style={styles.button}>
-                <Image
-                    style={styles.image}
-                    source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
-                />
-                <Text style={styles.indicationWord}>{indicationWord}</Text>
+            <View>
+                <TouchableOpacity style={styles.appButtonContainer} onPress={tilePress}>
+                    <Image
+                        style={styles.image}
+                        source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
+                    />
+                    <Text style={styles.appButtonText}>{indicationWord}</Text>
+                </TouchableOpacity>
             </View>
-            <View style={styles.button}>
-                <Image
-                    style={styles.image}
-                    source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
-                />
-                <Text style={styles.indicationWord}>{indicationWord}</Text>
+            <View>
+                <TouchableOpacity style={styles.appButtonContainer} onPress={tilePress}>
+                    <Image
+                        style={styles.image}
+                        source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
+                    />
+                    <Text style={styles.appButtonText}>{indicationWord}</Text>
+                </TouchableOpacity>
             </View>
+            <View>
+                <TouchableOpacity style={styles.appButtonContainer} onPress={tilePress}>
+                    <Image
+                        style={styles.image}
+                        source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
+                    />
+                    <Text style={styles.appButtonText}>{indicationWord}</Text>
+                </TouchableOpacity>
+            </View>
+        <View>
+            <Text style={{marginTop: 35}}/>
         </View>
+        </ScrollView>
     );
 }
 
@@ -38,7 +57,7 @@ const styles = StyleSheet.create({
         height: 100,
         width: 100,
     },
-    button: {
+    appButtonContainer: {
         textAlign: 'center',
         flex:1,
         alignItems:'center',
@@ -49,6 +68,7 @@ const styles = StyleSheet.create({
         marginBottom: 25,
         padding:5,
         elevation: 5,
+        height: 180,
     },
     header: {
         marginTop: 10,
@@ -57,8 +77,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 25,
     },
-    indicationWord: {
-        marginTop: 10,
+    appButtonText: {
+        marginTop: 15,
         fontSize: 20,
     }
 });

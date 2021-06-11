@@ -9,6 +9,7 @@ import {
     Text,
     useColorScheme,
     View,
+    Button,
 } from 'react-native';
 import TabNavigator from "./src/components/navigation components/tabnavigator";
 
@@ -24,8 +25,7 @@ const App: () => Node = () => {
             <NavigationContainer>
                 <TabNavigator/>
                 <SafeAreaView>
-                    <ScrollView>
-
+                    <ScrollView style={{flex:1}}>
                     </ScrollView>
                 </SafeAreaView>
             </NavigationContainer>
