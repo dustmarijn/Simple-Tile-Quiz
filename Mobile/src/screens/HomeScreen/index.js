@@ -1,4 +1,5 @@
 import React from 'react';
+import Tile from '../../components/Tiles';
 import style from "../../../style";
 import {
     SafeAreaView,
@@ -11,8 +12,8 @@ import {
 
 export default function HomeScreen() {
     return (
-        <View>
-           <Text style={[style.GraviolaSoft_Medium ,style.basecolor_blue]}>Testje</Text>
+        <View style = {{flex:1}}>
+            <Tile/>
         </View>
     )
 }
