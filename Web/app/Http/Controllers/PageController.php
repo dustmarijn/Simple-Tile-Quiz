@@ -26,31 +26,31 @@ class PageController extends Controller
      */
     public function create(Request $request)
     {
-        if($request->title) { // Checks if the title of the page is requested.
+        if($request->title) { // Checks if the title of the adminpage is requested.
 
-            $page = new Page(); // Creates new page.
-            $page->title = $request->title; // Title of the page.
-            if($request->path) { // Checks if the page path from the page is requested.
+            $page = new Page(); // Creates new adminpage.
+            $page->title = $request->title; // Title of the adminpage.
+            if($request->path) { // Checks if the adminpage path from the adminpage is requested.
                 if(!Page::all()->where('path', $request->path)) {
 
-                    $page->path = $request->path; // Sets the path of the page to the requested path.
-                    if ($request->able_to_use) { // Checks if the able to use of the page is requested.
+                    $page->path = $request->path; // Sets the path of the adminpage to the requested path.
+                    if ($request->able_to_use) { // Checks if the able to use of the adminpage is requested.
 
                         $page->able_to_use = $request->able_to_use; // Sets the able to use of the requested able to use.
-                        $page->save(); // Saves the page in the database.
+                        $page->save(); // Saves the adminpage in the database.
 
                         return response(['succesMessage' => 'Pagina succesvol aangemaakt!']);
                     } else {
-                        return response(['errorMessage' => 'Pagina kont niet worden aangemaakt, je moet aangeven of de pagina kan worden gebruikt!']);
+                        return response(['errorMessage' => 'Pagina kon niet worden aangemaakt, je moet aangeven of de pagina kan worden gebruikt!']);
                     }
                 } else {
-                    return response(['errorMessage' => 'Pagina kont niet worden aangemaakt, er is al een pagina die naar dit pad gaat!']);
+                    return response(['errorMessage' => 'Pagina kon niet worden aangemaakt, er is al een pagina die naar dit pad gaat!']);
                 }
             } else {
-                return response(['errorMessage' => 'Pagina kont niet worden aangemaakt, je moet een pad aangeven waar deze pagina komt!']);
+                return response(['errorMessage' => 'Pagina kon niet worden aangemaakt, je moet een pad aangeven waar deze pagina komt!']);
             }
         } else {
-            return response(['errorMessage' => 'Pagina kont niet worden aangemaakt, je moet wel een titel toevoegen!']);
+            return response(['errorMessage' => 'Pagina kon niet worden aangemaakt, je moet wel een titel toevoegen!']);
         }
     }
 
@@ -74,7 +74,7 @@ class PageController extends Controller
     {
         $page = Page::all()->where('id', $request->id);
 
-        return response(['page' => $page]);
+        return response(['adminpage' => $page]);
     }
 
     /**

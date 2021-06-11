@@ -1,5 +1,6 @@
 import React from 'react';
 import Tile from '../../components/Tiles';
+import style from "../../../style";
 import {
     SafeAreaView,
     StyleSheet,
