@@ -92,24 +92,47 @@ class PageController extends Controller
      */
     public function update(Request $request)
     {
-        $page = Page::all()->where('id', intval($request->page_id))->first();
+        if(isset($request->tile_id) && isset($request->page_id)) {
+            $page = Page::all()->where('id', intval($request->page_id))->first();
+            $tile = Tile::all()->where('path', $page->path)->first();
+        } else {
+            $tile = Tile::all()->where('id', intval($request->tile_id))->first();
+            $page = Page::all()->where('path', $tile->path)->first();
+        }
         if($page) {
-            $tile = Tile::all()->where('title', $page->title)->first();
             if($tile) {
                 if($page->path === $tile->path) {
-                    if($request->title) {
+                    if(isset($request->title)) {
                         $tile->title = $request->title;
                     }
-                    if($request->path) {
+                    if(isset($request->path)) {
                         $tile->path = $request->path;
+                    }
+                    if($request->hasFile('illustration_file_name')) {
+                        $this->validate($request, [
+
+                            'illustration_file_name' => 'required|mimes:jpg,jpeg,png,bmp,tif,svg'
+
+                        ]);
+
+                        $file = $request->file('illustration_file_name');
+                        $filename = $file->getClientOriginalName();
+
+                        $path = public_path('/images/illustrations');
+
+                        if (!file_exists($path . '' . $filename)) {
+                            $file->move($path, $filename);
+                        }
+
+                        $tile->illustration_file_name = $filename;
                     }
                     $tile->save();
                 }
             }
-            if($request->title) {
+            if(isset($request->title)) {
                 $page->title = $request->title;
             }
-            if($request->path) {
+            if(isset($request->path)) {
                 $page->path = $request->path;
             }
             $page->save();

@@ -21,17 +21,29 @@
     align-content: flex-start;
     flex-direction: column;
     background-color: white;
-    margin-top: 25px;
+    margin-top: 50px;
     box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
 }
 .page:last-child {
-    margin-bottom: 25px;
+    margin-bottom: 50px;
+}
+
+.page:first-child {
+    margin-top: 25px;
+}
+
+.page.disabled, .tile.disabled, .page.disabled .btn, .page.disabled .tiles .new-tile {
+    cursor: not-allowed;
+    user-select: none;
+    background-color: #f9f9f9;
+    filter: grayscale(200%);
 }
 
 .page h1 {
     font-size: 20px;
-    margin: 5px 0px;
+    margin: 5px 20px;
+    margin-top: 20px;
 }
 
 .page .give-tiles {
@@ -40,10 +52,10 @@
     border-top: 2px solid #e5e5e5;
 }
 
-.page p {
+.page p{
     color: black;
     font-size: 16px;
-    margin: 5px 0;
+    margin: 5px 20px;
 }
 
 .page p span {
@@ -75,38 +87,90 @@
     margin-right: 25px;
 }
 
-.edit-tile .edit-items {
+.edit-items {
     position: absolute;
-    top: 265px;
-    left: 25px;
-    width: calc(250px - 20px);
-    padding: 0px 10px;
-    height: 35px;
-    background-color: #e5e5e5;
+    top: 0;
+    left: 100px;
+    width: 300px;
+    padding: 0px 0;
+    height: auto;
+    background-color: rgba(226, 226, 226, 0.95);
     display: none;
-    justify-content: flex-end;
+    box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.15);
+    justify-content: center;
     align-items: center;
     align-content: center;
-    flex-direction: row;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    flex-direction: column;
+    border-radius: 7px;
     z-index: 5;
+    overflow: hidden;
     transition: 0.2s;
 }
 
-.edit-tile:hover .edit-items, .edit-tile:hover .tiles .tile {
+.edit-items .edit-item {
+    position: relative;
+    width: calc(100% - 40px);
+    height: 30px;
+    padding: 7px 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.95);
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    color: black;
+    border-bottom: 1px solid #e5e5e5;
+    cursor: pointer;
+}
+
+.edit-items .edit-item:hover {
+    background-color: #f9f9f9;
+}
+
+.edit-items .edit-item:last-child {
+    margin-top: 5px;
+    border: 0;
+}
+
+.edit-items .edit-item p {
+    font-size: 16px;
+    font-weight: 500;
+    width: 40ch;
+    margin: auto 0px;
+}
+
+.edit-items .remove p {
+    color: red;
+}
+
+.edit-tile:hover .tile {
     box-shadow: 0px 1px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);
     display: flex;
     transition: 0.2s;
 }
 
+.edit-tile:hover .edit-items {
+    display: flex;
+    animation: pop-in 0.3s;
+}
+
+.edit-tile:hover:focus-within .edit-items:hover:focus-within .edit-item {
+    display: none;
+}
+
+@keyframes pop-in {
+    0% {
+        transform: scale(0);
+        left: 0;
+        padding: 10px;
+        opacity: 0;
+        top: 0;
+    }
+}
+
 .edit-tile .tiles .tile:hover:focus {
     transform: scale(1);
     transition: 0.2s;
-}
-
-.edit-tile:hover .edit-items {
-    animation: come-in 0.2s;
 }
 
 @keyframes come-in {
@@ -115,12 +179,15 @@
     }
 }
 
-.edit-tile .item-btn {
+.edit-tile .edit-item img {
     position: relative;
-    z-index: 10;
     width: 20px;
     height: 20px;
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-size: cover;
 }
 
 .edit-tile .item-btn:nth-child(1) {
@@ -144,6 +211,19 @@
     align-content: center;
     flex-direction: column;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.page .tiles .new-tile:hover {
+    background-color: white;
+    border-color: black;
+    transition: 0.2s;
+}
+
+.page .tiles .new-tile:hover:focus {
+    background-color: white;
+    border-color: black;
+    transition: 0.2s;
 }
 
 .page .tiles .new-tile .plus {
@@ -195,7 +275,7 @@
 }
 
 .popup h1 {
-    margin: 5px 0px;
+    margin: 20px 20px;
     font-size: 20px;
 }
 
@@ -230,6 +310,7 @@
     width: 50%;
     height: 30px;
     padding: 5px 10px;
+    margin: 0 20px;
     background-color: white;
     box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);
     border: 1px solid #e5e5e5;
@@ -250,6 +331,7 @@
     align-items: flex-start;
     flex-direction: row;
     margin-top: 25px;
+    margin-left: 20px;
 }
 
 .btn {
@@ -271,8 +353,7 @@
 }
 
 .btn.mg-top {
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin: 20px;
 }
 
 
@@ -332,4 +413,22 @@
     align-items: center;
     align-content: center;
     flex-direction: row;
+}
+
+.tile.shake {
+    animation: shake 1s linear infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); opacity: 1}
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); opacity: 0.3 }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
 }

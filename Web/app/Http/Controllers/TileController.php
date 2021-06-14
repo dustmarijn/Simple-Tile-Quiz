@@ -29,7 +29,7 @@ class TileController extends Controller
 
             $tile = new Tile(); // Creates new tile.
             $tile->title = $request->title; // Title of the tile.
-            if ($request->file('illustration_file_name')) {
+            if ($request->hasFile('illustration_file_name')) {
 
                 $this->validate($request, [
 
@@ -40,7 +40,7 @@ class TileController extends Controller
                 $file = $request->file('illustration_file_name');
                 $filename = $file->getClientOriginalName();
 
-                $path = '/images/illustrations/';
+                $path = public_path('/images/illustrations/');
 
                 if (!file_exists($path . '' . $filename)) {
                     $file->move($path, $filename);
@@ -120,6 +120,33 @@ class TileController extends Controller
     public function update(Request $request, Tile $tile)
     {
         //
+    }
+
+
+    public function ableToUseTile(Request $request) {
+        $tile = Tile::all()->where('id', intval($request->tile_id))->first();
+        $disable = '';
+        if($tile) {
+            $page = Page::all()->where('path', $tile->path)->first();
+            if($page) {
+                if($request->able_to_use === '0') {
+                    $page->able_to_use = '0';
+                } else {
+                    $page->able_to_use = '1';
+                }
+                $page->save();
+            }
+            if($request->able_to_use === '0') {
+                $disable = 'disable';
+                $tile->able_to_use = '0';
+            } else {
+                $tile->able_to_use = '1';
+            }
+            $tile->save();
+            return response(['message' => 'Tile saved', 'disabled' => $disable]);
+        } else {
+            return response(['message' => 'Tile does not exist', 'disabled' => $disable]);
+        }
     }
 
     /**
