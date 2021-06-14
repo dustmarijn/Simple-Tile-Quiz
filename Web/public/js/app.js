@@ -4557,12 +4557,15 @@ __webpack_require__.r(__webpack_exports__);
 function Tile(_ref) {
   var title = _ref.title,
       illustration = _ref.illustration,
-      path = _ref.path;
+      path = _ref.path,
+      _onClick = _ref.onClick;
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useHistory)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
     className: "tile",
     onClick: function onClick() {
-      return history.push(path);
+      history.push(path);
+
+      _onClick();
     },
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
       src: '/images/illustrations/' + illustration,
@@ -4825,7 +4828,7 @@ function Home(_ref) {
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useHistory)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setLoading(false);
-  }, [loading]);
+  }, [tiles !== undefined]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_default_components_page__WEBPACK_IMPORTED_MODULE_1__.default, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       className: "content",
@@ -4879,7 +4882,7 @@ function Home(_ref) {
           })]
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
           children: tiles.map(function (tile, index) {
-            return tile.able_to_use === "true" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_default_components_tile__WEBPACK_IMPORTED_MODULE_2__.default, {
+            return tile.able_to_use === "true" || "1" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_default_components_tile__WEBPACK_IMPORTED_MODULE_2__.default, {
               title: tile.title,
               illustration: tile.illustration_file_name,
               path: tile.path
@@ -5215,7 +5218,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".content {\n  position: relative;\n  width: calc(100vw - 20vw);\n  height: auto;\n  padding: 10vh 10vw;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n}\n\n.content h1 {\n  font-size: 40px;\n  margin-top: 50px;\n}\n\n.tiles {\n  position: relative;\n  margin-top: 50px;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.back {\n  position: absolute;\n  left: calc(10vw + 25px);\n  top: 10vw;\n  width: auto;\n  background-color: #fff;\n  border: 0;\n  border-radius: 4px;\n  padding: 10px 20px;\n  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.back:hover {\n  box-shadow: 0px 0px 0px 2px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".content {\n  position: relative;\n  width: calc(100vw - 20vw);\n  height: auto;\n  padding: 10vh 10vw;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n}\n\n.content h1 {\n  font-size: 40px;\n  margin-top: 50px;\n}\n\n.tiles {\n  position: relative;\n  margin-top: 50px;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.back {\n  position: absolute;\n  left: calc(10vw + 25px);\n  top: 7.5vw;\n  width: auto;\n  background-color: #fff;\n  border: 0;\n  border-radius: 4px;\n  padding: 10px 20px;\n  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.back:hover {\n  box-shadow: 0px 0px 0px 2px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

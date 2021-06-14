@@ -25,10 +25,19 @@
     box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
 }
+.page:last-child {
+    margin-bottom: 25px;
+}
 
 .page h1 {
     font-size: 20px;
     margin: 5px 0px;
+}
+
+.page .give-tiles {
+    padding-top: 15px;
+    width: 100%;
+    border-top: 2px solid #e5e5e5;
 }
 
 .page p {
@@ -57,6 +66,65 @@
     position: relative;
     max-width: 150px;
     max-height: 150px;
+}
+
+.edit-tile {
+    position: relative;
+    width: 250px;
+    height: 275px;
+    margin-right: 25px;
+}
+
+.edit-tile .edit-items {
+    position: absolute;
+    top: 265px;
+    left: 25px;
+    width: calc(250px - 20px);
+    padding: 0px 10px;
+    height: 35px;
+    background-color: #e5e5e5;
+    display: none;
+    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    z-index: 5;
+    transition: 0.2s;
+}
+
+.edit-tile:hover .edit-items, .edit-tile:hover .tiles .tile {
+    box-shadow: 0px 1px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);
+    display: flex;
+    transition: 0.2s;
+}
+
+.edit-tile .tiles .tile:hover:focus {
+    transform: scale(1);
+    transition: 0.2s;
+}
+
+.edit-tile:hover .edit-items {
+    animation: come-in 0.2s;
+}
+
+@keyframes come-in {
+    0% {
+        opacity: 0;
+    }
+}
+
+.edit-tile .item-btn {
+    position: relative;
+    z-index: 10;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.edit-tile .item-btn:nth-child(1) {
+    margin-right: 15px;
 }
 
 .page .tiles .new-tile {
@@ -184,7 +252,7 @@
     margin-top: 25px;
 }
 
-.popup form .btns .btn {
+.btn {
     position: relative;
     width: auto;
     padding: 10px 20px;
@@ -196,8 +264,72 @@
     cursor: pointer;
 }
 
-.popup form .btns .btn.save {
+.btn.save {
     background-color: #f6227d;
     color: white;
     margin-right: 25px;
+}
+
+.btn.mg-top {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
+.blackbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    z-index: 50000;
+}
+
+.alert {
+    position: relative;
+    width: 90vw;
+    max-width: 500px;
+    height: auto;
+    padding: 40px 10px;
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    z-index: 10000;
+}
+
+.alert h1 {
+    position: relative;
+    width: auto;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.alert p {
+    position: relative;
+    width: 300px;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.alert .btns {
+    position: relative;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
 }
