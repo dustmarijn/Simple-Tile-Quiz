@@ -2319,6 +2319,27 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/components/api/UserApi/index.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/api/UserApi/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ UserApi)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _providers_UserProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../providers/UserProvider */ "./resources/js/components/providers/UserProvider/index.js");
+
+
+function UserApi() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_providers_UserProvider__WEBPACK_IMPORTED_MODULE_1__.UserContext);
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/default components/logo/index.js":
 /*!******************************************************************!*\
   !*** ./resources/js/components/default components/logo/index.js ***!
@@ -2399,12 +2420,15 @@ __webpack_require__.r(__webpack_exports__);
 function Tile(_ref) {
   var title = _ref.title,
       illustration = _ref.illustration,
-      path = _ref.path;
+      path = _ref.path,
+      _onClick = _ref.onClick;
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useHistory)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
     className: "tile",
     onClick: function onClick() {
-      return history.push(path);
+      history.push(path);
+
+      _onClick();
     },
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
       src: '/images/illustrations/' + illustration,
@@ -2663,26 +2687,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Topnavigation)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _api_UserApi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../api/UserApi */ "./resources/js/components/api/UserApi/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
-function Topnavigation(_ref) {
-  var user = _ref.user;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+
+function Topnavigation() {
+  var _UserApi = (0,_api_UserApi__WEBPACK_IMPORTED_MODULE_1__.default)(),
+      user = _UserApi.user;
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     className: "topnavigation",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
       children: "TeamStopcontact Admin"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "usercontent",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "useravatar"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "info",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
-          children: user.name
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
-          children: user.email
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
+          children: user === null || user === void 0 ? void 0 : user.name
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+          children: user === null || user === void 0 ? void 0 : user.email
         })]
       })]
     })]
@@ -2729,6 +2757,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Screens() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2740,12 +2769,58 @@ function Screens() {
       pages = _useState4[0],
       setPages = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
       _useState6 = _slicedToArray(_useState5, 2),
       popup = _useState6[0],
       setPopup = _useState6[1];
 
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState8 = _slicedToArray(_useState7, 2),
+      editPage = _useState8[0],
+      setEditPage = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      alert = _useState10[0],
+      setAlert = _useState10[1];
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    title: 'Bericht',
+    description: 'Beschrijving van bericht',
+    actionOK: null,
+    actionOKMessage: 'Oké',
+    actionCancel: null,
+    actionCancelMessage: 'Annuleren'
+  }),
+      _useState12 = _slicedToArray(_useState11, 2),
+      alertMSG = _useState12[0],
+      setAlertMSG = _useState12[1];
+
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState14 = _slicedToArray(_useState13, 2),
+      title = _useState14[0],
+      setTitle = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState16 = _slicedToArray(_useState15, 2),
+      path = _useState16[0],
+      setPath = _useState16[1];
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState18 = _slicedToArray(_useState17, 2),
+      image = _useState18[0],
+      setImage = _useState18[1];
+
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState20 = _slicedToArray(_useState19, 2),
+      pageID = _useState20[0],
+      setPageID = _useState20[1];
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    getPages();
+  }, []);
+
+  function getPages() {
     axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/pages').then(function (response) {
       if (response.data.pages) {
         setPages(response.data.pages);
@@ -2756,39 +2831,181 @@ function Screens() {
     })["catch"](function (error) {
       console.log(error);
     });
-  }, []);
+  }
 
-  function handleNewTile() {}
+  function handleNewTile(e) {
+    e.preventDefault();
 
-  function handleInput(e) {}
+    if (title !== null && path !== null && image !== null) {
+      var formData = new FormData();
+      formData.append('title', title);
+      formData.append('path', path);
+      formData.append('illustration_file_name', image);
+      formData.append('page_id', pageID);
+      setLoading(true);
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/createTile', formData).then(function (response) {
+        setPopup('');
+        getPages();
+        setLoading(false);
+      })["catch"](function (error) {
+        console.error(error);
+      });
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/createPage', {
+        title: title,
+        path: path
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    } else {
+      console.error(image);
+      console.error('error');
+    }
+  }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_adminpage__WEBPACK_IMPORTED_MODULE_1__.default, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+  function handleInput(e) {
+    if (e[1] === 'title') {
+      setTitle(e[0]);
+    }
+
+    if (e[1] === 'path') {
+      setPath(e[0]);
+    }
+
+    if (e[1] === 'illustration') {
+      setImage(e[0]);
+    }
+  }
+
+  function handleDeleteTile(tile) {
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/deleteTile', {
+      id: tile.id,
+      page_id: tile.page_id
+    }).then(function (response) {
+      console.log(response);
+      getPages();
+      setLoading(false);
+    })["catch"](function (error) {
+      console.error(error);
+    });
+  }
+
+  function handleEditTile(tile) {}
+
+  function handleEditPage(e) {
+    e.preventDefault();
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/editPage', {
+      title: title,
+      path: path,
+      page_id: pageID
+    }).then(function (response) {
+      setEditPage('');
+      getPages();
+      setLoading(false);
+    })["catch"](function (error) {
+      console.error(error);
+    });
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_components_adminpage__WEBPACK_IMPORTED_MODULE_1__.default, {
+    children: [alert ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "blackbox",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "alert",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+          children: alertMSG.title
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+          children: alertMSG.description
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "btns",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: 'btn save',
+            onClick: alertMSG.actionOK,
+            children: alertMSG.actionOKMessage
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: 'btn',
+            onClick: alertMSG.actionCancel,
+            children: alertMSG.actionCancelMessage
+          })]
+        })]
+      })
+    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: "pages",
       children: loading === false ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
         children: pages === null || pages === void 0 ? void 0 : pages.map(function (page, index) {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "page",
+            className: "page ".concat(page.title.replace(/\s+/g, '-').toLowerCase()),
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
               children: page.title
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
               children: ["Pad naar het scherm: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
                 children: page.path
               })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              className: 'btn save mg-top',
+              onClick: function onClick() {
+                return setEditPage(page.id);
+              },
+              children: "Bewerken"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+              className: 'give-tiles',
               children: "Keuze tegels die bij dit scherm horen:"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "tiles",
-              children: [page.tiles.map(function (tile, index) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_default_components_tile__WEBPACK_IMPORTED_MODULE_4__.default, {
-                  title: tile.title,
-                  illustration: tile.illustration_file_name,
-                  path: '/admin/edit/screens/' + tile.id
-                });
+              children: [page.tiles.map(function (tile, num) {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                  className: "edit-tile",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                    className: "edit-items",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+                      title: 'Bewerken',
+                      className: 'item-btn',
+                      onClick: function onClick() {
+                        return handleEditTile(tile);
+                      },
+                      src: '/images/pen-solid.svg',
+                      alt: ''
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+                      title: 'Verwijderen',
+                      className: 'item-btn',
+                      onClick: function onClick() {
+                        setAlert(true);
+                        setAlertMSG({
+                          title: 'Keuze tegel verwijderen?',
+                          description: 'Als u deze keuze tegel verwijderd, worden alle onderliggende pagina\'s ook verwijderd. Weet u het zeker?',
+                          actionOK: function actionOK() {
+                            setAlert(false);
+                            handleDeleteTile(tile);
+                          },
+                          actionOKMessage: 'Ja, verwijderen',
+                          actionCancel: function actionCancel() {
+                            setAlert(false);
+                            setAlertMSG({});
+                          },
+                          actionCancelMessage: 'Nee, annuleren'
+                        });
+                      },
+                      src: '/images/trash-alt-solid.svg',
+                      alt: ''
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_default_components_tile__WEBPACK_IMPORTED_MODULE_4__.default, {
+                    onClick: function onClick() {
+                      return document.getElementsByClassName("".concat(tile.title.replace(/\s+/g, '-').toLowerCase()))[0].scrollIntoView({
+                        block: 'center'
+                      });
+                    },
+                    title: tile.title,
+                    illustration: tile.illustration_file_name,
+                    path: undefined
+                  })]
+                }, num);
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                 className: "new-tile",
                 onClick: function onClick() {
-                  return setPopup(!popup);
+                  return setPopup(page.id);
                 },
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                   className: "plus",
@@ -2801,12 +3018,15 @@ function Screens() {
                   children: "Nieuwe tegel"
                 })]
               })]
-            }), !popup ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            }), popup === page.id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
               className: "popup",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
                 children: "Nieuwe tegel aanmaken"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
                 method: 'post',
+                onSubmit: function onSubmit(e) {
+                  handleNewTile(e);
+                },
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
                     children: "Tegel titel"
@@ -2815,7 +3035,8 @@ function Screens() {
                     name: 'title',
                     placeholder: 'Titel van de tegel',
                     onChange: function onChange(e) {
-                      return handleInput([e.target.value, e.target.name]);
+                      handleInput([e.target.value, e.target.name]);
+                      setPageID(page.id);
                     },
                     required: true
                   })]
@@ -2837,7 +3058,60 @@ function Screens() {
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
                     type: 'file',
                     name: 'illustration',
-                    accept: "image/png, image/gif, image/jpeg",
+                    accept: "image/png, image/gif, image/jpeg, image/svg+xml",
+                    onChange: function onChange(e) {
+                      return handleInput([e.target.files[0], e.target.name]);
+                    },
+                    required: true
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                  className: "btns",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                    className: 'btn save',
+                    type: 'submit',
+                    children: loading ? 'Bezig ...' : 'Aanmaken'
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                    className: "btn",
+                    onClick: function onClick() {
+                      return setPopup('');
+                    },
+                    children: "Annuleren"
+                  })]
+                })]
+              })]
+            }) : null, editPage === page.id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "popup",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("h1", {
+                children: ["Pagina aanpassen (", page.title, ")"]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: "Bij het aanpassen van de pagina, wordt ook de keuze tegel waar op je moet klikken om hier heen te gaan aangepast."
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+                method: 'post',
+                onSubmit: function onSubmit(e) {
+                  handleEditPage(e);
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                    children: "Pagina titel"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                    type: 'text',
+                    name: 'title',
+                    defaultValue: page.title,
+                    placeholder: 'Titel van de pagina',
+                    onChange: function onChange(e) {
+                      handleInput([e.target.value, e.target.name]);
+                      setPageID(page.id);
+                    },
+                    required: true
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                    children: "Pad naar pagina"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                    type: 'text',
+                    name: 'path',
+                    defaultValue: page.path,
+                    placeholder: "Voorbeeld '/pagina' ",
                     onChange: function onChange(e) {
                       return handleInput([e.target.value, e.target.name]);
                     },
@@ -2848,11 +3122,11 @@ function Screens() {
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                     className: 'btn save',
                     type: 'submit',
-                    children: "Aanmaken"
+                    children: loading ? 'Bezig ...' : 'Opslaan'
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
                     className: "btn",
                     onClick: function onClick() {
-                      return setPopup(!popup);
+                      return setEditPage('');
                     },
                     children: "Annuleren"
                   })]
@@ -2862,7 +3136,7 @@ function Screens() {
           }, index);
         })
       }) : null
-    })
+    })]
   });
 }
 
@@ -3009,7 +3283,7 @@ function UserProvider(_ref) {
       adminRights: adminRights,
       setAdminRights: setAdminRights
     },
-    children: !adminRights ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+    children: adminRights ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
       children: children
     }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_pages_admin_authentication__WEBPACK_IMPORTED_MODULE_2__.default, {
       adminRights: adminRights,
@@ -3344,7 +3618,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".pages {\n  position: relative;\n  width: calc(100% - 5vw);\n  height: auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  padding: 0 2.5vw;\n}\n\n.page {\n  position: relative;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n  background-color: white;\n  margin-top: 25px;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);\n  border-radius: 4px;\n}\n\n.page h1 {\n  font-size: 20px;\n  margin: 5px 0px;\n}\n\n.page p {\n  color: black;\n  font-size: 16px;\n  margin: 5px 0;\n}\n\n.page p span {\n  font-weight: bold;\n}\n\n.page .tiles {\n  display: flex;\n  width: 100%;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: row;\n  flex-wrap: wrap;\n  margin-top: 10px;\n}\n\n.page .tiles .tile {\n  position: relative;\n  max-width: 150px;\n  max-height: 150px;\n}\n\n.page .tiles .new-tile {\n  position: relative;\n  min-width: 250px;\n  width: 100%;\n  min-height: 250px;\n  height: 100%;\n  max-width: 250px;\n  max-height: 250px;\n  border: 1px solid #e5e5e5;\n  margin: 25px;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  cursor: pointer;\n}\n\n.page .tiles .new-tile .plus {\n  position: relative;\n  width: 75px;\n  height: 75px;\n  border-radius: 75px;\n  border: 3px solid black;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.page .tiles .new-tile h1 {\n  position: absolute;\n  bottom: 25px;\n}\n\n.page .tiles .new-tile .plus .line {\n  position: absolute;\n  width: 35px;\n  height: 3px;\n  background-color: black;\n  border-radius: 5px;\n  transform: rotate(0deg);\n}\n\n.page .tiles .new-tile .plus .line:nth-child(2) {\n  transform: rotate(90deg);\n}\n\n.popup {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: calc(100% - 20px);\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n  z-index: 99999;\n}\n\n.popup h1 {\n  margin: 5px 0px;\n  font-size: 20px;\n}\n\n.popup form {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label p {\n  margin-top: 20px;\n}\n\n.popup form label {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label input {\n  position: relative;\n  width: 50%;\n  height: 30px;\n  padding: 5px 10px;\n  background-color: white;\n  box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  border-radius: 4px;\n}\n\n.popup form label input[type=file] {\n  background-color: transparent;\n  box-shadow: 0 0 0 0 black;\n  border: 0;\n  padding: 0;\n  width: auto;\n}\n\n.popup form .btns {\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: row;\n  margin-top: 25px;\n}\n\n.popup form .btns .btn {\n  position: relative;\n  width: auto;\n  padding: 10px 20px;\n  background-color: #f9f9f9;\n  border: 0;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);\n  border-radius: 4px;\n  font-size: 14px;\n  cursor: pointer;\n}\n\n.popup form .btns .btn.save {\n  background-color: #f6227d;\n  color: white;\n  margin-right: 25px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".pages {\n  position: relative;\n  width: calc(100% - 5vw);\n  height: auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  padding: 0 2.5vw;\n}\n\n.page {\n  position: relative;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n  background-color: white;\n  margin-top: 25px;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);\n  border-radius: 4px;\n}\n\n.page:last-child {\n  margin-bottom: 25px;\n}\n\n.page h1 {\n  font-size: 20px;\n  margin: 5px 0px;\n}\n\n.page .give-tiles {\n  padding-top: 15px;\n  width: 100%;\n  border-top: 2px solid #e5e5e5;\n}\n\n.page p {\n  color: black;\n  font-size: 16px;\n  margin: 5px 0;\n}\n\n.page p span {\n  font-weight: bold;\n}\n\n.page .tiles {\n  display: flex;\n  width: 100%;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: row;\n  flex-wrap: wrap;\n  margin-top: 10px;\n}\n\n.page .tiles .tile {\n  position: relative;\n  max-width: 150px;\n  max-height: 150px;\n}\n\n.edit-tile {\n  position: relative;\n  width: 250px;\n  height: 275px;\n  margin-right: 25px;\n}\n\n.edit-tile .edit-items {\n  position: absolute;\n  top: 265px;\n  left: 25px;\n  width: calc(250px - 20px);\n  padding: 0px 10px;\n  height: 35px;\n  background-color: #e5e5e5;\n  display: none;\n  justify-content: flex-end;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  border-bottom-left-radius: 4px;\n  border-bottom-right-radius: 4px;\n  z-index: 5;\n  transition: 0.2s;\n}\n\n.edit-tile:hover .edit-items, .edit-tile:hover .tiles .tile {\n  box-shadow: 0px 1px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n  display: flex;\n  transition: 0.2s;\n}\n\n.edit-tile .tiles .tile:hover:focus {\n  transform: scale(1);\n  transition: 0.2s;\n}\n\n.edit-tile:hover .edit-items {\n  -webkit-animation: come-in 0.2s;\n          animation: come-in 0.2s;\n}\n\n@-webkit-keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n\n@keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n.edit-tile .item-btn {\n  position: relative;\n  z-index: 10;\n  width: 20px;\n  height: 20px;\n  cursor: pointer;\n}\n\n.edit-tile .item-btn:nth-child(1) {\n  margin-right: 15px;\n}\n\n.page .tiles .new-tile {\n  position: relative;\n  min-width: 250px;\n  width: 100%;\n  min-height: 250px;\n  height: 100%;\n  max-width: 250px;\n  max-height: 250px;\n  border: 1px solid #e5e5e5;\n  margin: 25px;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  cursor: pointer;\n}\n\n.page .tiles .new-tile .plus {\n  position: relative;\n  width: 75px;\n  height: 75px;\n  border-radius: 75px;\n  border: 3px solid black;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.page .tiles .new-tile h1 {\n  position: absolute;\n  bottom: 25px;\n}\n\n.page .tiles .new-tile .plus .line {\n  position: absolute;\n  width: 35px;\n  height: 3px;\n  background-color: black;\n  border-radius: 5px;\n  transform: rotate(0deg);\n}\n\n.page .tiles .new-tile .plus .line:nth-child(2) {\n  transform: rotate(90deg);\n}\n\n.popup {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: calc(100% - 20px);\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n  z-index: 99999;\n}\n\n.popup h1 {\n  margin: 5px 0px;\n  font-size: 20px;\n}\n\n.popup form {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label p {\n  margin-top: 20px;\n}\n\n.popup form label {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label input {\n  position: relative;\n  width: 50%;\n  height: 30px;\n  padding: 5px 10px;\n  background-color: white;\n  box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  border-radius: 4px;\n}\n\n.popup form label input[type=file] {\n  background-color: transparent;\n  box-shadow: 0 0 0 0 black;\n  border: 0;\n  padding: 0;\n  width: auto;\n}\n\n.popup form .btns {\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: row;\n  margin-top: 25px;\n}\n\n.btn {\n  position: relative;\n  width: auto;\n  padding: 10px 20px;\n  background-color: #f9f9f9;\n  border: 0;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);\n  border-radius: 4px;\n  font-size: 14px;\n  cursor: pointer;\n}\n\n.btn.save {\n  background-color: #f6227d;\n  color: white;\n  margin-right: 25px;\n}\n\n.btn.mg-top {\n  margin-top: 25px;\n  margin-bottom: 25px;\n}\n\n.blackbox {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background-color: rgba(0, 0, 0, 0.15);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 50000;\n}\n\n.alert {\n  position: relative;\n  width: 90vw;\n  max-width: 500px;\n  height: auto;\n  padding: 40px 10px;\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 10000;\n}\n\n.alert h1 {\n  position: relative;\n  width: auto;\n  text-align: center;\n  font-size: 25px;\n  margin-bottom: 15px;\n}\n\n.alert p {\n  position: relative;\n  width: 300px;\n  text-align: center;\n  font-size: 16px;\n  margin-top: 0;\n  margin-bottom: 25px;\n}\n\n.alert .btns {\n  position: relative;\n  width: 300px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3368,7 +3642,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".underlayer {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background-color: transparent;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.underlayer img {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n\n.underlayer .overlayer {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  background-image: linear-gradient(to bottom right, rgba(246, 34, 125, 0.4), rgba(5, 81, 216, 0.6));\n}\n\n.authentication {\n  position: relative;\n  min-width: 300px;\n  width: 100%;\n  max-width: 500px;\n  height: auto;\n  padding: 20px 10px;\n  background-color: white;\n  border-radius: 7px;\n  box-shadow: 0px 3px 7px 2px rgba(0, 0, 0, 0.15);\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n}\n\n.authentication form {\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n  width: 100%;\n}\n\n.authentication form label {\n  position: relative;\n  width: calc(100% - 40px);\n  padding: 0px 20px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.authentication form label p {\n  margin-bottom: 5px;\n}\n\n.authentication form label input {\n  position: relative;\n  width: calc(100% - 20px);\n  height: 30px;\n  padding: 5px 10px;\n  margin-top: 0px;\n  box-shadow: inset 0px 2px 7px 0px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  background-color: white;\n  border-radius: 4px;\n}\n\n.authentication .logo {\n  position: absolute;\n  left: 10px;\n  top: 10px;\n  transform: scale(0.85);\n}\n\n.authentication form button {\n  background-color: #F6227D;\n  padding: 10px 10px;\n  width: calc(100% - 40px);\n  font-size: 16px;\n  border: 0;\n  margin-top: 25px;\n  color: white;\n  border-radius: 4px;\n  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.authentication form button:hover {\n  background-color: #c11c63;\n  transition: 0.2s;\n}\n\n.authentication form h1 {\n  margin-top: 100px;\n  margin-bottom: 0;\n}\n\n.authentication form p:not(label p) {\n  margin-top: 5px;\n}\n\n.topnavigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 60px;\n  background-color: #f6227d;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  z-index: 999;\n}\n\n.topnavigation h1:not(.info h1) {\n  font-size: 22.5px;\n  color: white;\n  margin-left: 2.5vw;\n}\n\n.topnavigation .usercontent {\n  padding: 0 2.5vw;\n  width: auto;\n  background-color: transparent;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n}\n\n.topnavigation .usercontent .useravatar {\n  position: relative;\n  width: 35px;\n  height: 35px;\n  border: 1px solid #c5c5c5;\n  background-color: #f6f5fb;\n  margin-right: 10px;\n  border-radius: 50px;\n}\n\n.topnavigation .usercontent .info {\n  position: relative;\n  height: 100%;\n  width: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n}\n\n.topnavigation .usercontent .info h1 {\n  position: relative;\n  font-size: 18px;\n  margin-bottom: 0;\n  color: white;\n}\n\n.topnavigation .usercontent .info p {\n  position: relative;\n  font-size: 14px;\n  margin-top: 0px;\n  color: white;\n}\n\n.titlebar {\n  position: absolute;\n  top: 60px;\n  left: 290px;\n  width: calc(100vw - 290px);\n  height: 50px;\n  background-color: white;\n  box-shadow: 0px 3px 7px -2px rgba(0, 0, 0, 0.3);\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  z-index: 999;\n}\n\n.titlebar h1 {\n  font-size: 20px;\n  margin-left: 2.5vw;\n}\n\n.sidebar {\n  position: absolute;\n  left: 0;\n  top: 60px;\n  width: 290px;\n  background-color: #1F2831;\n  height: calc(100vh - 60px);\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 999;\n}\n\n.sidebar .logo {\n  position: relative;\n  width: calc(100% - 30px);\n  height: auto;\n  transform: scale(0.85);\n  left: 15px;\n  margin-top: 15px;\n}\n\n.sidebar .links {\n  position: relative;\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  margin-top: 25px;\n  width: 100%;\n}\n\n.sidebar .links p {\n  width: calc(100% - 40px);\n  color: #8d99a0;\n  font-size: 14px;\n  font-weight: 100;\n}\n\n.sidebar .links a {\n  position: relative;\n  width: calc(100% - 40px);\n  padding: 5px 20px;\n  height: 35px;\n  background-color: transparent;\n  display: flex;\n  justify-content: center;\n  align-items: flex-start;\n  align-content: center;\n  flex-direction: column;\n  text-decoration: none;\n  color: white;\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.sidebar .links a:hover {\n  background-color: #78838e;\n  transition: 0.2s;\n}\n\n.sidebar .links .is-active {\n  position: relative;\n  background-color: #4B5259;\n  transition: 0.2s;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".underlayer {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background-color: transparent;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.underlayer img {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n\n.underlayer .overlayer {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  background-image: linear-gradient(to bottom right, rgba(246, 34, 125, 0.4), rgba(5, 81, 216, 0.6));\n}\n\n.authentication {\n  position: relative;\n  min-width: 300px;\n  width: 100%;\n  max-width: 500px;\n  height: auto;\n  padding: 20px 10px;\n  background-color: white;\n  border-radius: 7px;\n  box-shadow: 0px 3px 7px 2px rgba(0, 0, 0, 0.15);\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n}\n\n.authentication form {\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n  width: 100%;\n}\n\n.authentication form label {\n  position: relative;\n  width: calc(100% - 40px);\n  padding: 0px 20px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.authentication form label p {\n  margin-bottom: 5px;\n}\n\n.authentication form label input {\n  position: relative;\n  width: calc(100% - 20px);\n  height: 30px;\n  padding: 5px 10px;\n  margin-top: 0px;\n  box-shadow: inset 0px 2px 7px 0px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  background-color: white;\n  border-radius: 4px;\n}\n\n.authentication .logo {\n  position: absolute;\n  left: 10px;\n  top: 10px;\n  transform: scale(0.85);\n}\n\n.authentication form button {\n  background-color: #F6227D;\n  padding: 10px 10px;\n  width: calc(100% - 40px);\n  font-size: 16px;\n  border: 0;\n  margin-top: 25px;\n  color: white;\n  border-radius: 4px;\n  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.authentication form button:hover {\n  background-color: #c11c63;\n  transition: 0.2s;\n}\n\n.authentication form h1 {\n  margin-top: 100px;\n  margin-bottom: 0;\n}\n\n.authentication form p:not(label p) {\n  margin-top: 5px;\n}\n\n.topnavigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 60px;\n  background-color: #f6227d;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  z-index: 999;\n}\n\n.topnavigation h1:not(.info h1) {\n  font-size: 22.5px;\n  color: white;\n  margin-left: 2.5vw;\n}\n\n.topnavigation .usercontent {\n  padding: 0 2.5vw;\n  width: auto;\n  background-color: transparent;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n}\n\n.topnavigation .usercontent .useravatar {\n  position: relative;\n  width: 35px;\n  height: 35px;\n  border: 1px solid #c5c5c5;\n  background-color: #f6f5fb;\n  margin-right: 10px;\n  border-radius: 50px;\n}\n\n.topnavigation .usercontent .info {\n  position: relative;\n  height: 100%;\n  width: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n}\n\n.topnavigation .usercontent .info h1 {\n  position: relative;\n  font-size: 18px;\n  margin-bottom: 0;\n  color: white;\n}\n\n.topnavigation .usercontent .info p {\n  position: relative;\n  font-size: 14px;\n  margin-top: 0px;\n  color: white;\n}\n\n.titlebar {\n  position: fixed;\n  top: 60px;\n  left: 290px;\n  width: calc(100vw - 290px);\n  height: 50px;\n  background-color: white;\n  box-shadow: 0px 3px 7px -2px rgba(0, 0, 0, 0.3);\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  z-index: 999;\n}\n\n.titlebar h1 {\n  font-size: 20px;\n  margin-left: 2.5vw;\n}\n\n.sidebar {\n  position: fixed;\n  left: 0;\n  top: 60px;\n  width: 290px;\n  background-color: #1F2831;\n  height: calc(100vh - 60px);\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 999;\n}\n\n.sidebar .logo {\n  position: relative;\n  width: calc(100% - 30px);\n  height: auto;\n  transform: scale(0.85);\n  left: 15px;\n  margin-top: 15px;\n}\n\n.sidebar .links {\n  position: relative;\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  margin-top: 25px;\n  width: 100%;\n}\n\n.sidebar .links p {\n  width: calc(100% - 40px);\n  color: #8d99a0;\n  font-size: 14px;\n  font-weight: 100;\n}\n\n.sidebar .links a {\n  position: relative;\n  width: calc(100% - 40px);\n  padding: 5px 20px;\n  height: 35px;\n  background-color: transparent;\n  display: flex;\n  justify-content: center;\n  align-items: flex-start;\n  align-content: center;\n  flex-direction: column;\n  text-decoration: none;\n  color: white;\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.sidebar .links a:hover {\n  background-color: #78838e;\n  transition: 0.2s;\n}\n\n.sidebar .links .is-active {\n  position: relative;\n  background-color: #4B5259;\n  transition: 0.2s;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39838,10 +40112,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function App() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
-      title = _useState2[0],
-      setTitle = _useState2[1];
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      title = _useState4[0],
+      setTitle = _useState4[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var url = window.location.href;
@@ -39851,12 +40130,7 @@ function App() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.BrowserRouter, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_components_providers_UserProvider__WEBPACK_IMPORTED_MODULE_9__.default, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_pages_admin_components_topnavigation__WEBPACK_IMPORTED_MODULE_4__.default, {
-          user: {
-            name: 'Test',
-            email: 'test@test.nl'
-          }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_pages_admin_components_titlebar__WEBPACK_IMPORTED_MODULE_10__.default, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_pages_admin_components_topnavigation__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_pages_admin_components_titlebar__WEBPACK_IMPORTED_MODULE_10__.default, {
           title: title
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_pages_admin_components_sidebar__WEBPACK_IMPORTED_MODULE_5__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Switch, {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {

@@ -45,7 +45,7 @@ export default function UserProvider({children}) {
 
     return (
         <UserContext.Provider value={{user, setUser, getUser, adminRights, setAdminRights}}>
-            {!adminRights ?
+            {adminRights ?
                 <>
                     {children}
                 </>

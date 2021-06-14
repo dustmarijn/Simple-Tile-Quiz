@@ -15,6 +15,8 @@ import UserProvider from "./components/providers/UserProvider";
 import TitleBar from "./components/pages/admin/components/titlebar";
 
 export default function App() {
+    const [loading, setLoading] = useState(true);
+
     const [title, setTitle] = useState('');
 
     useEffect(() => {
@@ -27,7 +29,7 @@ export default function App() {
         <>
             <Router>
                 <UserProvider>
-                    <Topnavigation user={{name: 'Test', email: 'test@test.nl'}}/>
+                    <Topnavigation/>
                     <TitleBar title={title}/>
                     <Sidebar/>
                     <Switch>

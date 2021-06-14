@@ -18,7 +18,7 @@ export default function Home({title, tiles}) {
 
     useEffect(() => {
         setLoading(false);
-    }, [loading]);
+    }, [tiles !== undefined]);
 
     return (
         <Page>
@@ -53,7 +53,7 @@ export default function Home({title, tiles}) {
                             {/* This will render all tiles from the visited route */}
                             {tiles.map((tile, index) => {
                                 return (
-                                    tile.able_to_use === "true" ?
+                                    tile.able_to_use === "true" || "1" ?
                                         <Tile key={index} title={tile.title} illustration={tile.illustration_file_name} path={tile.path}/>
                                     : null
                                 )
