@@ -127,6 +127,10 @@
     background-color: #f9f9f9;
 }
 
+.edit-items .edit-item:hover:focus {
+    background-color: #e5e5e5;
+}
+
 .edit-items .edit-item:last-child {
     margin-top: 5px;
     border: 0;

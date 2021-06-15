@@ -92,7 +92,7 @@ class PageController extends Controller
      */
     public function update(Request $request)
     {
-        if(isset($request->tile_id) && isset($request->page_id)) {
+        if($request->page_id !== "null") {
             $page = Page::all()->where('id', intval($request->page_id))->first();
             $tile = Tile::all()->where('path', $page->path)->first();
         } else {
@@ -102,10 +102,10 @@ class PageController extends Controller
         if($page) {
             if($tile) {
                 if($page->path === $tile->path) {
-                    if(isset($request->title)) {
+                    if($request->title !== "null") {
                         $tile->title = $request->title;
                     }
-                    if(isset($request->path)) {
+                    if($request->path !== "null") {
                         $tile->path = $request->path;
                     }
                     if($request->hasFile('illustration_file_name')) {
@@ -129,10 +129,10 @@ class PageController extends Controller
                     $tile->save();
                 }
             }
-            if(isset($request->title)) {
+            if($request->title !== "null") {
                 $page->title = $request->title;
             }
-            if(isset($request->path)) {
+            if($request->path !== "null") {
                 $page->path = $request->path;
             }
             $page->save();

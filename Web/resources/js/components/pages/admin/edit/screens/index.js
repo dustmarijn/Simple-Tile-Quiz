@@ -203,6 +203,8 @@ export default function Screens() {
                 console.error(error);
                 setTileID(null);
                 setPageID(null);
+                setEditPage('');
+                setPopup('');
                 dispatch({
                     type: 'ADD_NOTIFICATION',
                     payload: {
