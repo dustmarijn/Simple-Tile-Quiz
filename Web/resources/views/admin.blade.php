@@ -12,7 +12,7 @@
     body {
         padding: 0;
         margin: 0 auto;
-        font-family: sans-serif;
+        font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
         background-color: #f6f5fb;
         overflow-x: hidden;
         width: 100vw;
