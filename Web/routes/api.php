@@ -23,6 +23,15 @@ Route::get('/user', function() {
     }
 })->middleware('auth:api');
 
+Route::post('/createTile', 'App\Http\Controllers\TileController@create');
+Route::post('/createPage', 'App\Http\Controllers\PageController@create');
+
+Route::post('/editPage', 'App\Http\Controllers\PageController@update');
+
+Route::post('/deleteTile', 'App\Http\Controllers\TileController@destroy');
+
+Route::post('/ableToUseTile', 'App\Http\Controllers\TileController@ableToUseTile');
+
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
 
 Route::get('/users', 'App\Http\Controllers\UserController@Users');

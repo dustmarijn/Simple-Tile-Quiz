@@ -1,0 +1,108 @@
+
+.notifications-wrapper {
+    position: fixed;
+    bottom: 0px;
+    left: 0%;
+    width: 100vw;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 100000;
+    pointer-events: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.notifications-wrapper .notification {
+    position: absolute;
+    width: auto;
+    min-width: 100px;
+    max-width: 90vw;
+    height: auto;
+    padding: 15px 25px;
+    bottom: 25px;
+    background: rgba(0, 0, 0, 1);
+    border-radius: 4px;
+    box-shadow: 0 0px 7px 2px rgba(0, 0, 0, 0.3);
+    z-index: auto;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+    opacity: 0;
+    animation: go-in 0.3s;
+}
+
+.notifications-wrapper .notification:last-child {
+    opacity: 1;
+}
+
+.notifications-wrapper .enter {
+    animation: go-in 0.3s;
+}
+
+.notifications-wrapper .exit {
+    animation: go-out 0.3s;
+}
+
+.notifications-wrapper .error {
+    background-color: red;
+}
+
+.notifications-wrapper .succes {
+    background-color: black;
+}
+
+.notifications-wrapper .notification .icon-note {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border: 2px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font-size: 20px;
+    margin-right: 10px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 50px;
+}
+.notifications-wrapper .notification p {
+    position: relative;
+    font-size: 18px;
+    margin: 0;
+    color: #fff;
+    font-weight: 400;
+}
+
+@keyframes go-in {
+    0% {
+        position: absolute;
+        bottom: -300px;
+    }
+    100% {
+        bottom: 25px;
+    }
+}
+
+@keyframes go-out {
+    100% {
+        position: absolute;
+        bottom: -300px;
+    }
+}
+
+.notifications-wrapper .notification .bar {
+    position: relative;
+    width: auto;
+    height: 7px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    margin-top: 10px;
+}

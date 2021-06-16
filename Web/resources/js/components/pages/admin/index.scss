@@ -188,7 +188,7 @@
 }
 
 .titlebar {
-    position: absolute;
+    position: fixed;
     top: 60px;
     left: 290px;
     width: calc(100vw - 290px);
@@ -209,7 +209,7 @@
 }
 
 .sidebar {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 60px;
     width: 290px;
