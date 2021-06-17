@@ -29,6 +29,10 @@ class TileController extends Controller
 
             $tile = new Tile(); // Creates new tile.
             $tile->title = $request->title; // Title of the tile.
+            if($request->path) {
+                $tile->path = $request->path;
+            }
+            $filename = '';
             if ($request->hasFile('illustration_file_name')) {
 
                 $this->validate($request, [
@@ -45,35 +49,34 @@ class TileController extends Controller
                 if (!file_exists($path . '' . $filename)) {
                     $file->move($path, $filename);
                 }
+            } else {
+                if($request->illustration_file_name) {
+                    $filename = $request->illustration_file_name;
+                }
+            }
 
-                if ($request->path) { // Checks if the tile path from the tile is requested.
-                    if (Tile::all()->where('path', $request->path)) {
+            if ($request->path) { // Checks if the tile path from the tile is requested.
+                if (!Tile::all()->where('path', $request->path)->first()) {
+                    if ($request->page_id) {
 
-                        $tile->path = $request->path; // Sets the path of the tile to the requested path.
+                        $tile->illustration_file_name = $filename;
+                        $tile->able_to_use = "true";
+                        $tile->page_id = intval($request->page_id); // Sets the id from the relation adminpage.
+                        $tile->save(); // Saves the tile in the database.
 
-                        if ($request->page_id) {
-
-                            $tile->illustration_file_name = $filename;
-                            $tile->able_to_use = "true";
-                            $tile->page_id = intval($request->page_id); // Sets the id from the relation adminpage.
-                            $tile->save(); // Saves the tile in the database.
-
-                            return response(['succesMessage' => 'Keuze tegel succesvol aangemaakt!']);
-                        } else {
-                            return response(['errorMessage' => 'Keuze tegel kon niet worden aangemaakt, de keuze tegel moet toebehoren aan een pagina!']);
-                        }
-
+                        return response(['succesMessage' => 'Keuze tegel succesvol aangemaakt!'], 200);
                     } else {
-                        return response(['errorMessage' => 'Keuze tegel kon niet worden aangemaakt, er is al een keuze tegel die naar dit pad gaat!']);
+                        return response(['errorMessage' => 'Keuze tegel kon niet worden aangemaakt, de keuze tegel moet toebehoren aan een pagina!'], 500);
                     }
+
                 } else {
-                    return response(['errorMessage' => 'Keuze tegel kon niet worden aangemaakt, je moet een pad aangeven waar deze keuze tegel komt!']);
+                    return response(['errorMessage' => 'Keuze tegel kon niet worden aangemaakt, er is al een keuze tegel die naar dit pad gaat!'], 500);
                 }
             } else {
-                return response(['errorMessage' => 'Keuze tegel kon niet worden aangemaakt, er moet een illustratie bij zitten!']);
+                return response(['errorMessage' => 'Keuze tegel kon niet worden aangemaakt, je moet een pad aangeven waar deze keuze tegel komt!'], 500);
             }
         } else {
-            return response(['errorMessage' => 'Keuze tegel kon niet worden aangemaakt, je moet wel een titel toevoegen!']);
+            return response(['errorMessage' => 'Keuze tegel kon niet worden aangemaakt, je moet wel een titel toevoegen!'], 500);
         }
     }
 

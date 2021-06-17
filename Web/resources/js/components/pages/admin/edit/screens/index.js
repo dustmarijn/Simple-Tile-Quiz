@@ -11,10 +11,13 @@ import NotificationApi from "../../../../api/NotificationApi";
 export default function Screens() {
     const [loading, setLoading] = useState(true);
     const [pages, setPages] = useState([]);
+    const [organisations, setOrganisations] = useState([]);
     const [popup, setPopup] = useState('');
     const [editPage, setEditPage] = useState('');
     const [alert, setAlert] = useState(false);
     const [deleting, setDeleting] = useState(false);
+    const [findOrganisation, setFindOrganisation] = useState(false);
+    const [selectedOrganisation, setSelectedOrganisation] = useState(null);
     const [alertMSG, setAlertMSG] = useState({
         title: 'Bericht',
         description: 'Beschrijving van bericht',
@@ -35,9 +38,18 @@ export default function Screens() {
 
     useEffect(() => {
         getPages();
+        getOrganisations()
     }, []);
 
     function getPages() {
+        setTitle(null);
+        setPath(null);
+        setImage(null);
+        setPageID(null);
+        setEditTile(null);
+        setEditPage(null);
+        setPopup(null);
+        setTileID(null);
         axios.get('/api/pages')
             .then(response => {
                 if (response.data.pages) {
@@ -50,6 +62,86 @@ export default function Screens() {
             .catch(error => {
                 console.log(error);
             })
+    }
+
+    function getOrganisations() {
+        axios.get('/api/organisations')
+            .then(response => {
+                setOrganisations(response.data.organisations);
+            })
+            .catch(error => {
+                dispatch({
+                    type: 'ADD_NOTIFICATION',
+                    payload: {
+                        id: Date.now(),
+                        type: 'error',
+                        message: `Er is iets mis gegaan bij het ophalen van de organisaties!`,
+                    }
+                });
+            })
+    }
+
+    function handleOrgTile() {
+        if(selectedOrganisation !== null) {
+            const organisation = organisations.filter(org => org.id === selectedOrganisation)[0];
+            dispatch({
+                type: 'ADD_NOTIFICATION',
+                payload: {
+                    id: Date.now(),
+                    type: 'succes',
+                    message: `Aanmaken van organisatie tegel ...`,
+                }
+            });
+            if (organisation) {
+                const formData = new FormData();
+                formData.append('title', organisation.name);
+                formData.append('path', '/' + organisation.name.toLowerCase());
+                formData.append('illustration_file_name', organisation.logo_file_name);
+                formData.append('page_id', pageID);
+
+                axios.post('/api/createTile', formData)
+                    .then(response => {
+                        setPopup('');
+                        getPages();
+                        dispatch({
+                            type: 'ADD_NOTIFICATION',
+                            payload: {
+                                id: Date.now(),
+                                type: 'succes',
+                                message: `De keuze tegel '${organisation.name}' is aangemaakt!`,
+                            }
+                        });
+                        setSelectedOrganisation(null);
+                        setFindOrganisation(null);
+                        setPageID(null);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        dispatch({
+                            type: 'ADD_NOTIFICATION',
+                            payload: {
+                                id: Date.now(),
+                                type: 'error',
+                                message: `Er is iets mis gegaan bij het aanmaken!`,
+                            }
+                        });
+                        setSelectedOrganisation(null);
+                        setFindOrganisation(null);
+                        setPageID(null);
+                    });
+
+                axios.post('/api/createPage', {
+                    title: organisation.name,
+                    path: '/' + organisation.name.toLowerCase(),
+                })
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
+            }
+        }
     }
 
     function handleNewTile(e) {
@@ -274,8 +366,7 @@ export default function Screens() {
                     <>
                         {pages?.map((page, index) => {
                             return (
-                                <div
-                                    className={`page ${page.title.replace(/\s+/g, '-').toLowerCase()} ${page.able_to_use === '0' ? 'disabled' : 'enabled'}`}
+                                <div className={`page ${page.title.replace(/\s+/g, '-').toLowerCase()} ${page.able_to_use === '0' ? 'disabled' : 'enabled'}`}
                                     key={index}>
                                     <h1>{page.title}</h1>
                                     <p className={'path'}>Pad naar het scherm: <span>{page.path}</span></p>
@@ -287,6 +378,26 @@ export default function Screens() {
                                                 setPageID(page.id);
                                             }}>Bewerken
                                             </button>
+                                            {findOrganisation === page.id ?
+                                                <div className="find-organisations">
+                                                    <h1>Organisaties</h1>
+                                                    <p>Kies een organisatie en deze wordt weer gegeven als een tegel.</p>
+                                                    <div className="organisations">
+                                                        {organisations.map((org, index) => {
+                                                            return (
+                                                                <div className={`tile ${selectedOrganisation === org.id ? 'selected' : ''}`} key={index} onClick={() => {setPageID(page.id);setSelectedOrganisation(org.id)}}>
+                                                                    <img src={'/images/organisationlogo/' + org.logo_file_name} alt={''}/>
+                                                                    <h1>{org.name}</h1>
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </div>
+                                                    <div className="btns">
+                                                        <button className={`btn ${selectedOrganisation ? 'use' : 'not-use'} save`} onClick={() => handleOrgTile()}>Tegel gebruiken</button>
+                                                        <button className={'btn'} onClick={() => {setFindOrganisation(null);setSelectedOrganisation(null);setPageID(null)}}>Annuleren</button>
+                                                    </div>
+                                                </div>
+                                            : null }
                                             <p className={'give-tiles'}>Keuze tegels die bij dit scherm horen:</p>
                                             <div className="tiles">
                                                 {page.tiles.map((tile, num) => {
@@ -348,17 +459,45 @@ export default function Screens() {
                                                         </div>
                                                     )
                                                 })}
-                                                <div className="new-tile" onClick={() => {
-                                                    setEditTile('');
-                                                    setTileID(null);
-                                                    setPageID(page.id);
-                                                    setPopup(page.id)
-                                                }}>
-                                                    <div className="plus">
-                                                        <div className="line"/>
-                                                        <div className="line"/>
+                                                <div className="edit-tile tile" key={'weifjurghe93y874yr7g'}>
+                                                    <div className="edit-items">
+                                                        <div className="edit-item" onClick={() => {
+                                                            setEditTile('');
+                                                            setTileID(null);
+                                                            setPageID(page.id);
+                                                            setPopup(page.id)
+                                                        }}>
+                                                            <p>Nieuwe tegel</p>
+                                                            <img src={'/images/tile.svg'} alt={''}/>
+                                                        </div>
+                                                        <div className="edit-item" onClick={() => {
+                                                            setEditTile('');
+                                                            setTileID(null);
+                                                            setPageID(page.id);
+                                                            setFindOrganisation(page.id);
+                                                            setSelectedOrganisation(null);
+                                                        }}>
+                                                            <p>Organisatie tegel</p>
+                                                            <img src={'/images/organisation.svg'} alt={''}/>
+                                                        </div>
+                                                        {page.tiles.length === 0 ?
+                                                            <div className="edit-item" onClick={() => {
+                                                                setEditTile('');
+                                                                setTileID(null);
+                                                                setPageID(page.id);
+                                                                setPopup(page.id)
+                                                            }}>
+                                                                <p>Organisatie pagina</p>
+                                                                <img src={'/images/organisation2.svg'} alt={''}/>
+                                                            </div>
+                                                        : null }
                                                     </div>
-                                                    <h1>Nieuwe tegel</h1>
+                                                    <div className="new-tile">
+                                                        <div className="plus">
+                                                            <div className="line"/>
+                                                            <div className="line"/>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </>

@@ -76,14 +76,14 @@
 
 .page .tiles .tile {
     position: relative;
-    max-width: 150px;
-    max-height: 150px;
+    width: 250px;
+    height: 250px
 }
 
 .edit-tile {
     position: relative;
     width: 250px;
-    height: 275px;
+    height: 250px;
     margin-right: 25px;
 }
 
@@ -192,6 +192,7 @@
     align-content: center;
     align-items: center;
     background-size: cover;
+    margin: 0;
 }
 
 .edit-tile .item-btn:nth-child(1) {
@@ -283,7 +284,7 @@
     font-size: 20px;
 }
 
-.popup form {
+.popup form, .page form {
     position: relative;
     width: 100%;
     height: auto;
@@ -294,11 +295,11 @@
     flex-direction: column;
 }
 
-.popup form label p {
+.popup form label p, .page form label p {
     margin-top: 20px;
 }
 
-.popup form label {
+.popup form label, .page form label {
     position: relative;
     width: 100%;
     height: auto;
@@ -309,7 +310,7 @@
     flex-direction: column;
 }
 
-.popup form label input {
+.popup form label input, .page form input {
     position: relative;
     width: 50%;
     height: 30px;
@@ -320,7 +321,7 @@
     border: 1px solid #e5e5e5;
     border-radius: 4px;
 }
-.popup form label input[type="file"] {
+.popup form label input[type="file"], .page form label input[type="file"] {
     background-color: transparent;
     box-shadow: 0 0 0 0 black;
     border: 0;
@@ -328,7 +329,7 @@
     width: auto;
 }
 
-.popup form .btns {
+.popup form .btns, , .page form .btns {
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
@@ -435,4 +436,64 @@
     80% { transform: translate(-1px, -1px) rotate(1deg); }
     90% { transform: translate(1px, 2px) rotate(0deg); }
     100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.find-organisations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 25px 10px;
+    height: calc(100% - 50px);
+    width: calc(100% - 20px);
+    background-color: rgba(255, 255, 255, 1);
+    z-index: 300000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+}
+
+.find-organisations h1 {
+    margin-bottom: 5px;
+    font-size: 30px;
+}
+
+.find-organisations p {
+    font-size: 16px;
+    margin-top: 0;
+}
+
+.find-organisations .organisations {
+    position: relative;
+    width: calc(100% - 50px);
+    padding: 10px 10px;
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.find-organisations .organisations .tile {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.find-organisations .organisations .tile h1 {
+    font-size: 16px;
+}
+
+.find-organisations .btns {
+    position: relative;
+    margin-left: 20px;
+}
+
+.btn.not-use {
+    opacity: 0.4;
+    pointer-events: none;
 }

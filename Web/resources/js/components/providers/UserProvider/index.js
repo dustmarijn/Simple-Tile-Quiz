@@ -2,10 +2,12 @@ import React, {createContext, useEffect, useState} from 'react';
 import axios from "axios";
 import Authentication from "../../pages/admin/authentication";
 import NotificationApi from "../../api/NotificationApi";
+import AdminPage from "../../pages/admin/components/adminpage";
 
 export const UserContext = createContext();
 
 export default function UserProvider({children}) {
+    const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(undefined);
     const [adminRights, setAdminRights] = useState(false);
 
@@ -20,6 +22,12 @@ export default function UserProvider({children}) {
             setAdminRights(!adminRights);
         }
     }, [user !== undefined]);
+
+
+    function logoutUser() {
+        localStorage.setItem('auth_token', '');
+        window.location.href = '/logout';
+    }
 
     function getUser() {
         if (localStorage.getItem('auth_token') !== '' || localStorage.getItem('auth_token') !== undefined) {
@@ -38,6 +46,7 @@ export default function UserProvider({children}) {
             axios.get('/api/user', config)
                 .then(response => {
                     setUser(response.data.user);
+                    setLoading(false);
                     dispatch({
                         type: 'ADD_NOTIFICATION',
                         payload: {
@@ -49,6 +58,7 @@ export default function UserProvider({children}) {
                 })
                 .catch(response => {
                     setUser(null);
+                    setLoading(false);
                     dispatch({
                         type: 'ADD_NOTIFICATION',
                         payload: {
@@ -63,13 +73,27 @@ export default function UserProvider({children}) {
 
 
     return (
-        <UserContext.Provider value={{user, setUser, getUser, adminRights, setAdminRights}}>
-            {adminRights ?
+        <UserContext.Provider value={{user, setUser, getUser, adminRights, setAdminRights, logoutUser, setLoading, loading}}>
+            {loading === false ?
                 <>
-                    {children}
+                    {adminRights ?
+                        <>
+                            {children}
+                        </>
+                        : <Authentication adminRights={adminRights} setAdminRights={setAdminRights} user={user} setUser={setUser}/>
+                    }
                 </>
-            : <Authentication adminRights={adminRights} setAdminRights={setAdminRights} user={user} setUser={setUser}/>}
+            :
+                <div className="loading">
+                    <div className="lds-ring">
+                        <div/>
+                        <div/>
+                        <div/>
+                        <div/>
+                    </div>
+                    <h1>Bijna klaar ...</h1>
+                </div>
+            }
         </UserContext.Provider>
     )
-
 }
