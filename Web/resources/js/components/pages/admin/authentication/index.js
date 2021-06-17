@@ -1,13 +1,19 @@
 import React, {useState} from 'react';
 import Logo from "../../../default components/logo";
 import axios from "axios";
+import NotificationApi from "../../../api/NotificationApi";
+import UserApi from "../../../api/UserApi";
 
 export default function Authentication({adminRights, setAdminRights, user, setUser}) {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
+    const {dispatch} = NotificationApi();
+    const {loading, setLoading} = UserApi();
+
     function handleAuthentication(e) {
         e.preventDefault()
+        setLoading(true);
         if(email && password) {
             axios.post('/api/login', {
                 email: email,
@@ -17,11 +23,28 @@ export default function Authentication({adminRights, setAdminRights, user, setUs
                     if(response.data.message === 'Succes' && response.data.user.role === 'admin') {
                         setUser(response.data.user);
                         localStorage.setItem('auth_token', response.data.token);
+                        setLoading(false);
                         setAdminRights(true);
+                        dispatch({
+                            type: 'ADD_NOTIFICATION',
+                            payload: {
+                                id: Date.now(),
+                                type: 'succes',
+                                message: 'U bent nu ingelogd!',
+                            }
+                        });
                     }
                 })
                 .catch(error => {
                     console.error(error);
+                    dispatch({
+                        type: 'ADD_NOTIFICATION',
+                        payload: {
+                            id: Date.now(),
+                            type: 'error',
+                            message: 'Het e-mail of wachtwoord zijn onjuist!',
+                        }
+                    });
                 })
         }
     }

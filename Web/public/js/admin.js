@@ -2319,6 +2319,27 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/components/api/NotificationApi/index.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/api/NotificationApi/index.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ NotificationApi)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _providers_NotificationProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../providers/NotificationProvider */ "./resources/js/components/providers/NotificationProvider/index.js");
+
+
+function NotificationApi() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_providers_NotificationProvider__WEBPACK_IMPORTED_MODULE_1__.NotificationContext);
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/api/UserApi/index.js":
 /*!******************************************************!*\
   !*** ./resources/js/components/api/UserApi/index.js ***!
@@ -2412,6 +2433,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.scss */ "./resources/js/components/default components/tile/index.scss");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -2421,18 +2454,36 @@ function Tile(_ref) {
   var title = _ref.title,
       illustration = _ref.illustration,
       path = _ref.path,
-      _onClick = _ref.onClick;
+      _onClick = _ref.onClick,
+      className = _ref.className;
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useHistory)();
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      newImg = _useState2[0],
+      setNewImg = _useState2[1];
+
+  var img = new Image();
+  img.src = '/images/illustrations/' + illustration;
+
+  img.onload = function () {
+    setNewImg(img.src);
+  };
+
+  img.onerror = function () {
+    setNewImg('/images/organisationlogo/' + illustration);
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
-    className: "tile",
+    className: "tile ".concat(className),
     onClick: function onClick() {
       history.push(path);
 
       _onClick();
     },
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-      src: '/images/illustrations/' + illustration,
-      alt: ""
+      src: newImg ? newImg : '',
+      alt: ''
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
       children: title
     })]
@@ -2456,7 +2507,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _default_components_logo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../default components/logo */ "./resources/js/components/default components/logo/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _api_NotificationApi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../api/NotificationApi */ "./resources/js/components/api/NotificationApi/index.js");
+/* harmony import */ var _api_UserApi__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../api/UserApi */ "./resources/js/components/api/UserApi/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2468,6 +2521,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -2490,8 +2545,16 @@ function Authentication(_ref) {
       password = _useState4[0],
       setPassword = _useState4[1];
 
+  var _NotificationApi = (0,_api_NotificationApi__WEBPACK_IMPORTED_MODULE_3__.default)(),
+      dispatch = _NotificationApi.dispatch;
+
+  var _UserApi = (0,_api_UserApi__WEBPACK_IMPORTED_MODULE_4__.default)(),
+      loading = _UserApi.loading,
+      setLoading = _UserApi.setLoading;
+
   function handleAuthentication(e) {
     e.preventDefault();
+    setLoading(true);
 
     if (email && password) {
       axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/login', {
@@ -2501,10 +2564,27 @@ function Authentication(_ref) {
         if (response.data.message === 'Succes' && response.data.user.role === 'admin') {
           setUser(response.data.user);
           localStorage.setItem('auth_token', response.data.token);
+          setLoading(false);
           setAdminRights(true);
+          dispatch({
+            type: 'ADD_NOTIFICATION',
+            payload: {
+              id: Date.now(),
+              type: 'succes',
+              message: 'U bent nu ingelogd!'
+            }
+          });
         }
       })["catch"](function (error) {
         console.error(error);
+        dispatch({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: Date.now(),
+            type: 'error',
+            message: 'Het e-mail of wachtwoord zijn onjuist!'
+          }
+        });
       });
     }
   }
@@ -2519,47 +2599,47 @@ function Authentication(_ref) {
     }
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: "underlayer",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
       src: '/images/admin-background.png',
       alt: ''
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: "overlayer"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "authentication",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_default_components_logo__WEBPACK_IMPORTED_MODULE_1__.default, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_default_components_logo__WEBPACK_IMPORTED_MODULE_1__.default, {
         className: 'logo'
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
         method: 'post',
         onSubmit: function onSubmit(e) {
           return handleAuthentication(e);
         },
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h1", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
           children: "Welkom"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
           children: "Meld je aan voor de admin"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
             children: "E-mail adres"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: 'email',
             placeholder: 'E-mail adres',
             onChange: function onChange(e) {
               return handleInput([e.target.value, e.target.type]);
             }
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("p", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
             children: "Wachtwoord"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: 'password',
             placeholder: 'Wachtwoord',
             onChange: function onChange(e) {
               return handleInput([e.target.value, e.target.type]);
             }
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
           type: 'submit',
           children: "Aanmelden"
         })]
@@ -2593,6 +2673,107 @@ function AdminPage(_ref) {
     className: "adminpage",
     children: children
   });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/admin/components/notification/index.js":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/pages/admin/components/notification/index.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Notification)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.scss */ "./resources/js/components/pages/admin/components/notification/index.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+function Notification(props) {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      exit = _useState2[0],
+      setExit = _useState2[1];
+
+  var message = props.message,
+      type = props.type,
+      id = props.id;
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState4 = _slicedToArray(_useState3, 2),
+      width = _useState4[0],
+      setWidth = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState6 = _slicedToArray(_useState5, 2),
+      intervalID = _useState6[0],
+      setIntervalID = _useState6[1];
+
+  function handleStartTimer() {
+    var id = setInterval(function () {
+      setWidth(function (prev) {
+        if (prev < 200) {
+          return prev + 0.5;
+        }
+
+        return prev;
+      });
+    }, 20);
+    setIntervalID(id);
+  }
+
+  function handlePauseTimer() {
+    clearInterval(intervalID);
+  }
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    handleStartTimer();
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (width === 200) {
+      handleCloseNotification();
+    }
+  }, [width]);
+
+  function handleCloseNotification() {
+    setExit(true);
+    setTimeout(function () {
+      props.dispatch({
+        type: "REMOVE_NOTIFICATION",
+        id: props.id
+      });
+    }, 275);
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    onMouseEnter: handlePauseTimer,
+    onMouseLeave: handleStartTimer,
+    className: "notification ".concat(type, " ").concat(exit ? 'exit' : 'enter'),
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "icon-note",
+      children: "!"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+      children: message
+    })]
+  }, id);
 }
 
 /***/ }),
@@ -2689,31 +2870,392 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _api_UserApi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../api/UserApi */ "./resources/js/components/api/UserApi/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
 
 function Topnavigation() {
-  var _UserApi = (0,_api_UserApi__WEBPACK_IMPORTED_MODULE_1__.default)(),
-      user = _UserApi.user;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      userDropdown = _useState2[0],
+      setUserDropdown = _useState2[1];
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    className: "topnavigation",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
-      children: "TeamStopcontact Admin"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      className: "usercontent",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-        className: "useravatar"
+  var _UserApi = (0,_api_UserApi__WEBPACK_IMPORTED_MODULE_1__.default)(),
+      user = _UserApi.user,
+      logoutUser = _UserApi.logoutUser;
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      className: "topnavigation",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
+        children: "TeamStopcontact Admin"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "info",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
-          children: user === null || user === void 0 ? void 0 : user.name
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-          children: user === null || user === void 0 ? void 0 : user.email
+        className: "usercontent",
+        onClick: function onClick() {
+          return setUserDropdown(!userDropdown);
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "useravatar"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "info",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
+            children: user === null || user === void 0 ? void 0 : user.name
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+            children: user === null || user === void 0 ? void 0 : user.email
+          })]
         })]
       })]
-    })]
+    }), userDropdown ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      className: "userDropdown",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
+        children: user === null || user === void 0 ? void 0 : user.name
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+        children: user === null || user === void 0 ? void 0 : user.email
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "btns",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: 'btn',
+          onClick: function onClick() {
+            return logoutUser();
+          },
+          children: "Uitloggen"
+        })
+      })]
+    }) : null]
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/admin/edit/organisations/index.js":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/pages/admin/edit/organisations/index.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Organisations)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _components_adminpage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/adminpage */ "./resources/js/components/pages/admin/components/adminpage/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _api_NotificationApi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../api/NotificationApi */ "./resources/js/components/api/NotificationApi/index.js");
+/* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./index.scss */ "./resources/js/components/pages/admin/edit/organisations/index.scss");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+function Organisations() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      organisations = _useState2[0],
+      setOrganisations = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      newOrg = _useState4[0],
+      setNewOrg = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState6 = _slicedToArray(_useState5, 2),
+      name = _useState6[0],
+      setName = _useState6[1];
+
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState8 = _slicedToArray(_useState7, 2),
+      image = _useState8[0],
+      setImage = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState10 = _slicedToArray(_useState9, 2),
+      phone = _useState10[0],
+      setPhone = _useState10[1];
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState12 = _slicedToArray(_useState11, 2),
+      email = _useState12[0],
+      setEmail = _useState12[1];
+
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState14 = _slicedToArray(_useState13, 2),
+      location = _useState14[0],
+      setLocation = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState16 = _slicedToArray(_useState15, 2),
+      website = _useState16[0],
+      setWebsite = _useState16[1];
+
+  var _NotificationApi = (0,_api_NotificationApi__WEBPACK_IMPORTED_MODULE_3__.default)(),
+      dispatch = _NotificationApi.dispatch;
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    getOrganisations();
+  }, []);
+
+  function handleInput(e) {
+    if (e[1] === 'name') {
+      setName(e[0]);
+    }
+
+    if (e[1] === 'phone') {
+      setPhone(e[0]);
+    }
+
+    if (e[1] === 'email') {
+      setEmail(e[0]);
+    }
+
+    if (e[1] === 'adress') {
+      setLocation(e[0]);
+    }
+
+    if (e[1] === 'website') {
+      setWebsite(e[0]);
+    }
+
+    if (e[1] === 'logo') {
+      setImage(e[0]);
+    }
+  }
+
+  function getOrganisations() {
+    axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/organisations').then(function (response) {
+      setOrganisations(response.data.organisations);
+    })["catch"](function (error) {
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'error',
+          message: "Er is iets mis gegaan bij het ophalen van de organisaties!"
+        }
+      });
+    });
+  }
+
+  function handleNewOrg(e) {
+    e.preventDefault();
+    console.log(e);
+    dispatch({
+      type: 'ADD_NOTIFICATION',
+      payload: {
+        id: Date.now(),
+        type: 'succes',
+        message: "Organisatie wordt aangemaakt ..."
+      }
+    });
+    var formData = new FormData();
+    formData.append('logo_file_name', image);
+    formData.append('name', name);
+    formData.append('phone', phone);
+    formData.append('email', email);
+    formData.append('location', location);
+    formData.append('website', website);
+    setNewOrg(false);
+    axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/createOrganisation', formData).then(function (response) {
+      getOrganisations();
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'succes',
+          message: "Organisatie is succesvol aangemaakt!"
+        }
+      });
+    })["catch"](function (error) {
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'error',
+          message: "Er is iets mis gegaan bij het aanmaken."
+        }
+      });
+    });
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_adminpage__WEBPACK_IMPORTED_MODULE_1__.default, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
+        className: "new-org-btn ".concat(newOrg ? 'not-use' : ''),
+        onClick: function onClick() {
+          setNewOrg(true);
+          setTimeout(function () {
+            document.getElementsByClassName("newOrg")[0].scrollIntoView({
+              block: 'nearest'
+            });
+          }, 150);
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+          src: '/images/plus.svg',
+          alt: ''
+        }), " Nieuwe organisatie"]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "pages",
+        children: [organisations.map(function (org, index) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "page",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+              src: '/images/organisationlogo/' + org.logo_file_name,
+              alt: ''
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+              children: org.name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+              children: ["Telefoon nummer: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                children: org.phone_number
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+              children: ["E-mail adres: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                children: org.email
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+              children: ["locatie adres: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                children: org.location
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+              children: ["Website: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: 'website',
+                onClick: function onClick() {
+                  return window.open(org.website);
+                },
+                children: org.website
+              })]
+            })]
+          }, index);
+        }), newOrg ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "page newOrg",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+            children: "Nieuwe organisatie"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+            children: "Vul alle onderstaande gegevens in om een nieuwe organisatie aan te maken."
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+            method: 'post',
+            onSubmit: function onSubmit(e) {
+              return handleNewOrg(e);
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: "Logo organisatie:"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                type: 'file',
+                name: 'logo',
+                accept: "image/png, image/gif, image/jpeg, image/svg+xml",
+                onChange: function onChange(e) {
+                  return handleInput([e.target.files[0], e.target.name]);
+                },
+                required: true
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: "Naam organisatie:"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                type: 'text',
+                name: 'name',
+                onChange: function onChange(e) {
+                  return handleInput([e.target.value, e.target.name]);
+                },
+                placeholder: 'Naam van de organisatie',
+                required: true
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: "Telefoon nummer:"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                type: 'tel',
+                name: 'phone',
+                onChange: function onChange(e) {
+                  return handleInput([e.target.value, e.target.name]);
+                },
+                placeholder: 'Telefoon nummer van de organisatie',
+                required: true
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: "E-mail adres:"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                type: 'email',
+                name: 'email',
+                onChange: function onChange(e) {
+                  return handleInput([e.target.value, e.target.name]);
+                },
+                placeholder: 'E-mail adres van de organisatie',
+                required: true
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: "Adres organisatie:"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                type: 'text',
+                name: 'adress',
+                onChange: function onChange(e) {
+                  return handleInput([e.target.value, e.target.name]);
+                },
+                placeholder: 'Rodetorenplein 14, Zwolle',
+                required: true
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: "Website organisatie:"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                type: 'text',
+                name: 'website',
+                onChange: function onChange(e) {
+                  return handleInput([e.target.value, e.target.name]);
+                },
+                placeholder: 'https://www.organisatie.nl/',
+                required: true
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "btns",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                className: 'btn save',
+                children: "Aanmaken"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                className: 'btn',
+                onClick: function onClick() {
+                  return setNewOrg(false);
+                },
+                children: "Annuleren"
+              })]
+            })]
+          })]
+        }, 'wfeughgiyl74y4tirulfkg') : null]
+      })]
+    })
   });
 }
 
@@ -2736,7 +3278,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _index_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./index.scss */ "./resources/js/components/pages/admin/edit/screens/index.scss");
 /* harmony import */ var _default_components_tile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../default components/tile */ "./resources/js/components/default components/tile/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _api_NotificationApi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../api/NotificationApi */ "./resources/js/components/api/NotificationApi/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2758,6 +3301,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Screens() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
@@ -2769,22 +3313,42 @@ function Screens() {
       pages = _useState4[0],
       setPages = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState6 = _slicedToArray(_useState5, 2),
-      popup = _useState6[0],
-      setPopup = _useState6[1];
+      organisations = _useState6[0],
+      setOrganisations = _useState6[1];
 
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
       _useState8 = _slicedToArray(_useState7, 2),
-      editPage = _useState8[0],
-      setEditPage = _useState8[1];
+      popup = _useState8[0],
+      setPopup = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
       _useState10 = _slicedToArray(_useState9, 2),
-      alert = _useState10[0],
-      setAlert = _useState10[1];
+      editPage = _useState10[0],
+      setEditPage = _useState10[1];
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState12 = _slicedToArray(_useState11, 2),
+      alert = _useState12[0],
+      setAlert = _useState12[1];
+
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState14 = _slicedToArray(_useState13, 2),
+      deleting = _useState14[0],
+      setDeleting = _useState14[1];
+
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState16 = _slicedToArray(_useState15, 2),
+      findOrganisation = _useState16[0],
+      setFindOrganisation = _useState16[1];
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState18 = _slicedToArray(_useState17, 2),
+      selectedOrganisation = _useState18[0],
+      setSelectedOrganisation = _useState18[1];
+
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     title: 'Bericht',
     description: 'Beschrijving van bericht',
     actionOK: null,
@@ -2792,35 +3356,57 @@ function Screens() {
     actionCancel: null,
     actionCancelMessage: 'Annuleren'
   }),
-      _useState12 = _slicedToArray(_useState11, 2),
-      alertMSG = _useState12[0],
-      setAlertMSG = _useState12[1];
-
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-      _useState14 = _slicedToArray(_useState13, 2),
-      title = _useState14[0],
-      setTitle = _useState14[1];
-
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-      _useState16 = _slicedToArray(_useState15, 2),
-      path = _useState16[0],
-      setPath = _useState16[1];
-
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-      _useState18 = _slicedToArray(_useState17, 2),
-      image = _useState18[0],
-      setImage = _useState18[1];
-
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState20 = _slicedToArray(_useState19, 2),
-      pageID = _useState20[0],
-      setPageID = _useState20[1];
+      alertMSG = _useState20[0],
+      setAlertMSG = _useState20[1];
+
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState22 = _slicedToArray(_useState21, 2),
+      editTile = _useState22[0],
+      setEditTile = _useState22[1];
+
+  var _NotificationApi = (0,_api_NotificationApi__WEBPACK_IMPORTED_MODULE_5__.default)(),
+      dispatch = _NotificationApi.dispatch;
+
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState24 = _slicedToArray(_useState23, 2),
+      title = _useState24[0],
+      setTitle = _useState24[1];
+
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState26 = _slicedToArray(_useState25, 2),
+      path = _useState26[0],
+      setPath = _useState26[1];
+
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState28 = _slicedToArray(_useState27, 2),
+      image = _useState28[0],
+      setImage = _useState28[1];
+
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState30 = _slicedToArray(_useState29, 2),
+      pageID = _useState30[0],
+      setPageID = _useState30[1];
+
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState32 = _slicedToArray(_useState31, 2),
+      tileID = _useState32[0],
+      setTileID = _useState32[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     getPages();
+    getOrganisations();
   }, []);
 
   function getPages() {
+    setTitle(null);
+    setPath(null);
+    setImage(null);
+    setPageID(null);
+    setEditTile(null);
+    setEditPage(null);
+    setPopup(null);
+    setTileID(null);
     axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/pages').then(function (response) {
       if (response.data.pages) {
         setPages(response.data.pages);
@@ -2833,6 +3419,81 @@ function Screens() {
     });
   }
 
+  function getOrganisations() {
+    axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/organisations').then(function (response) {
+      setOrganisations(response.data.organisations);
+    })["catch"](function (error) {
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'error',
+          message: "Er is iets mis gegaan bij het ophalen van de organisaties!"
+        }
+      });
+    });
+  }
+
+  function handleOrgTile() {
+    if (selectedOrganisation !== null) {
+      var organisation = organisations.filter(function (org) {
+        return org.id === selectedOrganisation;
+      })[0];
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'succes',
+          message: "Aanmaken van organisatie tegel ..."
+        }
+      });
+
+      if (organisation) {
+        var formData = new FormData();
+        formData.append('title', organisation.name);
+        formData.append('path', '/' + organisation.name.toLowerCase());
+        formData.append('illustration_file_name', organisation.logo_file_name);
+        formData.append('page_id', pageID);
+        axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/createTile', formData).then(function (response) {
+          setPopup('');
+          getPages();
+          dispatch({
+            type: 'ADD_NOTIFICATION',
+            payload: {
+              id: Date.now(),
+              type: 'succes',
+              message: "De keuze tegel '".concat(organisation.name, "' is aangemaakt!")
+            }
+          });
+          setSelectedOrganisation(null);
+          setFindOrganisation(null);
+          setPageID(null);
+        })["catch"](function (error) {
+          console.error(error);
+          dispatch({
+            type: 'ADD_NOTIFICATION',
+            payload: {
+              id: Date.now(),
+              type: 'error',
+              message: "Er is iets mis gegaan bij het aanmaken!"
+            }
+          });
+          setSelectedOrganisation(null);
+          setFindOrganisation(null);
+          setPageID(null);
+        });
+        axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/createPage', {
+          title: organisation.name,
+          path: '/' + organisation.name.toLowerCase()
+        }).then(function (response) {
+          console.log(response);
+        })["catch"](function (error) {
+          console.error(error);
+        });
+      }
+    }
+  }
+
   function handleNewTile(e) {
     e.preventDefault();
 
@@ -2842,13 +3503,35 @@ function Screens() {
       formData.append('path', path);
       formData.append('illustration_file_name', image);
       formData.append('page_id', pageID);
-      setLoading(true);
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'succes',
+          message: "Aanmaken van tegel ..."
+        }
+      });
       axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/createTile', formData).then(function (response) {
         setPopup('');
         getPages();
-        setLoading(false);
+        dispatch({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: Date.now(),
+            type: 'succes',
+            message: "De keuze tegel '".concat(title, "' is aangemaakt!")
+          }
+        });
       })["catch"](function (error) {
         console.error(error);
+        dispatch({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: Date.now(),
+            type: 'error',
+            message: "Er is iets mis gegaan bij het aanmaken!"
+          }
+        });
       });
       axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/createPage', {
         title: title,
@@ -2879,183 +3562,401 @@ function Screens() {
   }
 
   function handleDeleteTile(tile) {
-    setLoading(true);
+    dispatch({
+      type: 'ADD_NOTIFICATION',
+      payload: {
+        id: Date.now(),
+        type: 'succes',
+        message: "Bezig met verwijderen ..."
+      }
+    });
     axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/deleteTile', {
       id: tile.id,
       page_id: tile.page_id
     }).then(function (response) {
       console.log(response);
       getPages();
-      setLoading(false);
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'succes',
+          message: "De keuze tegel '".concat(tile.title, "' is verwijderd!")
+        }
+      });
     })["catch"](function (error) {
       console.error(error);
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'error',
+          message: "Er is iets mis gegaan bij het verwijderen!"
+        }
+      });
     });
   }
 
-  function handleEditTile(tile) {}
+  function handleEditTile(e) {
+    handleEditPage(e);
+  }
 
   function handleEditPage(e) {
     e.preventDefault();
-    setLoading(true);
-    axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/editPage', {
-      title: title,
-      path: path,
-      page_id: pageID
-    }).then(function (response) {
+    console.log(image);
+    dispatch({
+      type: 'ADD_NOTIFICATION',
+      payload: {
+        id: Date.now(),
+        type: 'succes',
+        message: "Bezig met opslaan ..."
+      }
+    });
+    var formData = new FormData();
+    formData.append('title', title);
+    formData.append('path', path);
+    formData.append('illustration_file_name', image);
+    formData.append('page_id', pageID);
+    formData.append('tile_id', tileID);
+    axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/editPage', formData).then(function (response) {
       setEditPage('');
+      setPopup('');
+      setTileID(null);
+      setPageID(null);
       getPages();
-      setLoading(false);
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'succes',
+          message: "Bewerkingen zijn opgeslagen!"
+        }
+      });
     })["catch"](function (error) {
       console.error(error);
+      setTileID(null);
+      setPageID(null);
+      setEditPage('');
+      setPopup('');
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'error',
+          message: 'Er is iets mis gegaan bij het bewerken!'
+        }
+      });
     });
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_components_adminpage__WEBPACK_IMPORTED_MODULE_1__.default, {
-    children: [alert ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+  function handleDisableTile(tile) {
+    dispatch({
+      type: 'ADD_NOTIFICATION',
+      payload: {
+        id: Date.now(),
+        type: 'succes',
+        message: "Bezig met opslaan ..."
+      }
+    });
+    axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/ableToUseTile', {
+      able_to_use: tile.able_to_use === 'disable' ? '0' : '1',
+      tile_id: tile.tile_id
+    }).then(function (response) {
+      var _response$data;
+
+      getPages();
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'succes',
+          message: "De keuze tegel is nu ".concat(((_response$data = response.data) === null || _response$data === void 0 ? void 0 : _response$data.disabled) !== '' ? 'niet te gebruiken.' : 'wel te gebruiken.')
+        }
+      });
+    })["catch"](function (error) {
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'error',
+          message: "Er is iets mis gegaan!"
+        }
+      });
+    });
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_components_adminpage__WEBPACK_IMPORTED_MODULE_1__.default, {
+    children: [alert ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
       className: "blackbox",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         className: "alert",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h1", {
           children: alertMSG.title
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
           children: alertMSG.description
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
           className: "btns",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
             className: 'btn save',
             onClick: alertMSG.actionOK,
             children: alertMSG.actionOKMessage
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
             className: 'btn',
             onClick: alertMSG.actionCancel,
             children: alertMSG.actionCancelMessage
           })]
         })]
       })
-    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
       className: "pages",
-      children: loading === false ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+      children: loading === false ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
         children: pages === null || pages === void 0 ? void 0 : pages.map(function (page, index) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "page ".concat(page.title.replace(/\s+/g, '-').toLowerCase()),
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            className: "page ".concat(page.title.replace(/\s+/g, '-').toLowerCase(), " ").concat(page.able_to_use === '0' ? 'disabled' : 'enabled'),
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h1", {
               children: page.title
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
-              children: ["Pad naar het scherm: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("p", {
+              className: 'path',
+              children: ["Pad naar het scherm: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
                 children: page.path
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-              className: 'btn save mg-top',
-              onClick: function onClick() {
-                return setEditPage(page.id);
-              },
-              children: "Bewerken"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-              className: 'give-tiles',
-              children: "Keuze tegels die bij dit scherm horen:"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-              className: "tiles",
-              children: [page.tiles.map(function (tile, num) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "edit-tile",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                    className: "edit-items",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
-                      title: 'Bewerken',
-                      className: 'item-btn',
+            }), page.able_to_use !== '0' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                className: 'btn save mg-top',
+                onClick: function onClick() {
+                  setEditPage(page.id);
+                  setEditTile(null);
+                  setPageID(page.id);
+                },
+                children: "Bewerken"
+              }), findOrganisation === page.id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                className: "find-organisations",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h1", {
+                  children: "Organisaties"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                  children: "Kies een organisatie en deze wordt weer gegeven als een tegel."
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                  className: "organisations",
+                  children: organisations.map(function (org, index) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                      className: "tile ".concat(selectedOrganisation === org.id ? 'selected' : ''),
                       onClick: function onClick() {
-                        return handleEditTile(tile);
+                        setPageID(page.id);
+                        setSelectedOrganisation(org.id);
                       },
-                      src: '/images/pen-solid.svg',
-                      alt: ''
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
-                      title: 'Verwijderen',
-                      className: 'item-btn',
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                        src: '/images/organisationlogo/' + org.logo_file_name,
+                        alt: ''
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h1", {
+                        children: org.name
+                      })]
+                    }, index);
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  className: "btns",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                    className: "btn ".concat(selectedOrganisation ? 'use' : 'not-use', " save"),
+                    onClick: function onClick() {
+                      return handleOrgTile();
+                    },
+                    children: "Tegel gebruiken"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                    className: 'btn',
+                    onClick: function onClick() {
+                      setFindOrganisation(null);
+                      setSelectedOrganisation(null);
+                      setPageID(null);
+                    },
+                    children: "Annuleren"
+                  })]
+                })]
+              }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                className: 'give-tiles',
+                children: "Keuze tegels die bij dit scherm horen:"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                className: "tiles",
+                children: [page.tiles.map(function (tile, num) {
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                    className: "edit-tile",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                      className: "edit-items",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                        className: "edit-item",
+                        onClick: function onClick() {
+                          setPopup(page.id);
+                          setEditPage(null);
+                          setEditTile({
+                            title: tile.title,
+                            path: tile.path
+                          });
+                          setTileID(tile.id);
+                        },
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                          children: "Tegel aanpassen"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                          src: '/images/pen-solid.svg',
+                          alt: ''
+                        })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                        className: "edit-item",
+                        onClick: function onClick() {
+                          return handleDisableTile({
+                            tile_id: tile.id,
+                            able_to_use: tile.able_to_use !== '0' ? 'disable' : 'enable'
+                          });
+                        },
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                          children: tile.able_to_use !== '0' ? "Tegel uitzetten" : "Tegel aanzetten"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                          src: tile.able_to_use !== '0' ? '/images/disable.svg' : '/images/enable.svg',
+                          alt: ''
+                        })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                        className: "edit-item remove",
+                        onClick: function onClick() {
+                          setAlert(true);
+                          setDeleting(tile.id);
+                          setAlertMSG({
+                            title: 'Keuze tegel verwijderen?',
+                            description: 'Als u deze keuze tegel verwijderd, worden alle onderliggende pagina\'s ook verwijderd. Weet u het zeker?',
+                            actionOK: function actionOK() {
+                              setAlert(false);
+                              handleDeleteTile(tile);
+                            },
+                            actionOKMessage: 'Ja, verwijderen',
+                            actionCancel: function actionCancel() {
+                              setAlert(false);
+                              setDeleting(false);
+                              setAlertMSG({});
+                            },
+                            actionCancelMessage: 'Nee, annuleren'
+                          });
+                        },
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                          children: "Verwijderen"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                          src: '/images/trash-alt-solid.svg',
+                          alt: ''
+                        })]
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_default_components_tile__WEBPACK_IMPORTED_MODULE_4__.default, {
+                      className: "".concat(tile.id, " ").concat(tile.able_to_use !== '0' ? 'enabled' : 'disabled', " ").concat(deleting === tile.id ? 'shake' : ''),
                       onClick: function onClick() {
-                        setAlert(true);
-                        setAlertMSG({
-                          title: 'Keuze tegel verwijderen?',
-                          description: 'Als u deze keuze tegel verwijderd, worden alle onderliggende pagina\'s ook verwijderd. Weet u het zeker?',
-                          actionOK: function actionOK() {
-                            setAlert(false);
-                            handleDeleteTile(tile);
-                          },
-                          actionOKMessage: 'Ja, verwijderen',
-                          actionCancel: function actionCancel() {
-                            setAlert(false);
-                            setAlertMSG({});
-                          },
-                          actionCancelMessage: 'Nee, annuleren'
+                        return document.getElementsByClassName("".concat(tile.title.replace(/\s+/g, '-').toLowerCase()))[0].scrollIntoView({
+                          block: 'center'
                         });
                       },
-                      src: '/images/trash-alt-solid.svg',
-                      alt: ''
+                      title: tile.title,
+                      illustration: tile.illustration_file_name,
+                      path: undefined
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_default_components_tile__WEBPACK_IMPORTED_MODULE_4__.default, {
-                    onClick: function onClick() {
-                      return document.getElementsByClassName("".concat(tile.title.replace(/\s+/g, '-').toLowerCase()))[0].scrollIntoView({
-                        block: 'center'
-                      });
-                    },
-                    title: tile.title,
-                    illustration: tile.illustration_file_name,
-                    path: undefined
+                  }, num);
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  className: "edit-tile tile",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                    className: "edit-items",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                      className: "edit-item",
+                      onClick: function onClick() {
+                        setEditTile('');
+                        setTileID(null);
+                        setPageID(page.id);
+                        setPopup(page.id);
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                        children: "Nieuwe tegel"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                        src: '/images/tile.svg',
+                        alt: ''
+                      })]
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                      className: "edit-item",
+                      onClick: function onClick() {
+                        setEditTile('');
+                        setTileID(null);
+                        setPageID(page.id);
+                        setFindOrganisation(page.id);
+                        setSelectedOrganisation(null);
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                        children: "Organisatie tegel"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                        src: '/images/organisation.svg',
+                        alt: ''
+                      })]
+                    }), page.tiles.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                      className: "edit-item",
+                      onClick: function onClick() {
+                        setEditTile('');
+                        setTileID(null);
+                        setPageID(page.id);
+                        setPopup(page.id);
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+                        children: "Organisatie pagina"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                        src: '/images/organisation2.svg',
+                        alt: ''
+                      })]
+                    }) : null]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    className: "new-tile",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                      className: "plus",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                        className: "line"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                        className: "line"
+                      })]
+                    })
                   })]
-                }, num);
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "new-tile",
-                onClick: function onClick() {
-                  return setPopup(page.id);
-                },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "plus",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "line"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "line"
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
-                  children: "Nieuwe tegel"
-                })]
+                }, 'weifjurghe93y874yr7g')]
               })]
-            }), popup === page.id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
+              children: "Deze pagina kan nu niet worden gebruikt. Zet deze weer op 'gebruiken' om deze te kunnen bewerken."
+            }), popup === page.id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
               className: "popup",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
-                children: "Nieuwe tegel aanmaken"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h1", {
+                children: editTile ? "Keuze tegel bewerken (".concat(editTile.title, ")") : 'Nieuwe tegel aanmaken'
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
                 method: 'post',
                 onSubmit: function onSubmit(e) {
-                  handleNewTile(e);
+                  if (editTile === '') {
+                    handleNewTile(e);
+                  } else {
+                    handleEditTile(e);
+                  }
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
                     children: "Tegel titel"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
                     type: 'text',
                     name: 'title',
+                    defaultValue: editTile === null || editTile === void 0 ? void 0 : editTile.title,
                     placeholder: 'Titel van de tegel',
                     onChange: function onChange(e) {
                       handleInput([e.target.value, e.target.name]);
-                      setPageID(page.id);
                     },
                     required: true
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
                     children: "Pad naar tegel"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
                     type: 'text',
                     name: 'path',
+                    defaultValue: editTile === null || editTile === void 0 ? void 0 : editTile.path,
                     placeholder: "Voorbeeld '/tegel' ",
                     onChange: function onChange(e) {
                       return handleInput([e.target.value, e.target.name]);
                     },
                     required: true
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
                     children: "Illustratie voor de tegel"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
                     type: 'file',
                     name: 'illustration',
                     accept: "image/png, image/gif, image/jpeg, image/svg+xml",
@@ -3064,36 +3965,37 @@ function Screens() {
                     },
                     required: true
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                   className: "btns",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                     className: 'btn save',
                     type: 'submit',
-                    children: loading ? 'Bezig ...' : 'Aanmaken'
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                    children: editTile ? "Opslaan" : 'Aanmaken'
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                     className: "btn",
                     onClick: function onClick() {
-                      return setPopup('');
+                      setPopup('');
+                      setTileID(null);
                     },
                     children: "Annuleren"
                   })]
                 })]
               })]
-            }) : null, editPage === page.id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            }) : null, editPage === page.id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
               className: "popup",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("h1", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("h1", {
                 children: ["Pagina aanpassen (", page.title, ")"]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
                 children: "Bij het aanpassen van de pagina, wordt ook de keuze tegel waar op je moet klikken om hier heen te gaan aangepast."
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
                 method: 'post',
                 onSubmit: function onSubmit(e) {
                   handleEditPage(e);
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
                     children: "Pagina titel"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
                     type: 'text',
                     name: 'title',
                     defaultValue: page.title,
@@ -3104,10 +4006,10 @@ function Screens() {
                     },
                     required: true
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
                     children: "Pad naar pagina"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
                     type: 'text',
                     name: 'path',
                     defaultValue: page.path,
@@ -3117,13 +4019,13 @@ function Screens() {
                     },
                     required: true
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                   className: "btns",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                     className: 'btn save',
                     type: 'submit',
                     children: loading ? 'Bezig ...' : 'Opslaan'
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                     className: "btn",
                     onClick: function onClick() {
                       return setEditPage('');
@@ -3181,6 +4083,90 @@ function Admin() {
 
 /***/ }),
 
+/***/ "./resources/js/components/providers/NotificationProvider/index.js":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/providers/NotificationProvider/index.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "NotificationContext": () => (/* binding */ NotificationContext),
+/* harmony export */   "default": () => (/* binding */ NotificationProvider)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _pages_admin_components_notification__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../pages/admin/components/notification */ "./resources/js/components/pages/admin/components/notification/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+var NotificationContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)();
+function NotificationProvider(props) {
+  var children = props.children;
+
+  var _useReducer = (0,react__WEBPACK_IMPORTED_MODULE_0__.useReducer)(function (state, action) {
+    switch (action.type) {
+      case "ADD_NOTIFICATION":
+        return [].concat(_toConsumableArray(state), [_objectSpread({}, action.payload)]);
+
+      case "REMOVE_NOTIFICATION":
+        return state.filter(function (el) {
+          return el.id !== action.id;
+        });
+
+      default:
+        return state;
+    }
+  }, []),
+      _useReducer2 = _slicedToArray(_useReducer, 2),
+      state = _useReducer2[0],
+      dispatch = _useReducer2[1];
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(NotificationContext.Provider, {
+    value: {
+      dispatch: dispatch
+    },
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: 'notifications-wrapper',
+      children: state.map(function (note) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_pages_admin_components_notification__WEBPACK_IMPORTED_MODULE_1__.default, _objectSpread({
+          dispatch: dispatch
+        }, note), note.id);
+      })
+    }), children]
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/providers/UserProvider/index.js":
 /*!*****************************************************************!*\
   !*** ./resources/js/components/providers/UserProvider/index.js ***!
@@ -3197,7 +4183,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _pages_admin_authentication__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../pages/admin/authentication */ "./resources/js/components/pages/admin/authentication/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _api_NotificationApi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../api/NotificationApi */ "./resources/js/components/api/NotificationApi/index.js");
+/* harmony import */ var _pages_admin_components_adminpage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../pages/admin/components/adminpage */ "./resources/js/components/pages/admin/components/adminpage/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -3217,19 +4205,30 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
+
 var UserContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)();
 function UserProvider(_ref) {
   var children = _ref.children;
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
-      user = _useState2[0],
-      setUser = _useState2[1];
+      loading = _useState2[0],
+      setLoading = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(undefined),
       _useState4 = _slicedToArray(_useState3, 2),
-      adminRights = _useState4[0],
-      setAdminRights = _useState4[1];
+      user = _useState4[0],
+      setUser = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      adminRights = _useState6[0],
+      setAdminRights = _useState6[1];
+
+  var _NotificationApi = (0,_api_NotificationApi__WEBPACK_IMPORTED_MODULE_3__.default)(),
+      dispatch = _NotificationApi.dispatch;
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     getUser();
@@ -3239,6 +4238,11 @@ function UserProvider(_ref) {
       setAdminRights(!adminRights);
     }
   }, [user !== undefined]);
+
+  function logoutUser() {
+    localStorage.setItem('auth_token', '');
+    window.location.href = '/logout';
+  }
 
   function getUser() {
     if (localStorage.getItem('auth_token') !== '' || localStorage.getItem('auth_token') !== undefined) {
@@ -3269,27 +4273,58 @@ function UserProvider(_ref) {
       };
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/user', config).then(function (response) {
         setUser(response.data.user);
+        setLoading(false);
+        dispatch({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: Date.now(),
+            type: 'succes',
+            message: 'U bent nu ingelogd, gegevens waren opgeslagen.'
+          }
+        });
       })["catch"](function (response) {
         setUser(null);
+        setLoading(false);
+        dispatch({
+          type: 'ADD_NOTIFICATION',
+          payload: {
+            id: Date.now(),
+            type: 'succes',
+            message: 'U moet zich aanmelden om de admin te kunnen betreden.'
+          }
+        });
       });
     }
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(UserContext.Provider, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(UserContext.Provider, {
     value: {
       user: user,
       setUser: setUser,
       getUser: getUser,
       adminRights: adminRights,
-      setAdminRights: setAdminRights
-    },
-    children: adminRights ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-      children: children
-    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_pages_admin_authentication__WEBPACK_IMPORTED_MODULE_2__.default, {
-      adminRights: adminRights,
       setAdminRights: setAdminRights,
-      user: user,
-      setUser: setUser
+      logoutUser: logoutUser,
+      setLoading: setLoading,
+      loading: loading
+    },
+    children: loading === false ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+      children: adminRights ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+        children: children
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_pages_admin_authentication__WEBPACK_IMPORTED_MODULE_2__.default, {
+        adminRights: adminRights,
+        setAdminRights: setAdminRights,
+        user: user,
+        setUser: setUser
+      })
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+      className: "loading",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "lds-ring",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {})]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+        children: "Bijna klaar ..."
+      })]
     })
   });
 }
@@ -3570,7 +4605,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".tile {\n  position: relative;\n  min-width: 250px;\n  width: 100%;\n  min-height: 250px;\n  height: 100%;\n  max-width: 350px;\n  max-height: 350px;\n  background-color: #fff;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);\n  border-radius: 4px;\n  border: 0;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n  margin: 25px;\n  transition: 0.2s;\n}\n\n.img {\n  margin: 25px;\n}\n\n.tile:hover {\n  box-shadow: 0px 0px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n}\n\n.tile:hover:focus, .back:hover:focus {\n  transform: scale(1.05);\n  transition: 0.2s;\n}\n\n.tile img {\n  position: relative;\n  width: 80%;\n  margin-top: 25px;\n  height: auto;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  pointer-events: none;\n}\n\n.tile h1 {\n  font-size: 25px;\n  margin-top: 25px;\n  margin-bottom: 25px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".tile {\n  position: relative;\n  width: 300px;\n  height: 300px;\n  background-color: #fff;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);\n  border-radius: 4px;\n  border: 0;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n  margin: 25px;\n  transition: 0.2s;\n}\n\n.img {\n  margin: 25px;\n}\n\n.tile:hover {\n  box-shadow: 0px 0px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n}\n\n.tile:hover:focus, .back:hover:focus {\n  transform: scale(1.05);\n  transition: 0.2s;\n}\n\n.tile img {\n  position: absolute;\n  top: 0;\n  margin-top: 0;\n  margin-bottom: 0;\n  width: 85%;\n  height: calc(100% - 30%);\n  background-size: cover;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  pointer-events: none;\n}\n\n.tile h1 {\n  position: absolute;\n  font-size: 25px;\n  margin-top: 25px;\n  height: 30%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  bottom: 0px;\n  margin-bottom: 0;\n}\n\n.tile.selected {\n  box-shadow: 0px 0px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3601,6 +4636,54 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".adminpage {\n  position: absolute;\n 
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/pages/admin/components/notification/index.scss":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/pages/admin/components/notification/index.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".notifications-wrapper {\n  position: fixed;\n  bottom: 0px;\n  left: 0%;\n  width: 100vw;\n  height: 150px;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n  z-index: 100000;\n  pointer-events: none;\n  overflow-x: hidden;\n  overflow-y: hidden;\n}\n\n.notifications-wrapper .notification {\n  position: absolute;\n  width: auto;\n  min-width: 100px;\n  max-width: 90vw;\n  height: auto;\n  padding: 15px 25px;\n  bottom: 25px;\n  background: black;\n  border-radius: 4px;\n  box-shadow: 0 0px 7px 2px rgba(0, 0, 0, 0.3);\n  z-index: auto;\n  margin: 0;\n  display: flex;\n  justify-content: flex-start;\n  align-content: center;\n  align-items: center;\n  flex-direction: row;\n  opacity: 0;\n  -webkit-animation: go-in 0.3s;\n          animation: go-in 0.3s;\n}\n\n.notifications-wrapper .notification:last-child {\n  opacity: 1;\n}\n\n.notifications-wrapper .enter {\n  -webkit-animation: go-in 0.3s;\n          animation: go-in 0.3s;\n}\n\n.notifications-wrapper .exit {\n  -webkit-animation: go-out 0.3s;\n          animation: go-out 0.3s;\n}\n\n.notifications-wrapper .error {\n  background-color: red;\n}\n\n.notifications-wrapper .succes {\n  background-color: black;\n}\n\n.notifications-wrapper .notification .icon-note {\n  position: relative;\n  width: 25px;\n  height: 25px;\n  border: 2px solid #fff;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  font-size: 20px;\n  margin-right: 10px;\n  color: #fff;\n  font-weight: bold;\n  border-radius: 50px;\n}\n\n.notifications-wrapper .notification p {\n  position: relative;\n  font-size: 18px;\n  margin: 0;\n  color: #fff;\n  font-weight: 400;\n}\n\n@-webkit-keyframes go-in {\n  0% {\n    position: absolute;\n    bottom: -300px;\n  }\n  100% {\n    bottom: 25px;\n  }\n}\n\n@keyframes go-in {\n  0% {\n    position: absolute;\n    bottom: -300px;\n  }\n  100% {\n    bottom: 25px;\n  }\n}\n@-webkit-keyframes go-out {\n  100% {\n    position: absolute;\n    bottom: -300px;\n  }\n}\n@keyframes go-out {\n  100% {\n    position: absolute;\n    bottom: -300px;\n  }\n}\n.notifications-wrapper .notification .bar {\n  position: relative;\n  width: auto;\n  height: 7px;\n  background-color: rgba(0, 0, 0, 0.3);\n  border-radius: 20px;\n  margin-top: 10px;\n}\n\n.lds-ring {\n  display: inline-block;\n  position: relative;\n  width: 80px;\n  height: 80px;\n}\n\n.lds-ring div {\n  box-sizing: border-box;\n  display: block;\n  position: absolute;\n  width: 64px;\n  height: 64px;\n  margin: 8px;\n  border: 8px solid #424242;\n  border-radius: 50%;\n  -webkit-animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n          animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;\n  border-color: #424242 transparent transparent transparent;\n}\n\n.lds-ring div:nth-child(1) {\n  -webkit-animation-delay: -0.45s;\n          animation-delay: -0.45s;\n}\n\n.lds-ring div:nth-child(2) {\n  -webkit-animation-delay: -0.3s;\n          animation-delay: -0.3s;\n}\n\n.lds-ring div:nth-child(3) {\n  -webkit-animation-delay: -0.15s;\n          animation-delay: -0.15s;\n}\n\n@-webkit-keyframes lds-ring {\n  0% {\n    transform: rotate(0deg);\n  }\n  100% {\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes lds-ring {\n  0% {\n    transform: rotate(0deg);\n  }\n  100% {\n    transform: rotate(360deg);\n  }\n}\n.loading {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100vw;\n  height: 100vh;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.loading h1 {\n  font-size: 20px;\n  margin-top: 15px;\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/pages/admin/edit/organisations/index.scss":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/pages/admin/edit/organisations/index.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".pages img:not(.edit-tile .edit-items img):not(.tile img) {\n  position: relative;\n  left: 20px;\n  width: 125px;\n  height: auto;\n  background-size: cover;\n  margin-top: 25px;\n}\n\n.pages .page p .website {\n  color: #1f6fb2;\n  cursor: pointer;\n}\n\n.new-org-btn {\n  position: relative;\n  left: calc(2.5vw);\n  width: auto;\n  padding: 10px 25px;\n  height: 50px;\n  margin-top: 2.5vw;\n  background-color: #0551d8;\n  display: flex;\n  justify-content: space-between;\n  align-content: center;\n  align-items: center;\n  flex-direction: row;\n  border-radius: 4px;\n  color: white;\n  font-size: 16px;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);\n  border: 0;\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.new-org-btn img {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  background-size: cover;\n  filter: invert(100%);\n  margin-right: 10px;\n  transition: 0.2s;\n}\n\n.new-org-btn.not-use {\n  pointer-events: none;\n  filter: grayscale(100%);\n  opacity: 0.3;\n  transition: 0.2s;\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/pages/admin/edit/screens/index.scss":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/pages/admin/edit/screens/index.scss ***!
@@ -3618,7 +4701,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".pages {\n  position: relative;\n  width: calc(100% - 5vw);\n  height: auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  padding: 0 2.5vw;\n}\n\n.page {\n  position: relative;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n  background-color: white;\n  margin-top: 25px;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);\n  border-radius: 4px;\n}\n\n.page:last-child {\n  margin-bottom: 25px;\n}\n\n.page h1 {\n  font-size: 20px;\n  margin: 5px 0px;\n}\n\n.page .give-tiles {\n  padding-top: 15px;\n  width: 100%;\n  border-top: 2px solid #e5e5e5;\n}\n\n.page p {\n  color: black;\n  font-size: 16px;\n  margin: 5px 0;\n}\n\n.page p span {\n  font-weight: bold;\n}\n\n.page .tiles {\n  display: flex;\n  width: 100%;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: row;\n  flex-wrap: wrap;\n  margin-top: 10px;\n}\n\n.page .tiles .tile {\n  position: relative;\n  max-width: 150px;\n  max-height: 150px;\n}\n\n.edit-tile {\n  position: relative;\n  width: 250px;\n  height: 275px;\n  margin-right: 25px;\n}\n\n.edit-tile .edit-items {\n  position: absolute;\n  top: 265px;\n  left: 25px;\n  width: calc(250px - 20px);\n  padding: 0px 10px;\n  height: 35px;\n  background-color: #e5e5e5;\n  display: none;\n  justify-content: flex-end;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  border-bottom-left-radius: 4px;\n  border-bottom-right-radius: 4px;\n  z-index: 5;\n  transition: 0.2s;\n}\n\n.edit-tile:hover .edit-items, .edit-tile:hover .tiles .tile {\n  box-shadow: 0px 1px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n  display: flex;\n  transition: 0.2s;\n}\n\n.edit-tile .tiles .tile:hover:focus {\n  transform: scale(1);\n  transition: 0.2s;\n}\n\n.edit-tile:hover .edit-items {\n  -webkit-animation: come-in 0.2s;\n          animation: come-in 0.2s;\n}\n\n@-webkit-keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n\n@keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n.edit-tile .item-btn {\n  position: relative;\n  z-index: 10;\n  width: 20px;\n  height: 20px;\n  cursor: pointer;\n}\n\n.edit-tile .item-btn:nth-child(1) {\n  margin-right: 15px;\n}\n\n.page .tiles .new-tile {\n  position: relative;\n  min-width: 250px;\n  width: 100%;\n  min-height: 250px;\n  height: 100%;\n  max-width: 250px;\n  max-height: 250px;\n  border: 1px solid #e5e5e5;\n  margin: 25px;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  cursor: pointer;\n}\n\n.page .tiles .new-tile .plus {\n  position: relative;\n  width: 75px;\n  height: 75px;\n  border-radius: 75px;\n  border: 3px solid black;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.page .tiles .new-tile h1 {\n  position: absolute;\n  bottom: 25px;\n}\n\n.page .tiles .new-tile .plus .line {\n  position: absolute;\n  width: 35px;\n  height: 3px;\n  background-color: black;\n  border-radius: 5px;\n  transform: rotate(0deg);\n}\n\n.page .tiles .new-tile .plus .line:nth-child(2) {\n  transform: rotate(90deg);\n}\n\n.popup {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: calc(100% - 20px);\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n  z-index: 99999;\n}\n\n.popup h1 {\n  margin: 5px 0px;\n  font-size: 20px;\n}\n\n.popup form {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label p {\n  margin-top: 20px;\n}\n\n.popup form label {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label input {\n  position: relative;\n  width: 50%;\n  height: 30px;\n  padding: 5px 10px;\n  background-color: white;\n  box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  border-radius: 4px;\n}\n\n.popup form label input[type=file] {\n  background-color: transparent;\n  box-shadow: 0 0 0 0 black;\n  border: 0;\n  padding: 0;\n  width: auto;\n}\n\n.popup form .btns {\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: row;\n  margin-top: 25px;\n}\n\n.btn {\n  position: relative;\n  width: auto;\n  padding: 10px 20px;\n  background-color: #f9f9f9;\n  border: 0;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);\n  border-radius: 4px;\n  font-size: 14px;\n  cursor: pointer;\n}\n\n.btn.save {\n  background-color: #f6227d;\n  color: white;\n  margin-right: 25px;\n}\n\n.btn.mg-top {\n  margin-top: 25px;\n  margin-bottom: 25px;\n}\n\n.blackbox {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background-color: rgba(0, 0, 0, 0.15);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 50000;\n}\n\n.alert {\n  position: relative;\n  width: 90vw;\n  max-width: 500px;\n  height: auto;\n  padding: 40px 10px;\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 10000;\n}\n\n.alert h1 {\n  position: relative;\n  width: auto;\n  text-align: center;\n  font-size: 25px;\n  margin-bottom: 15px;\n}\n\n.alert p {\n  position: relative;\n  width: 300px;\n  text-align: center;\n  font-size: 16px;\n  margin-top: 0;\n  margin-bottom: 25px;\n}\n\n.alert .btns {\n  position: relative;\n  width: 300px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".pages {\n  position: relative;\n  width: calc(100% - 5vw);\n  height: auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  padding: 0 2.5vw;\n}\n\n.page {\n  position: relative;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n  background-color: white;\n  margin-top: 50px;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);\n  border-radius: 4px;\n}\n\n.page:last-child {\n  margin-bottom: 50px;\n}\n\n.page:first-child {\n  margin-top: 25px;\n}\n\n.page.disabled, .tile.disabled, .page.disabled .btn, .page.disabled .tiles .new-tile {\n  cursor: not-allowed;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  background-color: #f9f9f9;\n  filter: grayscale(200%);\n}\n\n.page h1 {\n  font-size: 20px;\n  margin: 5px 20px;\n  margin-top: 20px;\n}\n\n.page .give-tiles {\n  padding-top: 15px;\n  width: 100%;\n  border-top: 2px solid #e5e5e5;\n}\n\n.page p {\n  color: black;\n  font-size: 16px;\n  margin: 5px 20px;\n}\n\n.page p span {\n  font-weight: bold;\n}\n\n.page .tiles {\n  display: flex;\n  width: 100%;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: row;\n  flex-wrap: wrap;\n  margin-top: 10px;\n}\n\n.page .tiles .tile {\n  position: relative;\n  width: 250px;\n  height: 250px;\n}\n\n.edit-tile {\n  position: relative;\n  width: 250px;\n  height: 250px;\n  margin-right: 25px;\n}\n\n.edit-items {\n  position: absolute;\n  top: 0;\n  left: 100px;\n  width: 300px;\n  padding: 0px 0;\n  height: auto;\n  background-color: rgba(226, 226, 226, 0.95);\n  display: none;\n  box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.15);\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  border-radius: 7px;\n  z-index: 5;\n  overflow: hidden;\n  transition: 0.2s;\n}\n\n.edit-items .edit-item {\n  position: relative;\n  width: calc(100% - 40px);\n  height: 30px;\n  padding: 7px 20px;\n  display: flex;\n  justify-content: space-between;\n  background-color: rgba(255, 255, 255, 0.95);\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  color: black;\n  border-bottom: 1px solid #e5e5e5;\n  cursor: pointer;\n}\n\n.edit-items .edit-item:hover {\n  background-color: #f9f9f9;\n}\n\n.edit-items .edit-item:hover:focus {\n  background-color: #e5e5e5;\n}\n\n.edit-items .edit-item:last-child {\n  margin-top: 5px;\n  border: 0;\n}\n\n.edit-items .edit-item p {\n  font-size: 16px;\n  font-weight: 500;\n  width: 40ch;\n  margin: auto 0px;\n}\n\n.edit-items .remove p {\n  color: red;\n}\n\n.edit-tile:hover .tile {\n  box-shadow: 0px 1px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n  display: flex;\n  transition: 0.2s;\n}\n\n.edit-tile:hover .edit-items {\n  display: flex;\n  -webkit-animation: pop-in 0.3s;\n          animation: pop-in 0.3s;\n}\n\n.edit-tile:hover:focus-within .edit-items:hover:focus-within .edit-item {\n  display: none;\n}\n\n@-webkit-keyframes pop-in {\n  0% {\n    transform: scale(0);\n    left: 0;\n    padding: 10px;\n    opacity: 0;\n    top: 0;\n  }\n}\n\n@keyframes pop-in {\n  0% {\n    transform: scale(0);\n    left: 0;\n    padding: 10px;\n    opacity: 0;\n    top: 0;\n  }\n}\n.edit-tile .tiles .tile:hover:focus {\n  transform: scale(1);\n  transition: 0.2s;\n}\n\n@-webkit-keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n\n@keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n.edit-tile .edit-item img {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  background-size: cover;\n  margin: 0;\n}\n\n.edit-tile .item-btn:nth-child(1) {\n  margin-right: 15px;\n}\n\n.page .tiles .new-tile {\n  position: relative;\n  min-width: 250px;\n  width: 100%;\n  min-height: 250px;\n  height: 100%;\n  max-width: 250px;\n  max-height: 250px;\n  border: 1px solid #e5e5e5;\n  margin: 25px;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.page .tiles .new-tile:hover {\n  background-color: white;\n  border-color: black;\n  transition: 0.2s;\n}\n\n.page .tiles .new-tile:hover:focus {\n  background-color: white;\n  border-color: black;\n  transition: 0.2s;\n}\n\n.page .tiles .new-tile .plus {\n  position: relative;\n  width: 75px;\n  height: 75px;\n  border-radius: 75px;\n  border: 3px solid black;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.page .tiles .new-tile h1 {\n  position: absolute;\n  bottom: 25px;\n}\n\n.page .tiles .new-tile .plus .line {\n  position: absolute;\n  width: 35px;\n  height: 3px;\n  background-color: black;\n  border-radius: 5px;\n  transform: rotate(0deg);\n}\n\n.page .tiles .new-tile .plus .line:nth-child(2) {\n  transform: rotate(90deg);\n}\n\n.popup {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: calc(100% - 20px);\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n  z-index: 99999;\n}\n\n.popup h1 {\n  margin: 20px 20px;\n  font-size: 20px;\n}\n\n.popup form, .page form {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label p, .page form label p {\n  margin-top: 20px;\n}\n\n.popup form label, .page form label {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label input, .page form input {\n  position: relative;\n  width: 50%;\n  height: 30px;\n  padding: 5px 10px;\n  margin: 0 20px;\n  background-color: white;\n  box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  border-radius: 4px;\n}\n\n.popup form label input[type=file], .page form label input[type=file] {\n  background-color: transparent;\n  box-shadow: 0 0 0 0 black;\n  border: 0;\n  padding: 0;\n  width: auto;\n}\n\n.popup form .btns, .page form .btns {\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: row;\n  margin-top: 25px;\n  margin-left: 20px;\n}\n\n.btn {\n  position: relative;\n  width: auto;\n  padding: 10px 20px;\n  background-color: #f9f9f9;\n  border: 0;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);\n  border-radius: 4px;\n  font-size: 14px;\n  cursor: pointer;\n}\n\n.btn.save {\n  background-color: #f6227d;\n  color: white;\n  margin-right: 25px;\n}\n\n.btn.mg-top {\n  margin: 20px;\n}\n\n.blackbox {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background-color: rgba(0, 0, 0, 0.15);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 50000;\n}\n\n.alert {\n  position: relative;\n  width: 90vw;\n  max-width: 500px;\n  height: auto;\n  padding: 40px 10px;\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 10000;\n}\n\n.alert h1 {\n  position: relative;\n  width: auto;\n  text-align: center;\n  font-size: 25px;\n  margin-bottom: 15px;\n}\n\n.alert p {\n  position: relative;\n  width: 300px;\n  text-align: center;\n  font-size: 16px;\n  margin-top: 0;\n  margin-bottom: 25px;\n}\n\n.alert .btns {\n  position: relative;\n  width: 300px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n}\n\n.tile.shake {\n  -webkit-animation: shake 1s linear infinite;\n          animation: shake 1s linear infinite;\n}\n\n@-webkit-keyframes shake {\n  0% {\n    transform: translate(1px, 1px) rotate(0deg);\n    opacity: 1;\n  }\n  10% {\n    transform: translate(-1px, -2px) rotate(-1deg);\n  }\n  20% {\n    transform: translate(-3px, 0px) rotate(1deg);\n  }\n  30% {\n    transform: translate(3px, 2px) rotate(0deg);\n  }\n  40% {\n    transform: translate(1px, -1px) rotate(1deg);\n  }\n  50% {\n    transform: translate(-1px, 2px) rotate(-1deg);\n  }\n  60% {\n    transform: translate(-3px, 1px) rotate(0deg);\n    opacity: 0.3;\n  }\n  70% {\n    transform: translate(3px, 1px) rotate(-1deg);\n  }\n  80% {\n    transform: translate(-1px, -1px) rotate(1deg);\n  }\n  90% {\n    transform: translate(1px, 2px) rotate(0deg);\n  }\n  100% {\n    transform: translate(1px, -2px) rotate(-1deg);\n  }\n}\n\n@keyframes shake {\n  0% {\n    transform: translate(1px, 1px) rotate(0deg);\n    opacity: 1;\n  }\n  10% {\n    transform: translate(-1px, -2px) rotate(-1deg);\n  }\n  20% {\n    transform: translate(-3px, 0px) rotate(1deg);\n  }\n  30% {\n    transform: translate(3px, 2px) rotate(0deg);\n  }\n  40% {\n    transform: translate(1px, -1px) rotate(1deg);\n  }\n  50% {\n    transform: translate(-1px, 2px) rotate(-1deg);\n  }\n  60% {\n    transform: translate(-3px, 1px) rotate(0deg);\n    opacity: 0.3;\n  }\n  70% {\n    transform: translate(3px, 1px) rotate(-1deg);\n  }\n  80% {\n    transform: translate(-1px, -1px) rotate(1deg);\n  }\n  90% {\n    transform: translate(1px, 2px) rotate(0deg);\n  }\n  100% {\n    transform: translate(1px, -2px) rotate(-1deg);\n  }\n}\n.find-organisations {\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding: 25px 10px;\n  height: calc(100% - 50px);\n  width: calc(100% - 20px);\n  background-color: white;\n  z-index: 300000;\n  display: flex;\n  justify-content: center;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n}\n\n.find-organisations h1 {\n  margin-bottom: 5px;\n  font-size: 30px;\n}\n\n.find-organisations p {\n  font-size: 16px;\n  margin-top: 0;\n}\n\n.find-organisations .organisations {\n  position: relative;\n  width: calc(100% - 50px);\n  padding: 10px 10px;\n  height: 300px;\n  overflow-x: hidden;\n  overflow-y: scroll;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.find-organisations .organisations .tile {\n  max-width: 150px;\n  max-height: 150px;\n}\n\n.find-organisations .organisations .tile h1 {\n  font-size: 16px;\n}\n\n.find-organisations .btns {\n  position: relative;\n  margin-left: 20px;\n}\n\n.btn.not-use {\n  opacity: 0.4;\n  pointer-events: none;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3642,7 +4725,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".underlayer {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background-color: transparent;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.underlayer img {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n\n.underlayer .overlayer {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  background-image: linear-gradient(to bottom right, rgba(246, 34, 125, 0.4), rgba(5, 81, 216, 0.6));\n}\n\n.authentication {\n  position: relative;\n  min-width: 300px;\n  width: 100%;\n  max-width: 500px;\n  height: auto;\n  padding: 20px 10px;\n  background-color: white;\n  border-radius: 7px;\n  box-shadow: 0px 3px 7px 2px rgba(0, 0, 0, 0.15);\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n}\n\n.authentication form {\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n  width: 100%;\n}\n\n.authentication form label {\n  position: relative;\n  width: calc(100% - 40px);\n  padding: 0px 20px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.authentication form label p {\n  margin-bottom: 5px;\n}\n\n.authentication form label input {\n  position: relative;\n  width: calc(100% - 20px);\n  height: 30px;\n  padding: 5px 10px;\n  margin-top: 0px;\n  box-shadow: inset 0px 2px 7px 0px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  background-color: white;\n  border-radius: 4px;\n}\n\n.authentication .logo {\n  position: absolute;\n  left: 10px;\n  top: 10px;\n  transform: scale(0.85);\n}\n\n.authentication form button {\n  background-color: #F6227D;\n  padding: 10px 10px;\n  width: calc(100% - 40px);\n  font-size: 16px;\n  border: 0;\n  margin-top: 25px;\n  color: white;\n  border-radius: 4px;\n  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.authentication form button:hover {\n  background-color: #c11c63;\n  transition: 0.2s;\n}\n\n.authentication form h1 {\n  margin-top: 100px;\n  margin-bottom: 0;\n}\n\n.authentication form p:not(label p) {\n  margin-top: 5px;\n}\n\n.topnavigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 60px;\n  background-color: #f6227d;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  z-index: 999;\n}\n\n.topnavigation h1:not(.info h1) {\n  font-size: 22.5px;\n  color: white;\n  margin-left: 2.5vw;\n}\n\n.topnavigation .usercontent {\n  padding: 0 2.5vw;\n  width: auto;\n  background-color: transparent;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n}\n\n.topnavigation .usercontent .useravatar {\n  position: relative;\n  width: 35px;\n  height: 35px;\n  border: 1px solid #c5c5c5;\n  background-color: #f6f5fb;\n  margin-right: 10px;\n  border-radius: 50px;\n}\n\n.topnavigation .usercontent .info {\n  position: relative;\n  height: 100%;\n  width: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n}\n\n.topnavigation .usercontent .info h1 {\n  position: relative;\n  font-size: 18px;\n  margin-bottom: 0;\n  color: white;\n}\n\n.topnavigation .usercontent .info p {\n  position: relative;\n  font-size: 14px;\n  margin-top: 0px;\n  color: white;\n}\n\n.titlebar {\n  position: fixed;\n  top: 60px;\n  left: 290px;\n  width: calc(100vw - 290px);\n  height: 50px;\n  background-color: white;\n  box-shadow: 0px 3px 7px -2px rgba(0, 0, 0, 0.3);\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  z-index: 999;\n}\n\n.titlebar h1 {\n  font-size: 20px;\n  margin-left: 2.5vw;\n}\n\n.sidebar {\n  position: fixed;\n  left: 0;\n  top: 60px;\n  width: 290px;\n  background-color: #1F2831;\n  height: calc(100vh - 60px);\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 999;\n}\n\n.sidebar .logo {\n  position: relative;\n  width: calc(100% - 30px);\n  height: auto;\n  transform: scale(0.85);\n  left: 15px;\n  margin-top: 15px;\n}\n\n.sidebar .links {\n  position: relative;\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  margin-top: 25px;\n  width: 100%;\n}\n\n.sidebar .links p {\n  width: calc(100% - 40px);\n  color: #8d99a0;\n  font-size: 14px;\n  font-weight: 100;\n}\n\n.sidebar .links a {\n  position: relative;\n  width: calc(100% - 40px);\n  padding: 5px 20px;\n  height: 35px;\n  background-color: transparent;\n  display: flex;\n  justify-content: center;\n  align-items: flex-start;\n  align-content: center;\n  flex-direction: column;\n  text-decoration: none;\n  color: white;\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.sidebar .links a:hover {\n  background-color: #78838e;\n  transition: 0.2s;\n}\n\n.sidebar .links .is-active {\n  position: relative;\n  background-color: #4B5259;\n  transition: 0.2s;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".underlayer {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background-color: transparent;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.underlayer img {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n}\n\n.underlayer .overlayer {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  background-image: linear-gradient(to bottom right, rgba(246, 34, 125, 0.4), rgba(5, 81, 216, 0.6));\n}\n\n.authentication {\n  position: relative;\n  min-width: 300px;\n  width: 100%;\n  max-width: 500px;\n  height: auto;\n  padding: 20px 10px;\n  background-color: white;\n  border-radius: 7px;\n  box-shadow: 0px 3px 7px 2px rgba(0, 0, 0, 0.15);\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n}\n\n.authentication form {\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n  width: 100%;\n}\n\n.authentication form label {\n  position: relative;\n  width: calc(100% - 40px);\n  padding: 0px 20px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.authentication form label p {\n  margin-bottom: 5px;\n}\n\n.authentication form label input {\n  position: relative;\n  width: calc(100% - 20px);\n  height: 30px;\n  padding: 5px 10px;\n  margin-top: 0px;\n  box-shadow: inset 0px 2px 7px 0px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  background-color: white;\n  border-radius: 4px;\n}\n\n.authentication .logo {\n  position: absolute;\n  left: 10px;\n  top: 10px;\n  transform: scale(0.85);\n}\n\n.authentication form button {\n  background-color: #F6227D;\n  padding: 10px 10px;\n  width: calc(100% - 40px);\n  font-size: 16px;\n  border: 0;\n  margin-top: 25px;\n  color: white;\n  border-radius: 4px;\n  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.authentication form button:hover {\n  background-color: #c11c63;\n  transition: 0.2s;\n}\n\n.authentication form h1 {\n  margin-top: 100px;\n  margin-bottom: 0;\n}\n\n.authentication form p:not(label p) {\n  margin-top: 5px;\n}\n\n.topnavigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 60px;\n  background-color: #f6227d;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  z-index: 999;\n}\n\n.topnavigation h1:not(.info h1) {\n  font-size: 22.5px;\n  color: white;\n  margin-left: 2.5vw;\n}\n\n.topnavigation .usercontent {\n  padding: 0 5vw;\n  width: auto;\n  background-color: transparent;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n}\n\n.topnavigation .usercontent .useravatar {\n  position: relative;\n  width: 35px;\n  height: 35px;\n  border: 1px solid #c5c5c5;\n  background-color: #f6f5fb;\n  margin-right: 10px;\n  border-radius: 50px;\n}\n\n.topnavigation .usercontent .info {\n  position: relative;\n  height: 100%;\n  width: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n}\n\n.topnavigation .usercontent .info h1 {\n  position: relative;\n  font-size: 18px;\n  margin-bottom: 0;\n  color: white;\n}\n\n.topnavigation .usercontent .info p {\n  position: relative;\n  font-size: 14px;\n  margin-top: 0px;\n  color: white;\n}\n\n.titlebar {\n  position: fixed;\n  top: 60px;\n  left: 290px;\n  width: calc(100vw - 290px);\n  height: 50px;\n  background-color: white;\n  box-shadow: 0px 3px 7px -2px rgba(0, 0, 0, 0.3);\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  z-index: 999;\n}\n\n.titlebar h1 {\n  font-size: 20px;\n  margin-left: 2.5vw;\n}\n\n.sidebar {\n  position: fixed;\n  left: 0;\n  top: 60px;\n  width: 290px;\n  background-color: #1F2831;\n  height: calc(100vh - 60px);\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 999;\n}\n\n.sidebar .logo {\n  position: relative;\n  width: calc(100% - 30px);\n  height: auto;\n  transform: scale(0.85);\n  left: 15px;\n  margin-top: 15px;\n}\n\n.sidebar .links {\n  position: relative;\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  margin-top: 25px;\n  width: 100%;\n}\n\n.sidebar .links p {\n  width: calc(100% - 40px);\n  color: #8d99a0;\n  font-size: 14px;\n  font-weight: 100;\n}\n\n.sidebar .links a {\n  position: relative;\n  width: calc(100% - 40px);\n  padding: 5px 20px;\n  height: 35px;\n  background-color: transparent;\n  display: flex;\n  justify-content: center;\n  align-items: flex-start;\n  align-content: center;\n  flex-direction: column;\n  text-decoration: none;\n  color: white;\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.sidebar .links a:hover {\n  background-color: #78838e;\n  transition: 0.2s;\n}\n\n.sidebar .links .is-active {\n  position: relative;\n  background-color: #4B5259;\n  transition: 0.2s;\n}\n\n.userDropdown {\n  position: fixed;\n  top: 70px;\n  right: 5vw;\n  width: 300px;\n  height: auto;\n  padding: 20px 10px;\n  background-color: white;\n  border-radius: 4px;\n  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  flex-direction: column;\n  z-index: 10000;\n  -webkit-animation: pop-in 0.2s;\n          animation: pop-in 0.2s;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39294,6 +40377,66 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/admin/components/notification/index.scss":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/pages/admin/components/notification/index.scss ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_index_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!../../../../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!../../../../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./index.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/pages/admin/components/notification/index.scss");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_index_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_index_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/admin/edit/organisations/index.scss":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/pages/admin/edit/organisations/index.scss ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_index_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!../../../../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!../../../../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./index.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/pages/admin/edit/organisations/index.scss");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_index_scss__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_index_scss__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/admin/edit/screens/index.scss":
 /*!*********************************************************************!*\
   !*** ./resources/js/components/pages/admin/edit/screens/index.scss ***!
@@ -40113,8 +41256,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _components_pages_admin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/admin */ "./resources/js/components/pages/admin/index.js");
@@ -40125,7 +41268,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_pages_admin_edit_screens__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/admin/edit/screens */ "./resources/js/components/pages/admin/edit/screens/index.js");
 /* harmony import */ var _components_providers_UserProvider__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/providers/UserProvider */ "./resources/js/components/providers/UserProvider/index.js");
 /* harmony import */ var _components_pages_admin_components_titlebar__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/pages/admin/components/titlebar */ "./resources/js/components/pages/admin/components/titlebar/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_providers_NotificationProvider__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/providers/NotificationProvider */ "./resources/js/components/providers/NotificationProvider/index.js");
+/* harmony import */ var _components_pages_admin_edit_organisations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/pages/admin/edit/organisations */ "./resources/js/components/pages/admin/edit/organisations/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -40141,6 +41286,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
  // Import pages
+
+
 
 
 
@@ -40170,38 +41317,40 @@ function App() {
     var part = url.substring(url.lastIndexOf('/') + 1);
     setTitle(part);
   }, []);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_12__.BrowserRouter, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_components_providers_UserProvider__WEBPACK_IMPORTED_MODULE_9__.default, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_pages_admin_components_topnavigation__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_pages_admin_components_titlebar__WEBPACK_IMPORTED_MODULE_10__.default, {
-          title: title
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_pages_admin_components_sidebar__WEBPACK_IMPORTED_MODULE_5__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Switch, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
-            exact: true,
-            path: '/admin',
-            component: _components_pages_admin__WEBPACK_IMPORTED_MODULE_3__.default
-          }, 'w3456y9hugjfoire56905843eokrfgijy8'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
-            exact: true,
-            path: '/admin/organisations',
-            component: _components_pages_admin__WEBPACK_IMPORTED_MODULE_3__.default
-          }, 'erty765y5ii5iu5ju5'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
-            exact: true,
-            path: '/admin/edit/screens',
-            component: _components_pages_admin_edit_screens__WEBPACK_IMPORTED_MODULE_8__.default
-          }, 'feigur8hth7t7yuhtuhjjg5rti'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.Route, {
-            path: '/',
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_default_components_page__WEBPACK_IMPORTED_MODULE_7__.default, {
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("h1", {
-                children: "404 niet gevonden"
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.BrowserRouter, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_providers_NotificationProvider__WEBPACK_IMPORTED_MODULE_11__.default, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)(_components_providers_UserProvider__WEBPACK_IMPORTED_MODULE_9__.default, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_admin_components_topnavigation__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_admin_components_titlebar__WEBPACK_IMPORTED_MODULE_10__.default, {
+            title: title
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_pages_admin_components_sidebar__WEBPACK_IMPORTED_MODULE_5__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Switch, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+              exact: true,
+              path: '/admin',
+              component: _components_pages_admin__WEBPACK_IMPORTED_MODULE_3__.default
+            }, 'w3456y9hugjfoire56905843eokrfgijy8'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+              exact: true,
+              path: '/admin/organisations',
+              component: _components_pages_admin_edit_organisations__WEBPACK_IMPORTED_MODULE_12__.default
+            }, 'erty765y5ii5iu5ju5'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+              exact: true,
+              path: '/admin/edit/screens',
+              component: _components_pages_admin_edit_screens__WEBPACK_IMPORTED_MODULE_8__.default
+            }, 'feigur8hth7t7yuhtuhjjg5rti'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+              path: '/',
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_components_default_components_page__WEBPACK_IMPORTED_MODULE_7__.default, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("h1", {
+                  children: "404 niet gevonden"
+                })
               })
-            })
-          }, 'wo-3i4u508tjifnew34567832')]
-        })]
+            }, 'wo-3i4u508tjifnew34567832')]
+          })]
+        })
       })
     })
   });
 }
-react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(App, {}), document.getElementById('admin'));
+react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(App, {}), document.getElementById('admin'));
 })();
 
 /******/ })()
