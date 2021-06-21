@@ -6,6 +6,7 @@ import NotificationApi from "../../../../api/NotificationApi";
 import './index.scss';
 
 export default function Organisations() {
+    const [loading, setLoading] = useState(true);
     const [organisations, setOrganisations] = useState([]);
     const [newOrg, setNewOrg] = useState(false);
     const [name, setName] = useState(null);
@@ -46,6 +47,7 @@ export default function Organisations() {
         axios.get('/api/organisations')
             .then(response => {
                 setOrganisations(response.data.organisations);
+                setLoading(false);
             })
             .catch(error => {
                 dispatch({
@@ -107,67 +109,83 @@ export default function Organisations() {
 
     return (
         <AdminPage>
-            <>
-                <button className={`new-org-btn ${newOrg ? 'not-use' : ''}`} onClick={() => {
-                    setNewOrg(true);
-                    setTimeout(() => {
-                        document.getElementsByClassName(`newOrg`)[0].scrollIntoView({block: 'nearest'});
-                    }, 150);
-                }}><img src={'/images/plus.svg'} alt={''}/> Nieuwe organisatie</button>
-                <div className="pages">
-                    {organisations.map((org, index) => {
-                        return (
-                            <div className="page" key={index}>
-                                <img src={'/images/organisationlogo/' + org.logo_file_name} alt={''}/>
-                                <h1>{org.name}</h1>
-                                <p>Telefoon nummer: <span>{org.phone_number}</span></p>
-                                <p>E-mail adres: <span>{org.email}</span></p>
-                                <p>locatie adres: <span>{org.location}</span></p>
-                                <p>Website: <span className={'website'} onClick={() => window.open(org.website)}>{org.website}</span></p>
-                            </div>
-                        )
-                    })}
-                    {newOrg ?
-                        <div className="page newOrg" key={'wfeughgiyl74y4tirulfkg'}>
-                            <h1>Nieuwe organisatie</h1>
-                            <p>Vul alle onderstaande gegevens in om een nieuwe organisatie aan te maken.</p>
-                            <form method={'post'} onSubmit={(e) => handleNewOrg(e)}>
-                                <label>
-                                    <p>Logo organisatie:</p>
-                                    <input type={'file'} name={'logo'}
-                                           accept="image/png, image/gif, image/jpeg, image/svg+xml"
-                                           onChange={(e) => handleInput([e.target.files[0], e.target.name])}
-                                           required/>
-                                </label>
-                                <label>
-                                    <p>Naam organisatie:</p>
-                                    <input type={'text'} name={'name'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Naam van de organisatie'} required/>
-                                </label>
-                                <label>
-                                    <p>Telefoon nummer:</p>
-                                    <input type={'tel'} name={'phone'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Telefoon nummer van de organisatie'} required/>
-                                </label>
-                                <label>
-                                    <p>E-mail adres:</p>
-                                    <input type={'email'} name={'email'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'E-mail adres van de organisatie'} required/>
-                                </label>
-                                <label>
-                                    <p>Adres organisatie:</p>
-                                    <input type={'text'} name={'adress'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Rodetorenplein 14, Zwolle'} required/>
-                                </label>
-                                <label>
-                                    <p>Website organisatie:</p>
-                                    <input type={'text'} name={'website'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'https://www.organisatie.nl/'} required/>
-                                </label>
-                                <div className="btns">
-                                    <button className={'btn save'}>Aanmaken</button>
-                                    <button className={'btn'} onClick={() => setNewOrg(false)}>Annuleren</button>
+                <>
+                    {loading === false ?
+                        <button className={`new-org-btn ${newOrg ? 'not-use' : ''}`} onClick={() => {
+                            setNewOrg(true);
+                            setTimeout(() => {
+                                document.getElementsByClassName(`newOrg`)[0].scrollIntoView({block: 'nearest'});
+                            }, 150);
+                        }}><img src={'/images/plus.svg'} alt={''}/> Nieuwe organisatie</button>
+                    : null}
+                    <div className="pages">
+                    {loading === false ?
+                        <>
+                            {organisations.map((org, index) => {
+                                return (
+                                    <div className="page" key={index}>
+                                        <img src={'/images/organisationlogo/' + org.logo_file_name} alt={''}/>
+                                        <h1>{org.name}</h1>
+                                        <p>Telefoon nummer: <span>{org.phone_number}</span></p>
+                                        <p>E-mail adres: <span>{org.email}</span></p>
+                                        <p>locatie adres: <span>{org.location}</span></p>
+                                        <p>Website: <span className={'website'} onClick={() => window.open(org.website)}>{org.website}</span></p>
+                                    </div>
+                                )
+                            })}
+                            {newOrg ?
+                                <div className="page newOrg" key={'wfeughgiyl74y4tirulfkg'}>
+                                    <h1>Nieuwe organisatie</h1>
+                                    <p>Vul alle onderstaande gegevens in om een nieuwe organisatie aan te maken.</p>
+                                    <form method={'post'} onSubmit={(e) => handleNewOrg(e)}>
+                                        <label>
+                                            <p>Logo organisatie:</p>
+                                            <input type={'file'} name={'logo'}
+                                                   accept="image/png, image/gif, image/jpeg, image/svg+xml"
+                                                   onChange={(e) => handleInput([e.target.files[0], e.target.name])}
+                                                   required/>
+                                        </label>
+                                        <label>
+                                            <p>Naam organisatie:</p>
+                                            <input type={'text'} name={'name'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Naam van de organisatie'} required/>
+                                        </label>
+                                        <label>
+                                            <p>Telefoon nummer:</p>
+                                            <input type={'tel'} name={'phone'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Telefoon nummer van de organisatie'} required/>
+                                        </label>
+                                        <label>
+                                            <p>E-mail adres:</p>
+                                            <input type={'email'} name={'email'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'E-mail adres van de organisatie'} required/>
+                                        </label>
+                                        <label>
+                                            <p>Adres organisatie:</p>
+                                            <input type={'text'} name={'adress'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Rodetorenplein 14, Zwolle'} required/>
+                                        </label>
+                                        <label>
+                                            <p>Website organisatie:</p>
+                                            <input type={'text'} name={'website'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'https://www.organisatie.nl/'} required/>
+                                        </label>
+                                        <div className="btns">
+                                            <button className={'btn save'}>Aanmaken</button>
+                                            <button className={'btn'} onClick={() => setNewOrg(false)}>Annuleren</button>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
-                    : null }
-                </div>
-            </>
+                                : null }
+                        </>
+                            :
+                            <div className="loading">
+                                <div className="lds-ring">
+                                    <div/>
+                                    <div/>
+                                    <div/>
+                                    <div/>
+                                </div>
+                                <h1>Bijna klaar ...</h1>
+                            </div>
+                        }
+                    </div>
+                </>
         </AdminPage>
     )
 }

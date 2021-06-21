@@ -459,7 +459,7 @@ export default function Screens() {
                                                         </div>
                                                     )
                                                 })}
-                                                <div className="edit-tile tile" key={'weifjurghe93y874yr7g'}>
+                                                <div className="edit-tile" key={'weifjurghe93y874yr7g'}>
                                                     <div className="edit-items">
                                                         <div className="edit-item" onClick={() => {
                                                             setEditTile('');
@@ -492,7 +492,7 @@ export default function Screens() {
                                                             </div>
                                                         : null }
                                                     </div>
-                                                    <div className="new-tile">
+                                                    <div className="new-tile tile">
                                                         <div className="plus">
                                                             <div className="line"/>
                                                             <div className="line"/>
@@ -582,7 +582,17 @@ export default function Screens() {
                             )
                         })}
                     </>
-                    : null}
+                    :
+                    <div className="loading">
+                        <div className="lds-ring">
+                            <div/>
+                            <div/>
+                            <div/>
+                            <div/>
+                        </div>
+                        <h1>Bijna klaar ...</h1>
+                    </div>
+                }
             </div>
         </AdminPage>
     )

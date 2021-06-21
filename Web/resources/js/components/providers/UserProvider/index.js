@@ -27,6 +27,10 @@ export default function UserProvider({children}) {
     function logoutUser() {
         localStorage.setItem('auth_token', '');
         window.location.href = '/logout';
+        axios.get('/api/logout')
+            .then(response => {
+
+            })
     }
 
     function getUser() {

@@ -34,6 +34,9 @@ Route::post('/deleteTile', 'App\Http\Controllers\TileController@destroy');
 Route::post('/ableToUseTile', 'App\Http\Controllers\TileController@ableToUseTile');
 
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
+Route::get('/logout', function() {
+    \Illuminate\Support\Facades\Auth::logout();
+});
 
 Route::get('/users', 'App\Http\Controllers\UserController@Users');
 

@@ -4459,10 +4459,6 @@ function App() {
             }, index);
           }
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
-          exact: true,
-          path: '/admin',
-          component: _components_pages_admin__WEBPACK_IMPORTED_MODULE_4__.default
-        }, 'w3456y9hugjfoire56905843eokrfgijy8'), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
           path: '/',
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_pages_home__WEBPACK_IMPORTED_MODULE_2__.default, {
             title: loading ? '' : 'Pagina niet gevonden',
@@ -4637,7 +4633,9 @@ function Tile(_ref) {
     onClick: function onClick() {
       history.push(path);
 
-      _onClick();
+      if (_onClick) {
+        _onClick();
+      }
     },
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
       src: newImg ? newImg : '',
@@ -4708,7 +4706,8 @@ function Authentication(_ref) {
 
   var _UserApi = (0,_api_UserApi__WEBPACK_IMPORTED_MODULE_4__.default)(),
       loading = _UserApi.loading,
-      setLoading = _UserApi.setLoading;
+      setLoading = _UserApi.setLoading,
+      logoutUser = _UserApi.logoutUser;
 
   function handleAuthentication(e) {
     e.preventDefault();
@@ -4735,6 +4734,8 @@ function Authentication(_ref) {
         }
       })["catch"](function (error) {
         console.error(error);
+        setLoading(false);
+        logoutUser();
         dispatch({
           type: 'ADD_NOTIFICATION',
           payload: {
@@ -5018,7 +5019,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Home(_ref) {
   var title = _ref.title,
-      tiles = _ref.tiles;
+      tiles = _ref.tiles,
+      organisation = _ref.organisation;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
@@ -5030,7 +5032,8 @@ function Home(_ref) {
   var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useHistory)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setLoading(false);
-  }, [tiles !== undefined]);
+    console.log(organisation);
+  }, [tiles && organisation]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_default_components_page__WEBPACK_IMPORTED_MODULE_1__.default, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       className: "content",
@@ -5082,13 +5085,17 @@ function Home(_ref) {
               })
             })
           })]
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-          children: tiles.map(function (tile, index) {
-            return tile.able_to_use !== '0' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_default_components_tile__WEBPACK_IMPORTED_MODULE_2__.default, {
-              title: tile.title,
-              illustration: tile.illustration_file_name,
-              path: tile.path
-            }, index) : null;
+        }) : !organisation ? tiles.map(function (tile, index) {
+          return tile.able_to_use !== '0' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_default_components_tile__WEBPACK_IMPORTED_MODULE_2__.default, {
+            title: tile.title,
+            illustration: tile.illustration_file_name,
+            path: tile.path
+          }, index) : null;
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "organisation-content",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+            src: '/images/organisation/logo' + (organisation === null || organisation === void 0 ? void 0 : organisation.logo_file_name),
+            alt: ''
           })
         })
       })]
@@ -5257,6 +5264,7 @@ function UserProvider(_ref) {
   function logoutUser() {
     localStorage.setItem('auth_token', '');
     window.location.href = '/logout';
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/logout').then(function (response) {});
   }
 
   function getUser() {
