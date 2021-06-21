@@ -141,7 +141,7 @@
     margin-left: 2.5vw;
 }
 .topnavigation .usercontent {
-    padding: 0 5vw;
+    margin: 0 2.5vw;
     width: auto;
     background-color: transparent;
     height: 100%;
@@ -150,41 +150,40 @@
     align-items: center;
     align-content: center;
     flex-direction: row;
+    cursor: pointer;
 }
 
 .topnavigation .usercontent .useravatar {
     position: relative;
-    width: 35px;
-    height: 35px;
-    border: 1px solid #c5c5c5;
+    width: 40px;
+    height: 40px;
     background-color: #f6f5fb;
     margin-right: 10px;
     border-radius: 50px;
-}
-
-.topnavigation .usercontent .info {
-    position: relative;
-    height: 100%;
-    width: auto;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    align-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
     flex-direction: column;
 }
 
-.topnavigation .usercontent .info h1 {
-    position: relative;
-    font-size: 18px;
-    margin-bottom: 0;
-    color: white;
+.topnavigation .usercontent .useravatar p {
+    font-size: 30px;
+    font-weight: 900;
+    margin-top: 25px;
+    padding: 0;
+    color: #c5c5c5;
 }
 
-.topnavigation .usercontent .info p {
-    position: relative;
-    font-size: 14px;
-    margin-top: 0px;
-    color: white;
+.topnavigation .usercontent .useravatar .status {
+    position: absolute;
+    bottom: 2.5px;
+    right: 2.5px;
+    width: 10px;
+    height: 10px;
+    background-color: #2d995b;
+    box-shadow: 0 0 0px 3px #f6227d;
+    border-radius: 40px;
 }
 
 .titlebar {
@@ -247,7 +246,7 @@
     width: calc(100% - 40px);
     color: #8d99a0;
     font-size: 14px;
-    font-weight: 100;
+    font-weight: 400;
 }
 
 .sidebar .links a {
@@ -281,18 +280,38 @@
 .userDropdown {
     position: fixed;
     top: 70px;
-    right: 5vw;
+    right: 2.5vw;
     width: 300px;
     height: auto;
     padding: 20px 10px;
     background-color: white;
-    border-radius: 4px;
-    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 7px;
+    box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.15);
     display: flex;
     justify-content: center;
     align-content: center;
     align-items: center;
     flex-direction: column;
     z-index: 10000;
-    animation: pop-in 0.2s;
+    animation: user-in 0.2s;
+}
+
+.userDropdown h1 {
+    margin-bottom: 0;
+    text-transform: capitalize;
+    font-size: 25px;
+}
+
+.userDropdown p {
+    margin-top: 5px;
+}
+
+
+@keyframes user-in {
+    0% {
+        right: 0;
+        top: 0;
+        opacity: 0;
+        transform: scale(0);
+    }
 }

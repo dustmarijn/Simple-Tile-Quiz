@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="348" height="272" viewBox="0 0 348 272">
+  <defs>
+    <filter id="Rectangle_1" x="0" y="0" width="268" height="168" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#6b7dc1"/>
+      <stop offset="1" stop-color="#6b8cfa"/>
+    </linearGradient>
+    <filter id="Path_1" x="65" y="158" width="139" height="33" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_5" x="182" y="95" width="166" height="132" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-3"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_4" x="135" y="129" width="89" height="143" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-4"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-4"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="top-img" transform="translate(9 6)">
+    <g id="Component_4_1" data-name="Component 4 – 1">
+      <g id="Computer">
+        <g transform="matrix(1, 0, 0, 1, -9, -6)" filter="url(#Rectangle_1)">
+          <g id="Rectangle_1-2" data-name="Rectangle 1" transform="translate(9 6)" fill="#fff" stroke="#6b8cfa" stroke-width="5">
+            <rect width="250" height="150" rx="5" stroke="none"/>
+            <rect x="2.5" y="2.5" width="245" height="145" rx="2.5" fill="none"/>
+          </g>
+        </g>
+        <g id="Rectangle_2" data-name="Rectangle 2" transform="translate(103 150)" fill="#6b8cfa" stroke="#6b8cfa" stroke-width="1">
+          <rect width="45" height="15" stroke="none"/>
+          <rect x="0.5" y="0.5" width="44" height="14" fill="none"/>
+        </g>
+        <g transform="matrix(1, 0, 0, 1, -9, -6)" filter="url(#Path_1)">
+          <path id="Path_1-2" data-name="Path 1" d="M0,0H121V15H0Z" transform="translate(74 164)" fill="url(#linear-gradient)"/>
+        </g>
+      </g>
+    </g>
+    <g id="Component_3_1" data-name="Component 3 – 1" transform="translate(182 95)">
+      <g transform="matrix(1, 0, 0, 1, -191, -101)" filter="url(#Rectangle_5)">
+        <g id="Rectangle_5-2" data-name="Rectangle 5" transform="translate(191 101)" fill="#fff" stroke="#6b7ec5" stroke-width="5">
+          <rect width="148" height="114" rx="5" stroke="none"/>
+          <rect x="2.5" y="2.5" width="143" height="109" rx="2.5" fill="none"/>
+        </g>
+      </g>
+    </g>
+    <g id="Component_2_1" data-name="Component 2 – 1" transform="translate(135 129)">
+      <g transform="matrix(1, 0, 0, 1, -144, -135)" filter="url(#Rectangle_4)">
+        <g id="Rectangle_4-2" data-name="Rectangle 4" transform="translate(144 135)" fill="#fff" stroke="#6b8cfa" stroke-width="5">
+          <rect width="71" height="125" rx="4" stroke="none"/>
+          <rect x="2.5" y="2.5" width="66" height="120" rx="1.5" fill="none"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
