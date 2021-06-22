@@ -10,10 +10,10 @@ const [pages, setPages] = useState([]);
 const readPress = () => alert(OrganizationName)
 const OrganizationName = "Taalkoppels";
     useEffect( ()=> {
-        axios.get('http://192.168.178.214:8000/api/pages')
+        axios.get('http://192.168.178.1:8000/api/organisations')
             .then(response => {
-                if (response.data.pages) {
-                    setPages(response.data.pages);
+                if (response.data.organization) {
+                    setPages(response.data.organization);
                     setLoading(false);
                 }
                 console.log(response.data);
@@ -27,8 +27,9 @@ const OrganizationName = "Taalkoppels";
         <ScrollView>
             <View>
                 <TouchableOpacity style={styles.LeesvoorButton} onPress={readPress}>
-                    <Text style={styles.LeesvoorText}>Lees voor</Text>
+                    <Text>Lees voor</Text>
                 </TouchableOpacity>
+
                 <Text style={[homestyle.GraviolaSoft_Medium, styles.header]}> {OrganizationName} </Text>
             </View>
 
@@ -49,6 +50,9 @@ const styles = StyleSheet.create({
         height: 20,
         width: 75,
         padding: 10,
+        margin: 20,
+        color:'black',
+        fontSize: 10
     },
     LeesvoorText:{
         fontSize: 5,
