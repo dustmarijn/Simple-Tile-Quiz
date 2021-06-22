@@ -23,7 +23,7 @@ export default function TabNavigator() {
             style: {
                 position: 'absolute',
                 backgroundColor: 'white',
-                height: 70,
+                height: 40,
             },
         }}>
             <Tab.Screen name={'Home'} options={{
