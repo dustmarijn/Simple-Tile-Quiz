@@ -8,8 +8,8 @@ import axios from "axios";
 import Admin from "./components/pages/admin";
 
 export default function App() {
-    const [loading, setLoading] = useState(true);
-    const [pages, setPages] = useState([]);
+const [loading, setLoading] = useState(true);
+const [pages, setPages] = useState([]);
 
     useEffect(() => {
         axios.get('/api/pages')
