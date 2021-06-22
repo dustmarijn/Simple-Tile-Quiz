@@ -9,7 +9,7 @@ export default function Authentication({adminRights, setAdminRights, user, setUs
     const [password, setPassword] = useState(null);
 
     const {dispatch} = NotificationApi();
-    const {loading, setLoading} = UserApi();
+    const {loading, setLoading, logoutUser} = UserApi();
 
     function handleAuthentication(e) {
         e.preventDefault()
@@ -37,6 +37,8 @@ export default function Authentication({adminRights, setAdminRights, user, setUs
                 })
                 .catch(error => {
                     console.error(error);
+                    setLoading(false);
+                    logoutUser();
                     dispatch({
                         type: 'ADD_NOTIFICATION',
                         payload: {

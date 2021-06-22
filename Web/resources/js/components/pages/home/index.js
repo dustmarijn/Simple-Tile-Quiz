@@ -9,7 +9,7 @@ import Tile from "../../default components/tile";
 import './index.scss';
 import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
 
-export default function Home({title, tiles}) {
+export default function Home({title, tiles, organisation}) {
     const [loading, setLoading] = useState(true);
     let url = document.URL
     let lastPartUrl = url.substr(url.lastIndexOf('/') + 1);
@@ -18,7 +18,8 @@ export default function Home({title, tiles}) {
 
     useEffect(() => {
         setLoading(false);
-    }, [tiles !== undefined]);
+        console.log(organisation);
+    }, [tiles && organisation]);
 
     return (
         <Page>
@@ -49,16 +50,18 @@ export default function Home({title, tiles}) {
                             </div>
                         </>
                     :
-                        <>
-                            {/* This will render all tiles from the visited route */}
-                            {tiles.map((tile, index) => {
+                        !organisation ?
+                            tiles.map((tile, index) => {
                                 return (
                                     tile.able_to_use !== '0' ?
                                         <Tile key={index} title={tile.title} illustration={tile.illustration_file_name} path={tile.path}/>
                                     : null
                                 )
-                            })}
-                        </>
+                            })
+                        :
+                            <div className="organisation-content">
+                                <img src={'/images/organisation/logo' + organisation?.logo_file_name} alt={''}/>
+                            </div>
                     }
                 </div>
             </div>

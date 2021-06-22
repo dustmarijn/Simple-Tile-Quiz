@@ -9,6 +9,7 @@ export default function Tile({title, illustration, path, onClick, className}) {
     const [newImg, setNewImg] = useState(null);
 
     const img = new Image();
+
     img.src = '/images/illustrations/' + illustration;
 
     img.onload = () => {
@@ -21,7 +22,9 @@ export default function Tile({title, illustration, path, onClick, className}) {
     return (
         <button className={`tile ${className}`} onClick={() => {
             history.push(path);
-            onClick();
+            if(onClick) {
+                onClick();
+            }
         }}>
             <img src={newImg ? newImg : ''} alt={''}/>
             <h1>{title}</h1>

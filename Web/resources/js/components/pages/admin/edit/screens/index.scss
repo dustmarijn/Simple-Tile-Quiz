@@ -10,6 +10,15 @@
     padding: 0 2.5vw;
 }
 
+.pages .loading {
+    position: absolute;
+    top: 0;
+    margin-top: 0;
+    left: 2.5vw;
+    width: calc(100% - 5vw);
+    height: calc(100vh - 60px - 50px);
+}
+
 .page {
     position: relative;
     width: calc(100% - 20px);
@@ -48,6 +57,7 @@
 
 .page .give-tiles {
     padding-top: 15px;
+    margin-bottom: -25px;
     width: 100%;
     border-top: 2px solid #e5e5e5;
 }
@@ -77,14 +87,18 @@
 .page .tiles .tile {
     position: relative;
     width: 250px;
-    height: 250px
+    height: 250px;
+}
+
+.page .tiles .tile:last-child {
+    margin-bottom: 25px;
 }
 
 .edit-tile {
     position: relative;
     width: 250px;
     height: 250px;
-    margin-right: 25px;
+    margin: 25px;
 }
 
 .edit-items {
@@ -199,7 +213,7 @@
     margin-right: 15px;
 }
 
-.page .tiles .new-tile {
+.page .tiles .edit-items .new-tile {
     position: relative;
     min-width: 250px;
     width: 100%;
@@ -208,7 +222,6 @@
     max-width: 250px;
     max-height: 250px;
     border: 1px solid #e5e5e5;
-    margin: 25px;
     border-radius: 4px;
     display: flex;
     justify-content: center;
@@ -216,6 +229,7 @@
     align-content: center;
     flex-direction: column;
     cursor: pointer;
+    margin: 25px;
     transition: 0.2s;
 }
 
@@ -448,7 +462,7 @@
     background-color: rgba(255, 255, 255, 1);
     z-index: 300000;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-start;
     flex-direction: column;

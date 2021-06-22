@@ -11,7 +11,6 @@ export default function App() {
 const [loading, setLoading] = useState(true);
 const [pages, setPages] = useState([]);
 
-
     useEffect(() => {
         axios.get('/api/pages')
             .then(response => {
@@ -39,9 +38,6 @@ const [pages, setPages] = useState([]);
                             )
                         }
                     })}
-
-                    {/* Admin route */}
-                    <Route key={'w3456y9hugjfoire56905843eokrfgijy8'} exact path={'/admin'} component={Admin}/>
 
                     {/*This will render a 404 not found adminpage*/}
                     <Route key={'wo-3i4u508tjifnew34567832'} path={'/'}><Home title={loading ? '' : 'Pagina niet gevonden'} tiles={[]}/></Route>
