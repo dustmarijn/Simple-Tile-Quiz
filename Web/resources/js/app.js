@@ -9,38 +9,59 @@ import Admin from "./components/pages/admin";
 
 export default function App() {
     const [loading, setLoading] = useState(true);
-    const [pages, setPages] = useState([]);
+    const [pages, setPages] = useState(undefined);
+    const [organisations, setOrganisations] = useState(undefined);
 
     useEffect(() => {
         axios.get('/api/pages')
             .then(response => {
                 if(response.data.pages) {
                     setPages(response.data.pages);
-                    setLoading(false);
                 }
+            })
+            .catch(error => {
+                console.log(error);
+            });
 
-                console.log(response.data);
+        axios.get('/api/organisations')
+            .then(response => {
+                if(response.data.organisations) {
+                    setOrganisations(response.data.organisations);
+                }
             })
             .catch(error => {
                 console.log(error);
             })
     }, []);
 
+    useEffect(() => {
+        setLoading(false);
+    }, [organisations !== undefined && pages !== undefined]);
+
     return (
         <>
             <Router>
                 <Switch>
                     {/*This will render all routes given from the database */}
-                    {pages.map((page, index) => {
+                    {pages?.map((page, index) => {
                         if(page.path !== '/admin') {
-                            return (
-                                <Route key={index} exact path={page.path}><Home title={page.title} tiles={page.tiles}/></Route>
-                            )
+                            if(page.type === 'tile') {
+                                return (
+                                    <Route key={index} exact path={page.path}><Home title={page.title} organisation={null} tiles={page.tiles}/></Route>
+                                )
+                            } else {
+                                const org = organisations?.filter((org) => org.name === page.title);
+                                if(org) {
+                                    return (
+                                        <Route key={index} exact path={page.path}><Home title={page.title} organisation={org} tiles={null}/></Route>
+                                    )
+                                }
+                            }
                         }
                     })}
 
                     {/*This will render a 404 not found adminpage*/}
-                    <Route key={'wo-3i4u508tjifnew34567832'} path={'/'}><Home title={loading ? '' : 'Pagina niet gevonden'} tiles={[]}/></Route>
+                    <Route key={'wo-3i4u508tjifnew34567832'} path={'/'}><Home title={loading === true ? 'Aan het laden ...' : ''} tiles={null} organisation={null}/></Route>
                 </Switch>
             </Router>
         </>
