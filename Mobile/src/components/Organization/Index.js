@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, ScrollView, Button, Alert, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import homestyle from '../../../style';
-import axios from "axios";
+import AxiosCall from "./AxiosCall";
+
 
 
 export default function Organization(){
@@ -9,28 +10,17 @@ const [loading, setLoading] = useState(true);
 const [pages, setPages] = useState([]);
 const readPress = () => alert(OrganizationName)
 const OrganizationName = "Taalkoppels";
-    useEffect( ()=> {
-        axios.get('http://192.168.178.1:8000/api/organisations')
-            .then(response => {
-                if (response.data.organization) {
-                    setPages(response.data.organization);
-                    setLoading(false);
-                }
-                console.log(response.data);
-            })
-            .catch(error =>{
-                console.log(error);
-            })
-    }, []);
 
     return(
         <ScrollView>
             <View>
                 <TouchableOpacity style={styles.LeesvoorButton} onPress={readPress}>
-                    <Text>Lees voor</Text>
                 </TouchableOpacity>
 
                 <Text style={[homestyle.GraviolaSoft_Medium, styles.header]}> {OrganizationName} </Text>
+
+                <View style={styles.appButtonContainer}><AxiosCall/></View>
+
             </View>
 
 
@@ -58,5 +48,18 @@ const styles = StyleSheet.create({
         fontSize: 5,
         color:'black',
         textAlign: 'center',
+    },
+    appButtonContainer: {
+        textAlign: 'center',
+        flex:1,
+        alignItems:'center',
+        backgroundColor: 'white',
+        borderRadius: 5,
+        marginLeft: 30,
+        marginRight: 30,
+        marginBottom: 25,
+        padding:5,
+        elevation: 5,
+        height: 180,
     },
 });
