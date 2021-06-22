@@ -36,6 +36,10 @@ class PageController extends Controller
 
                     $page->path = $request->path; // Sets the path of the adminpage to the requested path.
 
+                    if($request->type) {
+                        $page->type = $request->type; // Sets the type of the page (Tile or Organisation).
+                    }
+
                     $page->save(); // Saves the adminpage in the database.
 
                     return response(['succesMessage' => 'Pagina succesvol aangemaakt!']);

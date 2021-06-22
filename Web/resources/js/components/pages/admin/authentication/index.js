@@ -48,6 +48,16 @@ export default function Authentication({adminRights, setAdminRights, user, setUs
                         }
                     });
                 })
+        } else {
+            setLoading(false);
+            dispatch({
+                type: 'ADD_NOTIFICATION',
+                payload: {
+                    id: Date.now(),
+                    type: 'error',
+                    message: 'U heeft geen e-mail of wachtwoord opgegeven!',
+                }
+            });
         }
     }
 
@@ -68,16 +78,30 @@ export default function Authentication({adminRights, setAdminRights, user, setUs
                 <Logo className={'logo'}/>
                 <form method={'post'} onSubmit={(e) => handleAuthentication(e)}>
                     <h1>Welkom</h1>
-                    <p>Meld je aan voor de admin</p>
-                    <label>
-                        <p>E-mail adres</p>
-                        <input type={'email'} placeholder={'E-mail adres'} onChange={(e) => handleInput([e.target.value, e.target.type])}/>
-                    </label>
-                    <label>
-                        <p>Wachtwoord</p>
-                        <input type={'password'} placeholder={'Wachtwoord'} onChange={(e) => handleInput([e.target.value, e.target.type])}/>
-                    </label>
-                    <button type={'submit'}>Aanmelden</button>
+                    <p>{loading ? 'Aan het laden ...' : 'Meld je aan voor de admin'}</p>
+                    {!loading ?
+                        <>
+                            <label>
+                                <p>E-mail adres</p>
+                                <input type={'email'} placeholder={'E-mail adres'} onChange={(e) => handleInput([e.target.value, e.target.type])}/>
+                            </label>
+                            <label>
+                                <p>Wachtwoord</p>
+                                <input type={'password'} placeholder={'Wachtwoord'} onChange={(e) => handleInput([e.target.value, e.target.type])}/>
+                            </label>
+                            <button type={'submit'}>Aanmelden</button>
+                        </>
+                    :
+                        <div className="loading">
+                            <div className="lds-ring">
+                                <div/>
+                                <div/>
+                                <div/>
+                                <div/>
+                                </div>
+                            <h1>Bijna klaar ...</h1>
+                        </div>
+                    }
                 </form>
             </div>
         </div>
