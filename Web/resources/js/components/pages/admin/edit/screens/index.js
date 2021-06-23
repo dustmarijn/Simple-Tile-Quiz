@@ -509,17 +509,6 @@ export default function Screens() {
                                                                 <p>Organisatie tegel</p>
                                                                 <img src={'/images/organisation.svg'} alt={''}/>
                                                             </div>
-                                                            {page.tiles.length === 0 ?
-                                                                <div className="edit-item" onClick={() => {
-                                                                    setEditTile('');
-                                                                    setTileID(null);
-                                                                    setPageID(page.id);
-                                                                    setPopup(page.id)
-                                                                }}>
-                                                                    <p>Organisatie pagina</p>
-                                                                    <img src={'/images/organisation2.svg'} alt={''}/>
-                                                                </div>
-                                                                : null}
                                                         </div>
                                                         <div className="new-tile tile">
                                                             <div className="plus">

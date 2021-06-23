@@ -1,4 +1,4 @@
-.pages img:not(.edit-tile .edit-items img):not(.tile img) {
+.pages img:not(.edit-tile .edit-items img, .delete-org):not(.tile img) {
     position: relative;
     left: 20px;
     width: 125px;
@@ -48,5 +48,23 @@
     pointer-events: none;
     filter: grayscale(100%);
     opacity: 0.3;
+    transition: 0.2s;
+}
+
+.page .delete-org {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    cursor: pointer;
+    padding: 5px;
+    transition: 0.2s;
+}
+
+.page .delete-org:hover {
+    background-color: #e5e5e5;
+    border-radius: 4px;
     transition: 0.2s;
 }
