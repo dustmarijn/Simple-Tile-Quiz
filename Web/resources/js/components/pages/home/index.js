@@ -9,16 +9,25 @@ import Tile from "../../default components/tile";
 import './index.scss';
 import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
 
-export default function Home({title, tiles}) {
+export default function Home({title, tiles, organisation}) {
     const [loading, setLoading] = useState(true);
-    let url = document.URL
+    const [org, setOrg] = useState(null);
+    let url = document.URL;
     let lastPartUrl = url.substr(url.lastIndexOf('/') + 1);
 
     const history = useHistory();
 
     useEffect(() => {
         setLoading(false);
-    }, [tiles !== undefined]);
+        organisation?.map((org) => {
+            setOrg(org);
+        });
+        console.log(organisation);
+    }, [organisation !== null]);
+
+    useEffect(() => {
+        setLoading(false);
+    }, [tiles !== null]);
 
     return (
         <Page>
@@ -49,16 +58,37 @@ export default function Home({title, tiles}) {
                             </div>
                         </>
                     :
-                        <>
-                            {/* This will render all tiles from the visited route */}
-                            {tiles.map((tile, index) => {
+                        org === null ?
+                            tiles?.map((tile, index) => {
                                 return (
                                     tile.able_to_use !== '0' ?
                                         <Tile key={index} title={tile.title} illustration={tile.illustration_file_name} path={tile.path}/>
                                     : null
                                 )
-                            })}
-                        </>
+                            })
+                        :
+                        <div className="organisation-content">
+                            <img src={'/images/organisationlogo/' + org?.logo_file_name} className={'logo'} alt={''}/>
+                            <div className="info-org">
+                                <h1>Contact gegevens</h1>
+                                <div className="info">
+                                    <img src={'/images/email.svg'} alt={''}/>
+                                    <span onClick={() => window.open('mailTo:' + org?.email + '?body=')}>{org?.email}</span>
+                                </div>
+                                <div className="info">
+                                    <img src={'/images/phone.svg'} alt={''}/>
+                                    <span onClick={() => window.open('tel:+' + org?.phone_number)}>{org?.phone_number}</span>
+                                </div>
+                                <div className="info">
+                                    <img src={'/images/location.svg'} alt={''}/>
+                                    <span onClick={() => window.open('https://www.google.nl/maps/place/' + org?.location + '/')}>{org?.location}</span>
+                                </div>
+                                <div className="info">
+                                    <img src={'/images/website.svg'} alt={''}/>
+                                    <span onClick={() => window.open(org?.website)}>{org?.website}</span>
+                                </div>
+                            </div>
+                        </div>
                     }
                 </div>
             </div>

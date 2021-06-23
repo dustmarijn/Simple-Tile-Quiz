@@ -11,7 +11,8 @@ export default function Tile(){
             <View>
                 <TouchableOpacity style={styles.appButtonContainer} onPress={tilePress}>
                     <Image
-                        style={styles.image}
+                       git 
+                       style={styles.image}
                         source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
                     />
                     <Text style={styles.appButtonText}>{indicationWord}</Text>

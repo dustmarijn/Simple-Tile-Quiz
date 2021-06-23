@@ -1,0 +1,22 @@
+<svg id="block" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="33" height="33" viewBox="0 0 33 33">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#6b8eff"/>
+      <stop offset="1" stop-color="#6b6f8c"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#6b8cfa"/>
+      <stop offset="1" stop-color="#6b7dc1"/>
+    </linearGradient>
+  </defs>
+  <g id="Component_1_1" data-name="Component 1 – 1">
+    <rect id="Rectangle_1" data-name="Rectangle 1" width="5" height="33" rx="2.5" fill="url(#linear-gradient)"/>
+    <rect id="Rectangle_2" data-name="Rectangle 2" width="5" height="33" rx="2.5" transform="translate(33 28) rotate(90)" fill="url(#linear-gradient)"/>
+    <rect id="Rectangle_3" data-name="Rectangle 3" width="5" height="33" rx="2.5" transform="translate(33 33) rotate(180)" fill="url(#linear-gradient)"/>
+    <rect id="Rectangle_4" data-name="Rectangle 4" width="5" height="33" rx="2.5" transform="translate(0 5) rotate(-90)" fill="url(#linear-gradient)"/>
+  </g>
+  <g id="Component_1_2" data-name="Component 1 – 2" transform="translate(16 16)">
+    <path id="Rectangle_1-2" data-name="Rectangle 1" d="M2.5,0h0A2.5,2.5,0,0,1,5,2.5V12a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V2.5A2.5,2.5,0,0,1,2.5,0Z" fill="url(#linear-gradient-5)"/>
+    <path id="Rectangle_4-2" data-name="Rectangle 4" d="M2.5,0h0A2.5,2.5,0,0,1,5,2.5V12a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V2.5A2.5,2.5,0,0,1,2.5,0Z" transform="translate(0 5) rotate(-90)" fill="url(#linear-gradient-5)"/>
+  </g>
+</svg>

@@ -25,6 +25,7 @@ Route::get('/user', function() {
 
 Route::post('/createTile', 'App\Http\Controllers\TileController@create');
 Route::post('/createPage', 'App\Http\Controllers\PageController@create');
+Route::post('/createOrganisation', 'App\Http\Controllers\OrganisationController@create');
 
 Route::post('/editPage', 'App\Http\Controllers\PageController@update');
 
@@ -33,7 +34,11 @@ Route::post('/deleteTile', 'App\Http\Controllers\TileController@destroy');
 Route::post('/ableToUseTile', 'App\Http\Controllers\TileController@ableToUseTile');
 
 Route::post('/login', 'App\Http\Controllers\Auth\LoginController@login');
+Route::get('/logout', function() {
+    \Illuminate\Support\Facades\Auth::logout();
+});
 
 Route::get('/users', 'App\Http\Controllers\UserController@Users');
 
 Route::get('/pages', 'App\Http\Controllers\PageController@index'); // Returns all created pages.
+Route::get('/organisations', 'App\Http\Controllers\OrganisationController@index'); // Returns all created organisations.

@@ -29,8 +29,8 @@
 }
 .back {
     position: absolute;
-    left: calc(10vw + 25px);
-    top: 7.5vw;
+    left: 10vw;
+    top: calc(10vh + 55px);
     width: auto;
     background-color: #fff;
     border: 0;
@@ -43,4 +43,58 @@
 }
 .back:hover {
     box-shadow: 0px 0px 0px 2px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);
+}
+
+.organisation-content {
+    position: relative;
+    width: calc(100vw - 10vw);
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+}
+
+.organisation-content .logo {
+    position: relative;
+    min-width: 100px;
+    max-width: 200px;
+    height: auto;
+    background-size: cover;
+}
+
+.organisation-content .info-org h1 {
+    font-size: 20px;
+}
+
+.organisation-content .info-org .info span {
+    color: #1f6fb2;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.organisation-content .info-org .info span:hover {
+    text-decoration: underline;
+}
+
+.organisation-content .info-org .info {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.organisation-content .info-org .info img {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    margin-right: 10px;
 }
