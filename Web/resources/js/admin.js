@@ -19,21 +19,13 @@ import Organisations from "./components/pages/admin/edit/organisations";
 export default function App() {
     const [loading, setLoading] = useState(true);
 
-    const [title, setTitle] = useState('');
-
-    useEffect(() => {
-        var url = window.location.href;
-        var part = url.substring(url.lastIndexOf('/') + 1);
-        setTitle(part);
-    }, []);
-
     return (
         <>
             <Router>
                 <NotificationProvider>
                     <UserProvider>
                         <Topnavigation/>
-                        <TitleBar title={title}/>
+                        <TitleBar/>
                         <Sidebar/>
                         <Switch>
                             {/* Admin route */}

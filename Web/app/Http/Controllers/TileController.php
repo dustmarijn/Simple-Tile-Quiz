@@ -56,7 +56,7 @@ class TileController extends Controller
             }
 
             if ($request->path) { // Checks if the tile path from the tile is requested.
-                if (!Tile::all()->where('path', $request->path)->first()) {
+                if (!Tile::where('path', $request->path)->first()) {
                     if ($request->page_id) {
 
                         $tile->illustration_file_name = $filename;
@@ -127,10 +127,10 @@ class TileController extends Controller
 
 
     public function ableToUseTile(Request $request) {
-        $tile = Tile::all()->where('id', intval($request->tile_id))->first();
+        $tile = Tile::where('id', intval($request->tile_id))->first();
         $disable = '';
         if($tile) {
-            $page = Page::all()->where('path', $tile->path)->first();
+            $page = Page::where('path', $tile->path)->first();
             if($page) {
                 if($request->able_to_use === '0') {
                     $page->able_to_use = '0';
@@ -160,9 +160,9 @@ class TileController extends Controller
      */
     public function destroy(Request $request)
     {
-        $tile = Tile::all()->where('id', intval($request->id))->first();
+        $tile = Tile::where('id', intval($request->id))->first();
         if($tile) {
-            $page = Page::all()->where('path', $tile->path)->first();
+            $page = Page::where('path', $tile->path)->first();
             if($page) {
                 $tile->delete();
                 $page->tiles()->delete();

@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import UserApi from "../../../../api/UserApi";
+import NotificationApi from "../../../../api/NotificationApi";
 
 export default function Topnavigation() {
     const [userDropdown, setUserDropdown] = useState(false);
     const {user, logoutUser} = UserApi();
     const [username, setUserName] = useState(null);
+
+    const {menu, setMenu} = NotificationApi();
 
     useEffect(() => {
         const name = user?.name;
@@ -15,7 +18,14 @@ export default function Topnavigation() {
     return (
         <>
             <div className="topnavigation">
-                <h1>TeamStopcontact Admin</h1>
+                <div className="title">
+                    <div className="menu" onClick={() => setMenu(!menu)}>
+                        <div className="line"/>
+                        <div className="line"/>
+                        <div className="line"/>
+                    </div>
+                    <h1>TeamStopcontact</h1>
+                </div>
                 <div className="usercontent" onClick={() => setUserDropdown(!userDropdown)}>
                     <div className="useravatar">
                         <p>{username}</p>

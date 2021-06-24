@@ -2946,7 +2946,7 @@ function Topnavigation() {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "topnavigation",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
-        children: "TeamStopcontact Admin"
+        children: "TeamStopcontact"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "usercontent",
         onClick: function onClick() {
@@ -3067,6 +3067,38 @@ function Organisations() {
       website = _useState18[0],
       setWebsite = _useState18[1];
 
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState20 = _slicedToArray(_useState19, 2),
+      editOrg = _useState20[0],
+      setEditOrg = _useState20[1];
+
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState22 = _slicedToArray(_useState21, 2),
+      orgID = _useState22[0],
+      setOrgID = _useState22[1];
+
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState24 = _slicedToArray(_useState23, 2),
+      alert = _useState24[0],
+      setAlert = _useState24[1];
+
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState26 = _slicedToArray(_useState25, 2),
+      deleting = _useState26[0],
+      setDeleting = _useState26[1];
+
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    title: 'Bericht',
+    description: 'Beschrijving van bericht',
+    actionOK: null,
+    actionOKMessage: 'Oké',
+    actionCancel: null,
+    actionCancelMessage: 'Annuleren'
+  }),
+      _useState28 = _slicedToArray(_useState27, 2),
+      alertMSG = _useState28[0],
+      setAlertMSG = _useState28[1];
+
   var _NotificationApi = (0,_api_NotificationApi__WEBPACK_IMPORTED_MODULE_3__.default)(),
       dispatch = _NotificationApi.dispatch;
 
@@ -3101,6 +3133,13 @@ function Organisations() {
   }
 
   function getOrganisations() {
+    setEditOrg(false);
+    setName(null);
+    setPhone(null);
+    setEmail(null);
+    setLocation(null);
+    setWebsite(null);
+    setOrgID(null);
     axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/organisations').then(function (response) {
       setOrganisations(response.data.organisations);
       setLoading(false);
@@ -3118,7 +3157,7 @@ function Organisations() {
 
   function handleNewOrg(e) {
     e.preventDefault();
-    console.log(e);
+    setLoading(true);
     dispatch({
       type: 'ADD_NOTIFICATION',
       payload: {
@@ -3154,11 +3193,127 @@ function Organisations() {
           message: "Er is iets mis gegaan bij het aanmaken."
         }
       });
+      setLoading(false);
+      setEditOrg(false);
+      setName(null);
+      setPhone(null);
+      setEmail(null);
+      setLocation(null);
+      setWebsite(null);
+      setOrgID(null);
     });
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_adminpage__WEBPACK_IMPORTED_MODULE_1__.default, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+  function handleEditOrg(e) {
+    e.preventDefault();
+    setLoading(true);
+    console.log(e);
+    dispatch({
+      type: 'ADD_NOTIFICATION',
+      payload: {
+        id: Date.now(),
+        type: 'succes',
+        message: "Organisatie wordt aangepast ..."
+      }
+    });
+    var formData = new FormData();
+    formData.append('logo_file_name', image);
+    formData.append('id', orgID);
+    formData.append('name', name);
+    formData.append('phone', phone);
+    formData.append('email', email);
+    formData.append('location', location);
+    formData.append('website', website);
+    axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/editOrganisation', formData).then(function (response) {
+      getOrganisations();
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'succes',
+          message: "Organisatie is succesvol aangepast!"
+        }
+      });
+    })["catch"](function (error) {
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'error',
+          message: "Er is iets mis gegaan bij het bewerken."
+        }
+      });
+      setLoading(false);
+      setEditOrg(false);
+      setName(null);
+      setPhone(null);
+      setEmail(null);
+      setLocation(null);
+      setWebsite(null);
+      setOrgID(null);
+    });
+  }
+
+  function handleDeleteOrg(org) {
+    console.log(org);
+    dispatch({
+      type: 'ADD_NOTIFICATION',
+      payload: {
+        id: Date.now(),
+        type: 'succes',
+        message: "Bezig met verwijderen ..."
+      }
+    });
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/deleteOrganisation', {
+      id: org.id
+    }).then(function (response) {
+      console.log(response);
+      getOrganisations();
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'succes',
+          message: "De organisatie '".concat(org.name, "' is verwijderd!")
+        }
+      });
+    })["catch"](function (error) {
+      console.error(error);
+      dispatch({
+        type: 'ADD_NOTIFICATION',
+        payload: {
+          id: Date.now(),
+          type: 'error',
+          message: "Er is iets mis gegaan bij het verwijderen!"
+        }
+      });
+    });
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_components_adminpage__WEBPACK_IMPORTED_MODULE_1__.default, {
+    children: [alert ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "blackbox",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "alert",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+          children: alertMSG.title
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+          children: alertMSG.description
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "btns",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: 'btn save',
+            onClick: alertMSG.actionOK,
+            children: alertMSG.actionOKMessage
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: 'btn',
+            onClick: alertMSG.actionCancel,
+            children: alertMSG.actionCancelMessage
+          })]
+        })]
+      })
+    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
       children: [loading === false ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
         className: "new-org-btn ".concat(newOrg ? 'not-use' : ''),
         onClick: function onClick() {
@@ -3177,34 +3332,160 @@ function Organisations() {
         className: "pages",
         children: loading === false ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
           children: [organisations.map(function (org, index) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-              className: "page",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
-                src: '/images/organisationlogo/' + org.logo_file_name,
-                alt: ''
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
-                children: org.name
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
-                children: ["Telefoon nummer: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                  children: org.phone_number
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
-                children: ["E-mail adres: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                  children: org.email
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
-                children: ["locatie adres: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                  children: org.location
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
-                children: ["Website: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                  className: 'website',
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "page ".concat(deleting === org.id ? 'shake' : ''),
+              children: editOrg !== org.id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+                  src: '/images/organisationlogo/' + org.logo_file_name,
+                  alt: ''
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                  className: 'btn save mg-top',
                   onClick: function onClick() {
-                    return window.open(org.website);
+                    setEditOrg(org.id);
+                    setOrgID(org.id);
                   },
-                  children: org.website
+                  children: "Bewerken"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+                  children: org.name
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+                  children: ["Telefoon nummer: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                    children: org.phone_number
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+                  children: ["E-mail adres: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                    children: org.email
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+                  children: ["locatie adres: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                    children: org.location
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
+                  children: ["Website: ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                    className: 'website',
+                    onClick: function onClick() {
+                      return window.open(org.website);
+                    },
+                    children: org.website
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+                  onClick: function onClick() {
+                    setAlert(true);
+                    setDeleting(org.id);
+                    setAlertMSG({
+                      title: 'Organisatie verwijderen?',
+                      description: 'Als u deze organisatie verwijderd, worden alle tiles van deze organisatie verwijderd, weet u het zeker?',
+                      actionOK: function actionOK() {
+                        setAlert(false);
+                        setDeleting(false);
+                        handleDeleteOrg(org);
+                      },
+                      actionOKMessage: 'Ja, verwijderen',
+                      actionCancel: function actionCancel() {
+                        setAlert(false);
+                        setDeleting(false);
+                        setAlertMSG({});
+                      },
+                      actionCancelMessage: 'Nee, annuleren'
+                    });
+                  },
+                  className: 'delete-org',
+                  src: '/images/trash-alt-solid.svg',
+                  alt: ''
                 })]
-              })]
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+                method: 'post',
+                onSubmit: function onSubmit(e) {
+                  return handleEditOrg(e);
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("h1", {
+                  children: ["Bewerken van organisatie (", org.name, ")"]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                  children: "De velden zijn niet verplicht om in te vullen."
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                    children: "Logo organisatie:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                    type: 'file',
+                    name: 'logo',
+                    accept: "image/png, image/gif, image/jpeg, image/svg+xml",
+                    onChange: function onChange(e) {
+                      return handleInput([e.target.files[0], e.target.name]);
+                    }
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                    children: "Naam organisatie:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                    defaultValue: org.name,
+                    type: 'text',
+                    name: 'name',
+                    onChange: function onChange(e) {
+                      return handleInput([e.target.value, e.target.name]);
+                    },
+                    placeholder: 'Naam van de organisatie'
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                    children: "Telefoon nummer:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                    defaultValue: org.phone_number,
+                    type: 'tel',
+                    name: 'phone',
+                    onChange: function onChange(e) {
+                      return handleInput([e.target.value, e.target.name]);
+                    },
+                    placeholder: 'Telefoon nummer van de organisatie'
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                    children: "E-mail adres:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                    defaultValue: org.email,
+                    type: 'email',
+                    name: 'email',
+                    onChange: function onChange(e) {
+                      return handleInput([e.target.value, e.target.name]);
+                    },
+                    placeholder: 'E-mail adres van de organisatie'
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                    children: "Adres organisatie:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                    defaultValue: org.location,
+                    type: 'text',
+                    name: 'adress',
+                    onChange: function onChange(e) {
+                      return handleInput([e.target.value, e.target.name]);
+                    },
+                    placeholder: 'Rodetorenplein 14, Zwolle'
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+                    children: "Website organisatie:"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                    defaultValue: org.website,
+                    type: 'text',
+                    name: 'website',
+                    onChange: function onChange(e) {
+                      return handleInput([e.target.value, e.target.name]);
+                    },
+                    placeholder: 'https://www.organisatie.nl/'
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                  className: "btns",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                    className: 'btn save',
+                    children: "Opslaan"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                    className: 'btn',
+                    onClick: function onClick() {
+                      return setEditOrg(false);
+                    },
+                    children: "Annuleren"
+                  })]
+                })]
+              })
             }, index);
           }), newOrg ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "page newOrg",
@@ -3314,7 +3595,7 @@ function Organisations() {
           })]
         })
       })]
-    })
+    })]
   });
 }
 
@@ -3958,21 +4239,7 @@ function Screens() {
                           src: '/images/organisation.svg',
                           alt: ''
                         })]
-                      }), page.tiles.length === 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                        className: "edit-item",
-                        onClick: function onClick() {
-                          setEditTile('');
-                          setTileID(null);
-                          setPageID(page.id);
-                          setPopup(page.id);
-                        },
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("p", {
-                          children: "Organisatie pagina"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
-                          src: '/images/organisation2.svg',
-                          alt: ''
-                        })]
-                      }) : null]
+                      })]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                       className: "new-tile tile",
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
@@ -4779,7 +5046,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".pages img:not(.edit-tile .edit-items img):not(.tile img) {\n  position: relative;\n  left: 20px;\n  width: 125px;\n  height: auto;\n  background-size: cover;\n  margin-top: 25px;\n}\n\n.pages .page p .website {\n  color: #1f6fb2;\n  cursor: pointer;\n}\n\n.new-org-btn {\n  position: relative;\n  left: calc(2.5vw);\n  width: auto;\n  padding: 10px 25px;\n  height: 50px;\n  margin-top: 2.5vw;\n  background-color: #0551d8;\n  display: flex;\n  justify-content: space-between;\n  align-content: center;\n  align-items: center;\n  flex-direction: row;\n  border-radius: 4px;\n  color: white;\n  font-size: 16px;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);\n  border: 0;\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.new-org-btn img {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  background-size: cover;\n  filter: invert(100%);\n  margin-right: 10px;\n  transition: 0.2s;\n}\n\n.new-org-btn.not-use {\n  pointer-events: none;\n  filter: grayscale(100%);\n  opacity: 0.3;\n  transition: 0.2s;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".pages img:not(.edit-tile .edit-items img, .delete-org):not(.tile img) {\n  position: relative;\n  left: 20px;\n  width: 125px;\n  height: auto;\n  background-size: cover;\n  margin-top: 25px;\n}\n\n.pages .page p .website {\n  color: #1f6fb2;\n  cursor: pointer;\n}\n\n.new-org-btn {\n  position: relative;\n  left: calc(2.5vw);\n  width: auto;\n  padding: 10px 25px;\n  height: 50px;\n  margin-top: 2.5vw;\n  background-color: #0551d8;\n  display: flex;\n  justify-content: space-between;\n  align-content: center;\n  align-items: center;\n  flex-direction: row;\n  border-radius: 4px;\n  color: white;\n  font-size: 16px;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);\n  border: 0;\n  cursor: pointer;\n  transition: 0.2s;\n}\n\n.new-org-btn img {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  background-size: cover;\n  filter: invert(100%);\n  margin-right: 10px;\n  transition: 0.2s;\n}\n\n.new-org-btn.not-use {\n  pointer-events: none;\n  filter: grayscale(100%);\n  opacity: 0.3;\n  transition: 0.2s;\n}\n\n.page .delete-org {\n  position: absolute;\n  top: 15px;\n  right: 15px;\n  width: 25px;\n  height: 25px;\n  background-size: cover;\n  cursor: pointer;\n  padding: 5px;\n  transition: 0.2s;\n}\n\n.page .delete-org:hover {\n  background-color: #e5e5e5;\n  border-radius: 4px;\n  transition: 0.2s;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4803,7 +5070,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".pages {\n  position: relative;\n  width: calc(100% - 5vw);\n  height: auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  padding: 0 2.5vw;\n}\n\n.pages .loading {\n  position: absolute;\n  top: 0;\n  margin-top: 0;\n  left: 2.5vw;\n  width: calc(100% - 5vw);\n  height: calc(100vh - 60px - 50px);\n}\n\n.page {\n  position: relative;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n  background-color: white;\n  margin-top: 50px;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);\n  border-radius: 4px;\n}\n\n.page:last-child {\n  margin-bottom: 50px;\n}\n\n.page:first-child {\n  margin-top: 25px;\n}\n\n.page.disabled, .tile.disabled, .page.disabled .btn, .page.disabled .tiles .new-tile {\n  cursor: not-allowed;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  background-color: #f9f9f9;\n  filter: grayscale(200%);\n}\n\n.page h1 {\n  font-size: 20px;\n  margin: 5px 20px;\n  margin-top: 20px;\n}\n\n.page .give-tiles {\n  padding-top: 15px;\n  margin-bottom: -25px;\n  width: 100%;\n  border-top: 2px solid #e5e5e5;\n}\n\n.page p {\n  color: black;\n  font-size: 16px;\n  margin: 5px 20px;\n}\n\n.page p span {\n  font-weight: bold;\n}\n\n.page .tiles {\n  display: flex;\n  width: 100%;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: row;\n  flex-wrap: wrap;\n  margin-top: 10px;\n}\n\n.page .tiles .tile {\n  position: relative;\n  width: 250px;\n  height: 250px;\n}\n\n.page .tiles .tile:last-child {\n  margin-bottom: 25px;\n}\n\n.edit-tile {\n  position: relative;\n  width: 250px;\n  height: 250px;\n  margin: 25px;\n}\n\n.edit-items {\n  position: absolute;\n  top: 0;\n  left: 100px;\n  width: 300px;\n  padding: 0px 0;\n  height: auto;\n  background-color: rgba(226, 226, 226, 0.95);\n  display: none;\n  box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.15);\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  border-radius: 7px;\n  z-index: 5;\n  overflow: hidden;\n  transition: 0.2s;\n}\n\n.edit-items .edit-item {\n  position: relative;\n  width: calc(100% - 40px);\n  height: 30px;\n  padding: 7px 20px;\n  display: flex;\n  justify-content: space-between;\n  background-color: rgba(255, 255, 255, 0.95);\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  color: black;\n  border-bottom: 1px solid #e5e5e5;\n  cursor: pointer;\n}\n\n.edit-items .edit-item:hover {\n  background-color: #f9f9f9;\n}\n\n.edit-items .edit-item:hover:focus {\n  background-color: #e5e5e5;\n}\n\n.edit-items .edit-item:last-child {\n  margin-top: 5px;\n  border: 0;\n}\n\n.edit-items .edit-item:nth-child(2) {\n  margin-top: 0px;\n  border: 0;\n}\n\n.edit-items .edit-item p {\n  font-size: 16px;\n  font-weight: 500;\n  width: 40ch;\n  margin: auto 0px;\n}\n\n.edit-items .remove p {\n  color: red;\n}\n\n.edit-tile:hover .tile {\n  box-shadow: 0px 1px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n  display: flex;\n  transition: 0.2s;\n}\n\n.edit-tile:hover .edit-items {\n  display: flex;\n  -webkit-animation: pop-in 0.3s;\n          animation: pop-in 0.3s;\n}\n\n.edit-tile:hover:focus-within .edit-items:hover:focus-within .edit-item {\n  display: none;\n}\n\n@-webkit-keyframes pop-in {\n  0% {\n    transform: scale(0);\n    left: 0;\n    padding: 10px;\n    opacity: 0;\n    top: 0;\n  }\n}\n\n@keyframes pop-in {\n  0% {\n    transform: scale(0);\n    left: 0;\n    padding: 10px;\n    opacity: 0;\n    top: 0;\n  }\n}\n.edit-tile .tiles .tile:hover:focus {\n  transform: scale(1);\n  transition: 0.2s;\n}\n\n@-webkit-keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n\n@keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n.edit-tile .edit-item img {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  background-size: cover;\n  margin: 0;\n}\n\n.edit-tile .item-btn:nth-child(1) {\n  margin-right: 15px;\n}\n\n.page .tiles .edit-items .new-tile {\n  position: relative;\n  min-width: 250px;\n  width: 100%;\n  min-height: 250px;\n  height: 100%;\n  max-width: 250px;\n  max-height: 250px;\n  border: 1px solid #e5e5e5;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  cursor: pointer;\n  margin: 25px;\n  transition: 0.2s;\n}\n\n.page .tiles .new-tile:hover {\n  background-color: white;\n  border-color: black;\n  transition: 0.2s;\n}\n\n.page .tiles .new-tile:hover:focus {\n  background-color: white;\n  border-color: black;\n  transition: 0.2s;\n}\n\n.page .tiles .new-tile .plus {\n  position: relative;\n  width: 75px;\n  height: 75px;\n  border-radius: 75px;\n  border: 3px solid black;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.page .tiles .new-tile h1 {\n  position: absolute;\n  bottom: 25px;\n}\n\n.page .tiles .new-tile .plus .line {\n  position: absolute;\n  width: 35px;\n  height: 3px;\n  background-color: black;\n  border-radius: 5px;\n  transform: rotate(0deg);\n}\n\n.page .tiles .new-tile .plus .line:nth-child(2) {\n  transform: rotate(90deg);\n}\n\n.popup {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: calc(100% - 20px);\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n  z-index: 99999;\n}\n\n.popup h1 {\n  margin: 20px 20px;\n  font-size: 20px;\n}\n\n.popup form, .page form {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label p, .page form label p {\n  margin-top: 20px;\n}\n\n.popup form label, .page form label {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label input, .page form input {\n  position: relative;\n  width: 50%;\n  height: 30px;\n  padding: 5px 10px;\n  margin: 0 20px;\n  background-color: white;\n  box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  border-radius: 4px;\n}\n\n.popup form label input[type=file], .page form label input[type=file] {\n  background-color: transparent;\n  box-shadow: 0 0 0 0 black;\n  border: 0;\n  padding: 0;\n  width: auto;\n}\n\n.popup form .btns, .page form .btns {\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: row;\n  margin-top: 25px;\n  margin-left: 20px;\n}\n\n.btn {\n  position: relative;\n  width: auto;\n  padding: 10px 20px;\n  background-color: #f9f9f9;\n  border: 0;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);\n  border-radius: 4px;\n  font-size: 14px;\n  cursor: pointer;\n}\n\n.btn.save {\n  background-color: #f6227d;\n  color: white;\n  margin-right: 25px;\n}\n\n.btn.mg-top {\n  margin: 20px;\n}\n\n.blackbox {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background-color: rgba(0, 0, 0, 0.15);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 50000;\n}\n\n.alert {\n  position: relative;\n  width: 90vw;\n  max-width: 500px;\n  height: auto;\n  padding: 40px 10px;\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 10000;\n}\n\n.alert h1 {\n  position: relative;\n  width: auto;\n  text-align: center;\n  font-size: 25px;\n  margin-bottom: 15px;\n}\n\n.alert p {\n  position: relative;\n  width: 300px;\n  text-align: center;\n  font-size: 16px;\n  margin-top: 0;\n  margin-bottom: 25px;\n}\n\n.alert .btns {\n  position: relative;\n  width: 300px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n}\n\n.tile.shake {\n  -webkit-animation: shake 1s linear infinite;\n          animation: shake 1s linear infinite;\n}\n\n@-webkit-keyframes shake {\n  0% {\n    transform: translate(1px, 1px) rotate(0deg);\n    opacity: 1;\n  }\n  10% {\n    transform: translate(-1px, -2px) rotate(-1deg);\n  }\n  20% {\n    transform: translate(-3px, 0px) rotate(1deg);\n  }\n  30% {\n    transform: translate(3px, 2px) rotate(0deg);\n  }\n  40% {\n    transform: translate(1px, -1px) rotate(1deg);\n  }\n  50% {\n    transform: translate(-1px, 2px) rotate(-1deg);\n  }\n  60% {\n    transform: translate(-3px, 1px) rotate(0deg);\n    opacity: 0.3;\n  }\n  70% {\n    transform: translate(3px, 1px) rotate(-1deg);\n  }\n  80% {\n    transform: translate(-1px, -1px) rotate(1deg);\n  }\n  90% {\n    transform: translate(1px, 2px) rotate(0deg);\n  }\n  100% {\n    transform: translate(1px, -2px) rotate(-1deg);\n  }\n}\n\n@keyframes shake {\n  0% {\n    transform: translate(1px, 1px) rotate(0deg);\n    opacity: 1;\n  }\n  10% {\n    transform: translate(-1px, -2px) rotate(-1deg);\n  }\n  20% {\n    transform: translate(-3px, 0px) rotate(1deg);\n  }\n  30% {\n    transform: translate(3px, 2px) rotate(0deg);\n  }\n  40% {\n    transform: translate(1px, -1px) rotate(1deg);\n  }\n  50% {\n    transform: translate(-1px, 2px) rotate(-1deg);\n  }\n  60% {\n    transform: translate(-3px, 1px) rotate(0deg);\n    opacity: 0.3;\n  }\n  70% {\n    transform: translate(3px, 1px) rotate(-1deg);\n  }\n  80% {\n    transform: translate(-1px, -1px) rotate(1deg);\n  }\n  90% {\n    transform: translate(1px, 2px) rotate(0deg);\n  }\n  100% {\n    transform: translate(1px, -2px) rotate(-1deg);\n  }\n}\n.find-organisations {\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding: 25px 10px;\n  height: calc(100% - 50px);\n  width: calc(100% - 20px);\n  background-color: white;\n  z-index: 300000;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n}\n\n.find-organisations h1 {\n  margin-bottom: 5px;\n  font-size: 30px;\n}\n\n.find-organisations p {\n  font-size: 16px;\n  margin-top: 0;\n}\n\n.find-organisations .organisations {\n  position: relative;\n  width: calc(100% - 50px);\n  padding: 10px 10px;\n  height: 300px;\n  overflow-x: hidden;\n  overflow-y: scroll;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.find-organisations .organisations .tile {\n  max-width: 150px;\n  max-height: 150px;\n}\n\n.find-organisations .organisations .tile h1 {\n  font-size: 16px;\n}\n\n.find-organisations .btns {\n  position: relative;\n  margin-left: 20px;\n}\n\n.btn.not-use {\n  opacity: 0.4;\n  pointer-events: none;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".pages {\n  position: relative;\n  width: calc(100% - 5vw);\n  height: auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  padding: 0 2.5vw;\n}\n\n.pages .loading {\n  position: absolute;\n  top: 0;\n  margin-top: 0;\n  left: 2.5vw;\n  width: calc(100% - 5vw);\n  height: calc(100vh - 60px - 50px);\n}\n\n.page {\n  position: relative;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n  background-color: white;\n  margin-top: 50px;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);\n  border-radius: 4px;\n}\n\n.page:last-child {\n  margin-bottom: 50px;\n}\n\n.page:first-child {\n  margin-top: 25px;\n}\n\n.page.disabled, .tile.disabled, .page.disabled .btn, .page.disabled .tiles .new-tile {\n  cursor: not-allowed;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  background-color: #f9f9f9;\n  filter: grayscale(200%);\n}\n\n.page h1 {\n  font-size: 20px;\n  margin: 5px 20px;\n  margin-top: 20px;\n}\n\n.page .give-tiles {\n  padding-top: 15px;\n  margin-bottom: -25px;\n  width: 100%;\n  border-top: 2px solid #e5e5e5;\n}\n\n.page p {\n  color: black;\n  font-size: 16px;\n  margin: 5px 20px;\n}\n\n.page p span {\n  font-weight: bold;\n}\n\n.page .tiles {\n  display: flex;\n  width: 100%;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: row;\n  flex-wrap: wrap;\n  margin-top: 10px;\n}\n\n.page .tiles .tile {\n  position: relative;\n  width: 250px;\n  height: 250px;\n}\n\n.page .tiles .tile:last-child {\n  margin-bottom: 25px;\n}\n\n.edit-tile {\n  position: relative;\n  width: 250px;\n  height: 250px;\n  margin: 25px;\n}\n\n.edit-items {\n  position: absolute;\n  top: 0;\n  left: 100px;\n  width: 300px;\n  padding: 0px 0;\n  height: auto;\n  background-color: rgba(226, 226, 226, 0.95);\n  display: none;\n  box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.15);\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  border-radius: 7px;\n  z-index: 5;\n  overflow: hidden;\n  transition: 0.2s;\n}\n\n.edit-items .edit-item {\n  position: relative;\n  width: calc(100% - 40px);\n  height: 30px;\n  padding: 7px 20px;\n  display: flex;\n  justify-content: space-between;\n  background-color: rgba(255, 255, 255, 0.95);\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n  color: black;\n  border-bottom: 1px solid #e5e5e5;\n  cursor: pointer;\n}\n\n.edit-items .edit-item:hover {\n  background-color: #f9f9f9;\n}\n\n.edit-items .edit-item:hover:focus {\n  background-color: #e5e5e5;\n}\n\n.edit-items .edit-item:last-child {\n  margin-top: 5px;\n  border: 0;\n}\n\n.edit-items .edit-item:nth-child(2) {\n  margin-top: 0px;\n  border: 0;\n}\n\n.edit-items .edit-item p {\n  font-size: 16px;\n  font-weight: 500;\n  width: 40ch;\n  margin: auto 0px;\n}\n\n.edit-items .remove p {\n  color: red;\n}\n\n.edit-items .edit-item.remove {\n  margin-top: 5px;\n  border: 0;\n}\n\n.edit-tile:hover .tile {\n  box-shadow: 0px 1px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);\n  display: flex;\n  transition: 0.2s;\n}\n\n.edit-tile:hover .edit-items {\n  display: flex;\n  -webkit-animation: pop-in 0.3s;\n          animation: pop-in 0.3s;\n}\n\n.edit-tile:hover:focus-within .edit-items:hover:focus-within .edit-item {\n  display: none;\n}\n\n@-webkit-keyframes pop-in {\n  0% {\n    transform: scale(0);\n    left: 0;\n    padding: 10px;\n    opacity: 0;\n    top: 0;\n  }\n}\n\n@keyframes pop-in {\n  0% {\n    transform: scale(0);\n    left: 0;\n    padding: 10px;\n    opacity: 0;\n    top: 0;\n  }\n}\n.edit-tile .tiles .tile:hover:focus {\n  transform: scale(1);\n  transition: 0.2s;\n}\n\n@-webkit-keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n\n@keyframes come-in {\n  0% {\n    opacity: 0;\n  }\n}\n.edit-tile .edit-item img {\n  position: relative;\n  width: 20px;\n  height: 20px;\n  display: flex;\n  justify-content: center;\n  align-content: center;\n  align-items: center;\n  background-size: cover;\n  margin: 0;\n}\n\n.edit-tile .item-btn:nth-child(1) {\n  margin-right: 15px;\n}\n\n.page .tiles .edit-items .new-tile {\n  position: relative;\n  min-width: 250px;\n  width: 100%;\n  min-height: 250px;\n  height: 100%;\n  max-width: 250px;\n  max-height: 250px;\n  border: 1px solid #e5e5e5;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  cursor: pointer;\n  margin: 25px;\n  transition: 0.2s;\n}\n\n.page .tiles .new-tile:hover {\n  background-color: white;\n  border-color: black;\n  transition: 0.2s;\n}\n\n.page .tiles .new-tile:hover:focus {\n  background-color: white;\n  border-color: black;\n  transition: 0.2s;\n}\n\n.page .tiles .new-tile .plus {\n  position: relative;\n  width: 75px;\n  height: 75px;\n  border-radius: 75px;\n  border: 3px solid black;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n}\n\n.page .tiles .new-tile h1 {\n  position: absolute;\n  bottom: 25px;\n}\n\n.page .tiles .new-tile .plus .line {\n  position: absolute;\n  width: 35px;\n  height: 3px;\n  background-color: black;\n  border-radius: 5px;\n  transform: rotate(0deg);\n}\n\n.page .tiles .new-tile .plus .line:nth-child(2) {\n  transform: rotate(90deg);\n}\n\n.popup {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: calc(100% - 20px);\n  padding: 10px;\n  height: calc(100% - 20px);\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n  z-index: 99999;\n}\n\n.popup h1 {\n  margin: 20px 20px;\n  font-size: 20px;\n}\n\n.popup form, .page form {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label p, .page form label p {\n  margin-top: 20px;\n}\n\n.popup form label, .page form label {\n  position: relative;\n  width: 100%;\n  height: auto;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: column;\n}\n\n.popup form label input, .page form input {\n  position: relative;\n  width: 50%;\n  height: 30px;\n  padding: 5px 10px;\n  margin: 0 20px;\n  background-color: white;\n  box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);\n  border: 1px solid #e5e5e5;\n  border-radius: 4px;\n}\n\n.popup form label input[type=file], .page form label input[type=file] {\n  background-color: transparent;\n  box-shadow: 0 0 0 0 black;\n  border: 0;\n  padding: 0;\n  width: auto;\n}\n\n.popup form .btns, .page form .btns {\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: row;\n  margin-top: 25px;\n  margin-left: 20px;\n}\n\n.btn {\n  position: relative;\n  width: auto;\n  padding: 10px 20px;\n  background-color: #f9f9f9;\n  border: 0;\n  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);\n  border-radius: 4px;\n  font-size: 14px;\n  cursor: pointer;\n}\n\n.btn.save {\n  background-color: #f6227d;\n  color: white;\n  margin-right: 25px;\n}\n\n.btn.mg-top {\n  margin: 20px;\n}\n\n.blackbox {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100vw;\n  height: 100vh;\n  background-color: rgba(0, 0, 0, 0.15);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 50000;\n}\n\n.alert {\n  position: relative;\n  width: 90vw;\n  max-width: 500px;\n  height: auto;\n  padding: 40px 10px;\n  background-color: white;\n  border-radius: 4px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  align-content: center;\n  flex-direction: column;\n  z-index: 10000;\n}\n\n.alert h1 {\n  position: relative;\n  width: auto;\n  text-align: center;\n  font-size: 25px;\n  margin-bottom: 15px;\n}\n\n.alert p {\n  position: relative;\n  width: 300px;\n  text-align: center;\n  font-size: 16px;\n  margin-top: 0;\n  margin-bottom: 25px;\n}\n\n.alert .btns {\n  position: relative;\n  width: 300px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  align-content: center;\n  flex-direction: row;\n}\n\n.tile.shake, .page.shake {\n  -webkit-animation: shake 1s linear infinite;\n          animation: shake 1s linear infinite;\n}\n\n@-webkit-keyframes shake {\n  0% {\n    transform: translate(1px, 1px) rotate(0deg);\n    opacity: 1;\n  }\n  10% {\n    transform: translate(-1px, -2px) rotate(-1deg);\n  }\n  20% {\n    transform: translate(-3px, 0px) rotate(1deg);\n  }\n  30% {\n    transform: translate(3px, 2px) rotate(0deg);\n  }\n  40% {\n    transform: translate(1px, -1px) rotate(1deg);\n  }\n  50% {\n    transform: translate(-1px, 2px) rotate(-1deg);\n  }\n  60% {\n    transform: translate(-3px, 1px) rotate(0deg);\n    opacity: 0.3;\n  }\n  70% {\n    transform: translate(3px, 1px) rotate(-1deg);\n  }\n  80% {\n    transform: translate(-1px, -1px) rotate(1deg);\n  }\n  90% {\n    transform: translate(1px, 2px) rotate(0deg);\n  }\n  100% {\n    transform: translate(1px, -2px) rotate(-1deg);\n  }\n}\n\n@keyframes shake {\n  0% {\n    transform: translate(1px, 1px) rotate(0deg);\n    opacity: 1;\n  }\n  10% {\n    transform: translate(-1px, -2px) rotate(-1deg);\n  }\n  20% {\n    transform: translate(-3px, 0px) rotate(1deg);\n  }\n  30% {\n    transform: translate(3px, 2px) rotate(0deg);\n  }\n  40% {\n    transform: translate(1px, -1px) rotate(1deg);\n  }\n  50% {\n    transform: translate(-1px, 2px) rotate(-1deg);\n  }\n  60% {\n    transform: translate(-3px, 1px) rotate(0deg);\n    opacity: 0.3;\n  }\n  70% {\n    transform: translate(3px, 1px) rotate(-1deg);\n  }\n  80% {\n    transform: translate(-1px, -1px) rotate(1deg);\n  }\n  90% {\n    transform: translate(1px, 2px) rotate(0deg);\n  }\n  100% {\n    transform: translate(1px, -2px) rotate(-1deg);\n  }\n}\n.find-organisations {\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding: 25px 10px;\n  height: calc(100% - 50px);\n  width: calc(100% - 20px);\n  background-color: white;\n  z-index: 300000;\n  display: flex;\n  justify-content: flex-start;\n  align-items: flex-start;\n  align-content: flex-start;\n  flex-direction: column;\n}\n\n.find-organisations h1 {\n  margin-bottom: 5px;\n  font-size: 30px;\n}\n\n.find-organisations p {\n  font-size: 16px;\n  margin-top: 0;\n}\n\n.find-organisations .organisations {\n  position: relative;\n  width: calc(100% - 50px);\n  padding: 10px 10px;\n  height: 300px;\n  overflow-x: hidden;\n  overflow-y: scroll;\n  display: flex;\n  justify-content: flex-start;\n  align-content: flex-start;\n  align-items: flex-start;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\n.find-organisations .organisations .tile {\n  max-width: 150px;\n  max-height: 150px;\n}\n\n.find-organisations .organisations .tile h1 {\n  font-size: 16px;\n}\n\n.find-organisations .btns {\n  position: relative;\n  margin-left: 20px;\n}\n\n.btn.not-use {\n  opacity: 0.4;\n  pointer-events: none;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
