@@ -1,4 +1,4 @@
-.pages img:not(.edit-tile .edit-items img):not(.tile img) {
+.pages img:not(.edit-tile .edit-items img, .delete-org):not(.tile img) {
     position: relative;
     left: 20px;
     width: 125px;
@@ -15,8 +15,8 @@
     position: relative;
     left: calc(2.5vw);
     width: auto;
-    padding: 10px 25px;
-    height: 50px;
+    padding: 5px 15px;
+    height: 40px;
     margin-top: 2.5vw;
     background-color: #0551d8;
     display: flex;
@@ -49,4 +49,80 @@
     filter: grayscale(100%);
     opacity: 0.3;
     transition: 0.2s;
+}
+
+.page .delete-org {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    cursor: pointer;
+    padding: 5px;
+    transition: 0.2s;
+}
+
+.page .delete-org:hover {
+    background-color: #e5e5e5;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.topitems {
+    position: relative;
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+}
+
+.search {
+    position: relative;
+    left: calc(2.5vw);
+    width: 40vw;
+    height: 30px;
+    padding: 5px 15px;
+    background-color: white;
+    box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    margin-top: 2.5vw;
+    margin-left: 25px;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.search img {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    filter: invert(40%);
+    margin-right: 10px;
+}
+
+.search input {
+    position: relative;
+    width: calc(100% - 30px);
+    top: 0;
+    left: 0;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    box-shadow: 0 0 0 0 black;
+}
+.search input:focus {
+    outline: none;
+}
+
+.not-found {
+    position: relative;
+    width: calc(100%);
+    padding: 10px 0;
 }

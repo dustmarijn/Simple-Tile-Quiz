@@ -16,7 +16,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        return response(['pages' => Page::with('tiles')->get()]);
+        $pages = Page::with('tiles')->get();
+        return response(['pages' => $pages, 'mobilePages' => json_encode($pages)]);
     }
 
     /**
@@ -72,7 +73,7 @@ class PageController extends Controller
      */
     public function show(Request $request)
     {
-        $page = Page::all()->where('id', $request->id);
+        $page = Page::where('id', intval($request->id))->first();;
 
         return response(['adminpage' => $page]);
     }
@@ -97,11 +98,11 @@ class PageController extends Controller
     public function update(Request $request)
     {
         if($request->page_id !== "null") {
-            $page = Page::all()->where('id', intval($request->page_id))->first();
-            $tile = Tile::all()->where('path', $page->path)->first();
+            $page = Page::where('id', intval($request->id))->first();;
+            $tile = Tile::where('path', $page->path)->first();
         } else {
-            $tile = Tile::all()->where('id', intval($request->tile_id))->first();
-            $page = Page::all()->where('path', $tile->path)->first();
+            $tile = Tile::where('id', intval($request->tile_id))->first();
+            $page = Page::where('path', $tile->path)->first();
         }
         if($page) {
             if($tile) {

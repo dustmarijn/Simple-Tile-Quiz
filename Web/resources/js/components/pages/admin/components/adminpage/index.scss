@@ -7,10 +7,17 @@
     background-color: #f6f5fb;
     animation: glow-in 0.3s;
     z-index: 100;
+    transition: 0.2s;
 }
 
 @keyframes glow-in {
     0% {
         opacity: 0
     }
+}
+
+.adminpage.closed {
+    width: calc(100vw - 90px);
+    left: 90px;
+    transition: 0.2s;
 }
