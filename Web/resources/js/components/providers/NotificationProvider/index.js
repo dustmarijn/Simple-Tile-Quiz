@@ -1,9 +1,11 @@
-import React, {useReducer, createContext} from 'react';
+import React, {useReducer, createContext, useState} from 'react';
 import Notification from "../../pages/admin/components/notification";
 
 export const NotificationContext = createContext();
 
 export default function NotificationProvider(props) {
+    const [menu, setMenu] = useState(true);
+    const [pageTitle, setPageTitle] = useState('');
     const {children} = props;
     const [state, dispatch] = useReducer((state, action) => {
         switch(action.type) {
@@ -17,7 +19,7 @@ export default function NotificationProvider(props) {
     }, []);
 
     return (
-        <NotificationContext.Provider value={{dispatch}}>
+        <NotificationContext.Provider value={{dispatch, menu, setMenu, pageTitle, setPageTitle}}>
             <div className={'notifications-wrapper'}>
                 {state.map(note => {
                     return <Notification dispatch={dispatch} key={note.id} {...note}/>

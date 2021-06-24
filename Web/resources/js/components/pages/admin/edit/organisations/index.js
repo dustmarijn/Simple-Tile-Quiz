@@ -8,6 +8,7 @@ import './index.scss';
 export default function Organisations() {
     const [loading, setLoading] = useState(true);
     const [organisations, setOrganisations] = useState([]);
+    const [filteredOrgs, setFilteredOrgs] = useState([]);
     const [newOrg, setNewOrg] = useState(false);
     const [name, setName] = useState(null);
     const [image, setImage] = useState(null);
@@ -28,10 +29,13 @@ export default function Organisations() {
         actionCancelMessage: 'Annuleren',
     });
 
-    const {dispatch} = NotificationApi();
+    const {dispatch, setPageTitle} = NotificationApi();
 
     useEffect(() => {
         getOrganisations();
+        var url = window.location.href;
+        var part = url.substring(url.lastIndexOf('/') + 1);
+        setPageTitle(part);
     }, []);
 
     function handleInput(e) {
@@ -66,6 +70,7 @@ export default function Organisations() {
         axios.get('/api/organisations')
             .then(response => {
                 setOrganisations(response.data.organisations);
+                setFilteredOrgs(response.data.organisations);
                 setLoading(false);
             })
             .catch(error => {
@@ -227,6 +232,14 @@ export default function Organisations() {
     }
 
 
+    function handleSearch(text) {
+        const searchedOrg = organisations?.filter(org => org.name.toLowerCase().includes(text.toLowerCase()));
+        if(searchedOrg) {
+            setFilteredOrgs(searchedOrg);
+        }
+    }
+
+
     return (
         <AdminPage>
                 {alert ?
@@ -245,89 +258,99 @@ export default function Organisations() {
                 : null}
                 <>
                     {loading === false ?
-                        <button className={`new-org-btn ${newOrg ? 'not-use' : ''}`} onClick={() => {
-                            setNewOrg(true);
-                            setTimeout(() => {
-                                document.getElementsByClassName(`newOrg`)[0].scrollIntoView({block: 'nearest'});
-                            }, 150);
-                        }}><img src={'/images/plus.svg'} alt={''}/> Nieuwe organisatie</button>
+                        <div className="topitems">
+                            <button className={`new-org-btn ${newOrg ? 'not-use' : ''}`} onClick={() => {
+                                setNewOrg(true);
+                                setTimeout(() => {
+                                    document.getElementsByClassName(`newOrg`)[0].scrollIntoView({block: 'nearest'});
+                                }, 150);
+                            }}><img src={'/images/plus.svg'} alt={''}/> Nieuwe organisatie</button>
+                            <div className="search">
+                                <img src={'/images/search.svg'} alt={''}/>
+                                <input type={'search'} placeholder={'Zoeken naar organisatie ...'} onChange={(e) => handleSearch(e.target.value)} />
+                            </div>
+                        </div>
                     : null}
                     <div className="pages">
                     {loading === false ?
                         <>
-                            {organisations.map((org, index) => {
-                                return (
-                                    <div className={`page ${deleting === org.id ? 'shake' : ''}`} key={index}>
-                                        {editOrg !== org.id ?
-                                            <>
-                                                <img src={'/images/organisationlogo/' + org.logo_file_name} alt={''}/>
-                                                <button className={'btn save mg-top'} onClick={() => {setEditOrg(org.id);setOrgID(org.id)}}>Bewerken</button>
-                                                <h1>{org.name}</h1>
-                                                <p>Telefoon nummer: <span>{org.phone_number}</span></p>
-                                                <p>E-mail adres: <span>{org.email}</span></p>
-                                                <p>locatie adres: <span>{org.location}</span></p>
-                                                <p>Website: <span className={'website'} onClick={() => window.open(org.website)}>{org.website}</span></p>
-                                                <img onClick={() => {
-                                                    setAlert(true);
-                                                    setDeleting(org.id);
-                                                    setAlertMSG({
-                                                        title: 'Organisatie verwijderen?',
-                                                        description: 'Als u deze organisatie verwijderd, worden alle tiles van deze organisatie verwijderd, weet u het zeker?',
-                                                        actionOK: () => {
-                                                            setAlert(false);
-                                                            setDeleting(false);
-                                                            handleDeleteOrg(org)
-                                                        },
-                                                        actionOKMessage: 'Ja, verwijderen',
-                                                        actionCancel: () => {
-                                                            setAlert(false);
-                                                            setDeleting(false);
-                                                            setAlertMSG({})
-                                                        },
-                                                        actionCancelMessage: 'Nee, annuleren',
-                                                    })
-                                                }} className={'delete-org'} src={'/images/trash-alt-solid.svg'} alt={''}/>
+                            {filteredOrgs.length > 0 ?
+                                <>
+                                    {filteredOrgs?.map((org, index) => {
+                                        return (
+                                            <div className={`page ${deleting === org.id ? 'shake' : ''}`} key={index}>
+                                                {editOrg !== org.id ?
+                                                    <>
+                                                        <img src={'/images/organisationlogo/' + org.logo_file_name} alt={''}/>
+                                                        <button className={'btn save mg-top'} onClick={() => {setEditOrg(org.id);setOrgID(org.id)}}>Bewerken</button>
+                                                        <h1>{org.name}</h1>
+                                                        <p>Telefoon nummer: <span>{org.phone_number}</span></p>
+                                                        <p>E-mail adres: <span>{org.email}</span></p>
+                                                        <p>locatie adres: <span>{org.location}</span></p>
+                                                        <p>Website: <span className={'website'} onClick={() => window.open(org.website)}>{org.website}</span></p>
+                                                        <img onClick={() => {
+                                                            setAlert(true);
+                                                            setDeleting(org.id);
+                                                            setAlertMSG({
+                                                                title: 'Organisatie verwijderen?',
+                                                                description: 'Als u deze organisatie verwijderd, worden alle tiles van deze organisatie verwijderd, weet u het zeker?',
+                                                                actionOK: () => {
+                                                                    setAlert(false);
+                                                                    setDeleting(false);
+                                                                    handleDeleteOrg(org)
+                                                                },
+                                                                actionOKMessage: 'Ja, verwijderen',
+                                                                actionCancel: () => {
+                                                                    setAlert(false);
+                                                                    setDeleting(false);
+                                                                    setAlertMSG({})
+                                                                },
+                                                                actionCancelMessage: 'Nee, annuleren',
+                                                            })
+                                                        }} className={'delete-org'} src={'/images/trash-alt-solid.svg'} alt={''}/>
 
-                                            </>
-                                            :
-                                            <form method={'post'} onSubmit={(e) => handleEditOrg(e)}>
-                                                <h1>Bewerken van organisatie ({org.name})</h1>
-                                                <p>De velden zijn niet verplicht om in te vullen.</p>
-                                                <label>
-                                                    <p>Logo organisatie:</p>
-                                                    <input type={'file'} name={'logo'}
-                                                           accept="image/png, image/gif, image/jpeg, image/svg+xml"
-                                                           onChange={(e) => handleInput([e.target.files[0], e.target.name])}/>
-                                                </label>
-                                                <label>
-                                                    <p>Naam organisatie:</p>
-                                                    <input defaultValue={org.name} type={'text'} name={'name'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Naam van de organisatie'}/>
-                                                </label>
-                                                <label>
-                                                    <p>Telefoon nummer:</p>
-                                                    <input defaultValue={org.phone_number} type={'tel'} name={'phone'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Telefoon nummer van de organisatie'}/>
-                                                </label>
-                                                <label>
-                                                    <p>E-mail adres:</p>
-                                                    <input defaultValue={org.email} type={'email'} name={'email'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'E-mail adres van de organisatie'}/>
-                                                </label>
-                                                <label>
-                                                    <p>Adres organisatie:</p>
-                                                    <input defaultValue={org.location} type={'text'} name={'adress'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Rodetorenplein 14, Zwolle'}/>
-                                                </label>
-                                                <label>
-                                                    <p>Website organisatie:</p>
-                                                    <input defaultValue={org.website} type={'text'} name={'website'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'https://www.organisatie.nl/'}/>
-                                                </label>
-                                                <div className="btns">
-                                                    <button className={'btn save'}>Opslaan</button>
-                                                    <button className={'btn'} onClick={() => setEditOrg(false)}>Annuleren</button>
-                                                </div>
-                                            </form>
-                                        }
-                                    </div>
-                                )
-                            })}
+                                                    </>
+                                                    :
+                                                    <form method={'post'} onSubmit={(e) => handleEditOrg(e)}>
+                                                        <h1>Bewerken van organisatie ({org.name})</h1>
+                                                        <p>De velden zijn niet verplicht om in te vullen.</p>
+                                                        <label>
+                                                            <p>Logo organisatie:</p>
+                                                            <input type={'file'} name={'logo'}
+                                                                   accept="image/png, image/gif, image/jpeg, image/svg+xml"
+                                                                   onChange={(e) => handleInput([e.target.files[0], e.target.name])}/>
+                                                        </label>
+                                                        <label>
+                                                            <p>Naam organisatie:</p>
+                                                            <input defaultValue={org.name} type={'text'} name={'name'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Naam van de organisatie'}/>
+                                                        </label>
+                                                        <label>
+                                                            <p>Telefoon nummer:</p>
+                                                            <input defaultValue={org.phone_number} type={'tel'} name={'phone'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Telefoon nummer van de organisatie'}/>
+                                                        </label>
+                                                        <label>
+                                                            <p>E-mail adres:</p>
+                                                            <input defaultValue={org.email} type={'email'} name={'email'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'E-mail adres van de organisatie'}/>
+                                                        </label>
+                                                        <label>
+                                                            <p>Adres organisatie:</p>
+                                                            <input defaultValue={org.location} type={'text'} name={'adress'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'Rodetorenplein 14, Zwolle'}/>
+                                                        </label>
+                                                        <label>
+                                                            <p>Website organisatie:</p>
+                                                            <input defaultValue={org.website} type={'text'} name={'website'} onChange={(e) => handleInput([e.target.value, e.target.name])} placeholder={'https://www.organisatie.nl/'}/>
+                                                        </label>
+                                                        <div className="btns">
+                                                            <button className={'btn save'}>Opslaan</button>
+                                                            <button className={'btn'} onClick={() => setEditOrg(false)}>Annuleren</button>
+                                                        </div>
+                                                    </form>
+                                                }
+                                            </div>
+                                        )
+                                    })}
+                                </>
+                            : <p className={'not-found'}>Geen organisatie gevonden.</p>}
                             {newOrg ?
                                 <div className="page newOrg" key={'wfeughgiyl74y4tirulfkg'}>
                                     <h1>Nieuwe organisatie</h1>

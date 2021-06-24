@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ReactDOM from "react-dom";
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, useLocation} from 'react-router-dom';
 
 // Import pages
 import axios from "axios";
@@ -19,21 +19,13 @@ import Organisations from "./components/pages/admin/edit/organisations";
 export default function App() {
     const [loading, setLoading] = useState(true);
 
-    const [title, setTitle] = useState('');
-
-    useEffect(() => {
-        var url = window.location.href;
-        var part = url.substring(url.lastIndexOf('/') + 1);
-        setTitle(part);
-    }, []);
-
     return (
         <>
             <Router>
                 <NotificationProvider>
                     <UserProvider>
                         <Topnavigation/>
-                        <TitleBar title={title}/>
+                        <TitleBar/>
                         <Sidebar/>
                         <Switch>
                             {/* Admin route */}

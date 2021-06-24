@@ -19,6 +19,8 @@ export default function Screens() {
     const [findOrganisation, setFindOrganisation] = useState(false);
     const [selectedOrganisation, setSelectedOrganisation] = useState(null);
     const [pageType, setPageType] = useState(null);
+    const [filteredPage, setFilteredPage] = useState([]);
+
     const [alertMSG, setAlertMSG] = useState({
         title: 'Bericht',
         description: 'Beschrijving van bericht',
@@ -29,7 +31,7 @@ export default function Screens() {
     });
     const [editTile, setEditTile] = useState(null);
 
-    const {dispatch} = NotificationApi();
+    const {dispatch, pageTitle, setPageTitle} = NotificationApi();
 
     const [title, setTitle] = useState(null);
     const [path, setPath] = useState(null);
@@ -39,7 +41,9 @@ export default function Screens() {
 
     useEffect(() => {
         getPages();
-        getOrganisations()
+        var url = window.location.href;
+        var part = url.substring(url.lastIndexOf('/') + 1);
+        setPageTitle(part);
     }, []);
 
     function getPages() {
@@ -56,6 +60,7 @@ export default function Screens() {
             .then(response => {
                 if (response.data.pages) {
                     setPages(response.data.pages);
+                    setFilteredPage(response.data.pages);
                     setLoading(false);
                 }
 
@@ -353,6 +358,15 @@ export default function Screens() {
             })
     }
 
+
+    function handleSearch(text) {
+        const searchedPage = pages?.filter(page => page.title.toLowerCase().includes(text.toLowerCase()));
+        if(searchedPage) {
+            setFilteredPage(searchedPage);
+        }
+    }
+
+
     return (
         <AdminPage>
             {alert ?
@@ -369,10 +383,19 @@ export default function Screens() {
                     </div>
                 </div>
                 : null}
+                {loading === false ?
+                    <div className="topitems">
+                        <div className="search margin-left-null">
+                            <img src={'/images/search.svg'} alt={''}/>
+                            <input type={'search'} placeholder={'Zoeken naar pagina\'s ...'} onChange={(e) => handleSearch(e.target.value)} />
+                        </div>
+                    </div>
+                : null}
             <div className="pages">
                 {loading === false ?
+                    filteredPage.length > 0 ?
                     <>
-                        {pages?.map((page, index) => {
+                        {filteredPage?.map((page, index) => {
                             if(page.type !== 'organisation') {
                                 return (
                                     <div
@@ -605,7 +628,8 @@ export default function Screens() {
                             }
                         })}
                     </>
-                    :
+                        : <p className={'not-found'}>Pagina niet gevonden.</p>
+                :
                     <div className="loading">
                         <div className="lds-ring">
                             <div/>
