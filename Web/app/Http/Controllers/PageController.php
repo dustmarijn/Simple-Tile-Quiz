@@ -16,7 +16,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        return response(['pages' => Page::with('tiles')->get()]);
+        $pages = Page::with('tiles')->get();
+        return response(['pages' => $pages, 'mobilePages' => json_encode($pages)]);
     }
 
     /**
