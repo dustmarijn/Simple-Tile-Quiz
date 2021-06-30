@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organisation;
+use App\Models\Page;
+use App\Models\Tile;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class OrganisationController extends Controller
@@ -111,17 +114,77 @@ class OrganisationController extends Controller
      */
     public function update(Request $request, Organisation $organisation)
     {
-        //
+        $org = Organisation::where('id', intval($request->id))->first();
+        if($org) {
+            $tile = Tile::where('title', $org->name)->first();
+            if($request->name !== 'null') {
+                $org->name = $request->name;
+                $tile->title = $request->name;
+            }
+            if($request->hasFile('logo_file_name')) {
+                $this->validate($request, [
+
+                    'logo_file_name' => 'required|mimes:jpg,jpeg,png,bmp,tif,svg'
+
+                ]);
+
+                $file = $request->file('logo_file_name');
+                $filename = $file->getClientOriginalName();
+
+                $path = public_path('/images/organisationlogo/');
+
+                if (!file_exists($path . '' . $filename)) {
+                    $file->move($path, $filename);
+                }
+                $org->logo_file_name = $filename;
+                $tile->illustration_file_name = $filename;
+            }
+            if($request->phone !== 'null') {
+                $org->phone_number = $request->phone;
+            }
+            if($request->email !== 'null') {
+                $org->email = $request->email;
+            }
+            if($request->location !== 'null') {
+                $org->location = $request->location;
+            }
+            if($request->website !== 'null') {
+                $org->website = $request->website;
+            }
+            $tile->save();
+            $org->save();
+
+            return response(['succesMessage' => 'Organisatie is aangepast en opgeslagen!'], 200);
+        } else {
+            return response(['errorMessage' => 'Er is iets mis gegaan!'], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Organisation  $organisation
+     * @param \App\Models\Tile $tile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Organisation $organisation)
+    public function destroy(Request $request)
     {
-        //
+        $org = Organisation::where('id', intval($request->id))->first();
+        if($org) {
+            $page = Page::where('title', $org->name)->first();
+            $tile = Tile::where('title', $org->name)->first();
+            $org->delete();
+            if($page) {
+                $tile->delete();
+                $page->tiles()->delete();
+                if($page->id !== 1) {
+                    $page->delete();
+                }
+                return response(['succesMessage' => 'Organisatie en bijbehorende pagina\'s zijn verwijderd.'], 200);
+            } else {
+                return response(['errorMessage' => 'Pagina van de organisatie kon niet worden gevonden'], 500);
+            }
+        } else {
+            return response(['errorMessage' => 'Organisatie kon niet worden gevonden.'], 500);
+        }
     }
 }

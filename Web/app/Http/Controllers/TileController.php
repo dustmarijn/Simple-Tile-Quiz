@@ -29,9 +29,6 @@ class TileController extends Controller
 
             $tile = new Tile(); // Creates new tile.
             $tile->title = $request->title; // Title of the tile.
-            if($request->path) {
-                $tile->path = $request->path;
-            }
             $filename = '';
             if ($request->hasFile('illustration_file_name')) {
 
@@ -56,12 +53,18 @@ class TileController extends Controller
             }
 
             if ($request->path) { // Checks if the tile path from the tile is requested.
-                if (!Tile::all()->where('path', $request->path)->first()) {
+                if (!Tile::where('path', $request->path)->first()) {
                     if ($request->page_id) {
 
                         $tile->illustration_file_name = $filename;
                         $tile->able_to_use = "true";
                         $tile->page_id = intval($request->page_id); // Sets the id from the relation adminpage.
+                        $page = Page::where('id', intval($request->page_id))->first();
+                        if($page->path !== '/') {
+                            $tile->path = str_replace(" ", "-", strtolower($request->path));
+                        } else {
+                            $tile->path = '/' . str_replace(" ", "-", strtolower($request->title));
+                        }
                         $tile->save(); // Saves the tile in the database.
 
                         return response(['succesMessage' => 'Keuze tegel succesvol aangemaakt!'], 200);
@@ -127,10 +130,10 @@ class TileController extends Controller
 
 
     public function ableToUseTile(Request $request) {
-        $tile = Tile::all()->where('id', intval($request->tile_id))->first();
+        $tile = Tile::where('id', intval($request->tile_id))->first();
         $disable = '';
         if($tile) {
-            $page = Page::all()->where('path', $tile->path)->first();
+            $page = Page::where('path', $tile->path)->first();
             if($page) {
                 if($request->able_to_use === '0') {
                     $page->able_to_use = '0';
@@ -146,9 +149,9 @@ class TileController extends Controller
                 $tile->able_to_use = '1';
             }
             $tile->save();
-            return response(['message' => 'Tile saved', 'disabled' => $disable]);
+            return response(['message' => 'Tile saved', 'disabled' => $disable], 200);
         } else {
-            return response(['message' => 'Tile does not exist', 'disabled' => $disable]);
+            return response(['message' => 'Tile does not exist', 'disabled' => $disable], 500);
         }
     }
 
@@ -160,21 +163,30 @@ class TileController extends Controller
      */
     public function destroy(Request $request)
     {
-        $tile = Tile::all()->where('id', intval($request->id))->first();
+        $tile = Tile::where('id', intval($request->id))->first();
         if($tile) {
-            $page = Page::all()->where('path', $tile->path)->first();
+            $page = Page::where('path', $tile->path)->first();
+            $tile->delete();
             if($page) {
-                $tile->delete();
                 $page->tiles()->delete();
                 if($page->id !== 1) {
                     $page->delete();
                 }
-                return response(['succesMessage' => 'Tile en bijbehorende pagina\'s zijn verwijderd.']);
-            } else {
-                return response(['errorMessage' => 'Pagina van de tegel kon niet worden gevonden']);
+                return response(['succesMessage' => 'Tile en bijbehorende pagina\'s zijn verwijderd.'], 200);
             }
+            $deleteAllPages = Page::all();
+            forEach($deleteAllPages as $delPage) {
+                if(!Tile::where('title', $delPage)->first()) {
+                    if($delPage->path !== '/') {
+                        if(!$delPage->tiles()) {
+                            $delPage->delete();
+                        }
+                    }
+                }
+            }
+            return response(['errorMessage' => 'Tegel is verwijderd. Hoorde alleen geen pagina bij'], 200);
         } else {
-            return response(['errorMessage' => 'Keuze tegel kon niet worden gevonden.']);
+            return response(['errorMessage' => 'Keuze tegel kon niet worden gevonden.'], 500);
         }
     }
 }

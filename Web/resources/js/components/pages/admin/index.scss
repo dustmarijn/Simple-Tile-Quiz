@@ -135,11 +135,51 @@
     z-index: 999;
 }
 
-.topnavigation h1:not(.info h1) {
-    font-size: 22.5px;
-    color: white;
-    margin-left: 2.5vw;
+.topnavigation .title {
+    position: relative;
+    height: 100%;
+    width: calc(290px - 3vw);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    padding: 0 1.5vw;
+    background-color: #c91c66;
 }
+
+.topnavigation .title h1:not(.info h1) {
+    font-size: 20px;
+    color: white;
+}
+
+.topnavigation .menu {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    transition: 0.2s;
+}
+
+.topnavigation .menu:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.topnavigation .menu .line {
+    position: relative;
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 4px;
+    margin: 2.5px 0px;
+}
+
 .topnavigation .usercontent {
     margin: 0 2.5vw;
     width: auto;
@@ -186,6 +226,12 @@
     border-radius: 40px;
 }
 
+.titlebar.closed {
+    left: 90px;
+    width: calc(100vw - 90px);
+    transition: 0.2s;
+}
+
 .titlebar {
     position: fixed;
     top: 60px;
@@ -200,11 +246,30 @@
     align-content: center;
     flex-direction: row;
     z-index: 999;
+    transition: 0.2s;
 }
 
 .titlebar h1 {
     font-size: 20px;
     margin-left: 2.5vw;
+}
+
+.sidebar.closed {
+    width: 90px;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.sidebar.closed .logo {
+    width: 100%;
+    left: 10px;
+}
+
+.sidebar.closed .links a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 .sidebar {
@@ -220,6 +285,7 @@
     align-content: center;
     flex-direction: column;
     z-index: 999;
+    transition: 0.2s;
 }
 
 .sidebar .logo {
@@ -256,14 +322,23 @@
     height: 35px;
     background-color: transparent;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
     align-content: center;
-    flex-direction: column;
+    flex-direction: row;
     text-decoration: none;
     color: white;
     cursor: pointer;
     transition: 0.2s;
+}
+
+.sidebar .links a img {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    filter: invert(100%);
+    margin-right: 10px;
 }
 
 .sidebar .links a:hover {
@@ -314,4 +389,19 @@
         opacity: 0;
         transform: scale(0);
     }
+}
+
+.authentication form .loading {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.authentication form .loading h1 {
+    margin-top: 25px;
 }

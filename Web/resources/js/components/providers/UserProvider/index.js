@@ -1,4 +1,5 @@
 import React, {createContext, useEffect, useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import axios from "axios";
 import Authentication from "../../pages/admin/authentication";
 import NotificationApi from "../../api/NotificationApi";
@@ -12,6 +13,7 @@ export default function UserProvider({children}) {
     const [adminRights, setAdminRights] = useState(false);
 
     const {dispatch} = NotificationApi();
+    const history = useHistory();
 
     useEffect(() => {
         getUser();
@@ -26,10 +28,10 @@ export default function UserProvider({children}) {
 
     function logoutUser() {
         localStorage.setItem('auth_token', '');
-        window.location.href = '/logout';
+        history.push('/admin');
+        setAdminRights(false);
         axios.get('/api/logout')
             .then(response => {
-
             })
     }
 
@@ -78,25 +80,11 @@ export default function UserProvider({children}) {
 
     return (
         <UserContext.Provider value={{user, setUser, getUser, adminRights, setAdminRights, logoutUser, setLoading, loading}}>
-            {loading === false ?
+            {adminRights ?
                 <>
-                    {adminRights ?
-                        <>
-                            {children}
-                        </>
-                        : <Authentication adminRights={adminRights} setAdminRights={setAdminRights} user={user} setUser={setUser}/>
-                    }
+                    {children}
                 </>
-            :
-                <div className="loading">
-                    <div className="lds-ring">
-                        <div/>
-                        <div/>
-                        <div/>
-                        <div/>
-                    </div>
-                    <h1>Bijna klaar ...</h1>
-                </div>
+                : <Authentication adminRights={adminRights} setAdminRights={setAdminRights} user={user} setUser={setUser}/>
             }
         </UserContext.Provider>
     )

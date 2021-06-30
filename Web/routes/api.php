@@ -27,9 +27,13 @@ Route::post('/createTile', 'App\Http\Controllers\TileController@create');
 Route::post('/createPage', 'App\Http\Controllers\PageController@create');
 Route::post('/createOrganisation', 'App\Http\Controllers\OrganisationController@create');
 
+Route::post('/showPage', 'App\Http\Controllers\PageController@show');
+
 Route::post('/editPage', 'App\Http\Controllers\PageController@update');
+Route::post('/editOrganisation', 'App\Http\Controllers\OrganisationController@update');
 
 Route::post('/deleteTile', 'App\Http\Controllers\TileController@destroy');
+Route::post('/deleteOrganisation', 'App\Http\Controllers\OrganisationController@destroy');
 
 Route::post('/ableToUseTile', 'App\Http\Controllers\TileController@ableToUseTile');
 

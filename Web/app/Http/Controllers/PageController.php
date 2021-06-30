@@ -16,7 +16,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        return response(['pages' => Page::with('tiles')->get()]);
+        $pages = Page::with('tiles')->get();
+        return response(['pages' => $pages, 'mobilePages' => $pages])->header('Content-Type', 'text/plain');
     }
 
     /**
@@ -31,19 +32,19 @@ class PageController extends Controller
 
             $page = new Page(); // Creates new adminpage.
             $page->title = $request->title; // Title of the adminpage.
-            if ($request->path) { // Checks if the adminpage path from the adminpage is requested.
-                if (Page::all()->where('path', $request->path)) {
+            if (!Page::where('path', $request->path)->first()) {
 
-                    $page->path = $request->path; // Sets the path of the adminpage to the requested path.
+                $page->path = str_replace(" ", "-", $request->path); // Sets the path of the adminpage to the requested path.
 
-                    $page->save(); // Saves the adminpage in the database.
-
-                    return response(['succesMessage' => 'Pagina succesvol aangemaakt!']);
-                } else {
-                    return response(['errorMessage' => 'Pagina kon niet worden aangemaakt, er is al een pagina die naar dit pad gaat!']);
+                if($request->type) {
+                    $page->type = $request->type; // Sets the type of the page (Tile or Organisation).
                 }
+
+                $page->save(); // Saves the adminpage in the database.
+
+                return response(['succesMessage' => 'Pagina succesvol aangemaakt!']);
             } else {
-                return response(['errorMessage' => 'Pagina kon niet worden aangemaakt, je moet een pad aangeven waar deze pagina komt!']);
+                return response(['errorMessage' => 'Pagina kon niet worden aangemaakt, er is al een pagina die naar dit pad gaat!']);
             }
         } else {
             return response(['errorMessage' => 'Pagina kon niet worden aangemaakt, je moet wel een titel toevoegen!']);
@@ -68,9 +69,9 @@ class PageController extends Controller
      */
     public function show(Request $request)
     {
-        $page = Page::all()->where('id', $request->id);
+        $page = Page::where('id', intval($request->id))->first();;
 
-        return response(['adminpage' => $page]);
+        return response(['adminpage' => $page, 'mobilePage' => $page])->header('Content-Type', 'text/plain');
     }
 
     /**
@@ -92,53 +93,67 @@ class PageController extends Controller
      */
     public function update(Request $request)
     {
-        if($request->page_id !== "null") {
-            $page = Page::all()->where('id', intval($request->page_id))->first();
-            $tile = Tile::all()->where('path', $page->path)->first();
-        } else {
-            $tile = Tile::all()->where('id', intval($request->tile_id))->first();
-            $page = Page::all()->where('path', $tile->path)->first();
-        }
+        $page = Page::where('id', $request->page_id)->first();
+        $tile = Tile::where('id', $request->tile_id)->first();
         if($page) {
-            if($tile) {
-                if($page->path === $tile->path) {
-                    if($request->title !== "null") {
+            if(!$tile) {
+                $tile = Tile::where('title', $page->title)->first();
+                if($tile) {
+                    if($request->title !== 'null' or $request->title !== null) {
                         $tile->title = $request->title;
                     }
-                    if($request->path !== "null") {
-                        $tile->path = $request->path;
-                    }
-                    if($request->hasFile('illustration_file_name')) {
-                        $this->validate($request, [
-
-                            'illustration_file_name' => 'required|mimes:jpg,jpeg,png,bmp,tif,svg'
-
-                        ]);
-
-                        $file = $request->file('illustration_file_name');
-                        $filename = $file->getClientOriginalName();
-
-                        $path = public_path('/images/illustrations');
-
-                        if (!file_exists($path . '' . $filename)) {
-                            $file->move($path, $filename);
-                        }
-
-                        $tile->illustration_file_name = $filename;
+                    if($request->path !== 'null' or $request->path !== null) {
+                        $tile->path = str_replace(" ", "-", strtolower($request->path));
                     }
                     $tile->save();
                 }
             }
-            if($request->title !== "null") {
+            if($request->title !== 'null' or $request->title !== null) {
                 $page->title = $request->title;
             }
-            if($request->path !== "null") {
-                $page->path = $request->path;
+            if($request->path !== 'null' or $request->path !== null) {
+                $page->path = str_replace(" ", "-", strtolower($request->path));
             }
             $page->save();
-            return response(['succesMessage' => 'De aanpassingen zijn succesvol opgeslagen!']);
-        } else {
-            return response(['errorMessage' => 'Deze pagina bestaat niet!']);
+        }
+        if($tile) {
+            if(!$page) {
+                $page = Page::where('title', $tile->title)->first();
+                if($page) {
+                    if($request->title !== 'null' or $request->title !== null) {
+                        $page->title = $request->title;
+                    }
+                    if($request->path !== 'null' or $request->path !== null) {
+                        $page->path = str_replace(" ", "-", strtolower($request->path));
+                    }
+                    $page->save();
+                }
+            }
+            if($request->title !== 'null' or $request->title !== null) {
+                $tile->title = $request->title;
+            }
+            if($request->path !== 'null' or $request->path !== null) {
+                $tile->path = str_replace(" ", "-", strtolower($request->path));
+            }
+            if($request->hasFile('illustration_file_name')) {
+                $this->validate($request, [
+
+                    'illustration_file_name' => 'required|mimes:jpg,jpeg,png,bmp,tif,svg'
+
+                ]);
+
+                $file = $request->file('illustration_file_name');
+                $filename = $file->getClientOriginalName();
+
+                $path = public_path('/images/illustrations');
+
+                if (!file_exists($path . '' . $filename)) {
+                    $file->move($path, $filename);
+                }
+
+                $tile->illustration_file_name = $filename;
+            }
+            $tile->save();
         }
     }
 

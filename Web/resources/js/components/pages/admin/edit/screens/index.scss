@@ -150,6 +150,11 @@
     border: 0;
 }
 
+.edit-items .edit-item:nth-child(2) {
+    margin-top: 0px;
+    border: 0;
+}
+
 .edit-items .edit-item p {
     font-size: 16px;
     font-weight: 500;
@@ -159,6 +164,11 @@
 
 .edit-items .remove p {
     color: red;
+}
+
+.edit-items .edit-item.remove {
+    margin-top: 5px;
+    border: 0;
 }
 
 .edit-tile:hover .tile {
@@ -343,7 +353,7 @@
     width: auto;
 }
 
-.popup form .btns, , .page form .btns {
+.popup form .btns , .page form .btns {
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
@@ -434,7 +444,7 @@
     flex-direction: row;
 }
 
-.tile.shake {
+.tile.shake, .page.shake {
     animation: shake 1s linear infinite;
 }
 
@@ -510,4 +520,8 @@
 .btn.not-use {
     opacity: 0.4;
     pointer-events: none;
+}
+
+.search.margin-left-null {
+    left: 1vw;
 }

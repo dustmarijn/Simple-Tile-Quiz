@@ -7,10 +7,57 @@
     background-color: #f6f5fb;
     animation: glow-in 0.3s;
     z-index: 100;
+    transition: 0.2s;
 }
 
 @keyframes glow-in {
     0% {
         opacity: 0
     }
+}
+
+.adminpage.closed {
+    width: calc(100vw - 90px);
+    left: 90px;
+    transition: 0.2s;
+}
+
+.flexbox-container {
+    position: relative;
+    width: calc(100% - 2.5vw);
+    left: 2.5vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.flexbox-container .page {
+    position: relative;
+    max-width: 35vw;
+    margin-right: 2.5vw;
+    margin-top: 25px;
+}
+
+.page .info-text {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    height: auto;
+    padding: 5px 0px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.page .info-text p {
+    width: 250px;
+    color: #696969;
+}
+
+.page .info-text.normal p {
+    color: black;
 }
