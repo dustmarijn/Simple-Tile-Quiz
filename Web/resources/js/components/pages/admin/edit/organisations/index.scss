@@ -1,8 +1,8 @@
 .pages img:not(.edit-tile .edit-items img, .delete-org):not(.tile img) {
     position: relative;
     left: 20px;
-    width: 125px;
-    height: auto;
+    width: auto;
+    height: 50px;
     background-size: cover;
     margin-top: 25px;
 }
@@ -61,6 +61,24 @@
     cursor: pointer;
     padding: 5px;
     transition: 0.2s;
+}
+
+.orgs {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    left: -25px;
+}
+
+.organisation {
+    position: relative;
+    max-width: 40%;
+    min-width: 300px;
+    margin: 25px;
 }
 
 .page .delete-org:hover {

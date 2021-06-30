@@ -4,6 +4,7 @@ import axios from "axios";
 import NotificationApi from "../../../../api/NotificationApi";
 
 import './index.scss';
+import Alert from "../../alert";
 
 export default function Organisations() {
     const [loading, setLoading] = useState(true);
@@ -243,18 +244,7 @@ export default function Organisations() {
     return (
         <AdminPage>
                 {alert ?
-                <div className="blackbox">
-                    <div className="alert">
-                        <h1>{alertMSG.title}</h1>
-                        <p>{alertMSG.description}</p>
-                        <div className="btns">
-                            <button className={'btn save'}
-                                    onClick={alertMSG.actionOK}>{alertMSG.actionOKMessage}</button>
-                            <button className={'btn'}
-                                    onClick={alertMSG.actionCancel}>{alertMSG.actionCancelMessage}</button>
-                        </div>
-                    </div>
-                </div>
+                    <Alert alertMSG={alertMSG}/>
                 : null}
                 <>
                     {loading === false ?
@@ -271,14 +261,14 @@ export default function Organisations() {
                             </div>
                         </div>
                     : null}
-                    <div className="pages">
+                    <div className="pages orgs">
                     {loading === false ?
                         <>
                             {filteredOrgs.length > 0 ?
                                 <>
                                     {filteredOrgs?.map((org, index) => {
                                         return (
-                                            <div className={`page ${deleting === org.id ? 'shake' : ''}`} key={index}>
+                                            <div className={`page organisation ${deleting === org.id ? 'shake' : ''}`} key={index}>
                                                 {editOrg !== org.id ?
                                                     <>
                                                         <img src={'/images/organisationlogo/' + org.logo_file_name} alt={''}/>
