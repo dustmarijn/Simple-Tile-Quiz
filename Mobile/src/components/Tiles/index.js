@@ -1,53 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, ScrollView, Button, Alert, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import axios from "axios";
+import Tile from "./Tile";
 
-export default function Tile(){
-    var indicationWord = 'steekwoord';
-    const tilePress = () => alert(indicationWord);
+export default function Tiles({navigation, page, organisations}){
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if(page.id) {
+            setLoading(false);
+        }
+    }, [page]);
 
     return(
         <ScrollView>
-            <Text style={styles.header}>Ik zoek voor</Text>
-            <View>
-                <TouchableOpacity style={styles.appButtonContainer} onPress={tilePress}>
-                    <Image
-                       git 
-                       style={styles.image}
-                        source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
-                    />
-                    <Text style={styles.appButtonText}>{indicationWord}</Text>
-                </TouchableOpacity>
-            </View>
-            <View>
-                <TouchableOpacity style={styles.appButtonContainer} onPress={tilePress}>
-                    <Image
-                        style={styles.image}
-                        source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
-                    />
-                    <Text style={styles.appButtonText}>{indicationWord}</Text>
-                </TouchableOpacity>
-            </View>
-            <View>
-                <TouchableOpacity style={styles.appButtonContainer} onPress={tilePress}>
-                    <Image
-                        style={styles.image}
-                        source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
-                    />
-                    <Text style={styles.appButtonText}>{indicationWord}</Text>
-                </TouchableOpacity>
-            </View>
-            <View>
-                <TouchableOpacity style={styles.appButtonContainer} onPress={tilePress}>
-                    <Image
-                        style={styles.image}
-                        source={{uri: 'https://reactnative.dev/img/tiny_logo.png',}}
-                    />
-                    <Text style={styles.appButtonText}>{indicationWord}</Text>
-                </TouchableOpacity>
-            </View>
-        <View>
-            <Text style={{marginTop: 35}}/>
-        </View>
+            <Text style={styles.header}>{page?.title}</Text>
+            {loading === false ?
+                <View style={styles.tiles}>
+                    {page?.tiles?.map((tile, index) => {
+                        return (
+                            <Tile organisations={organisations} key={index} title={tile.title} illustration={tile.illustration_file_name} onPress={() => navigation.navigate(tile.path)} />
+                        )
+                    })}
+                </View>
+            : <Text>Laden ...</Text> }
         </ScrollView>
     );
 }
@@ -72,14 +48,24 @@ const styles = StyleSheet.create({
         height: 180,
     },
     header: {
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: 25,
+        marginBottom: 25,
         color: 'black',
         textAlign: 'center',
-        fontSize: 25,
+        fontSize: 30,
     },
     appButtonText: {
         marginTop: 15,
         fontSize: 20,
+    },
+    tiles: {
+        width: 100 + '%',
+        height: 'auto',
+        display: 'flex',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 50,
+        flexDirection: 'column',
     }
 });

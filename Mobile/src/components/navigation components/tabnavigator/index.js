@@ -26,7 +26,7 @@ export default function TabNavigator() {
                 height: 40,
             },
         }}>
-            <Tab.Screen name={'Home'} options={{
+            <Tab.Screen name={'/'} options={{
                 tabBarIcon: ({focused}) => (
                     <View style={{borderRadius: 50, height: 55, width: 55, alignItems: 'center', justifyContent: 'center', padding: 3, top: -25, backgroundColor: '#F6227D'}}>
                         <View style={{borderRadius: 50, height: 50, width: 50, alignItems: 'center', justifyContent: 'center', padding: 3, top: -3, backgroundColor: '#4A2485'}}>
@@ -36,7 +36,7 @@ export default function TabNavigator() {
                         </View>
                     </View>
                 )
-            }}>{props => <StackNavigator defaultRoute={'Home'}/>}</Tab.Screen>
+            }}>{props => <StackNavigator defaultRoute={'/'}/>}</Tab.Screen>
         </Tab.Navigator>
     )
 }

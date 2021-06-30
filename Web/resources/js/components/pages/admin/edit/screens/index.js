@@ -7,6 +7,7 @@ import axios from "axios";
 import './index.scss';
 import Tile from "../../../../default components/tile";
 import NotificationApi from "../../../../api/NotificationApi";
+import Alert from "../../alert";
 
 export default function Screens() {
     const [loading, setLoading] = useState(true);
@@ -41,6 +42,7 @@ export default function Screens() {
 
     useEffect(() => {
         getPages();
+        getOrganisations();
         var url = window.location.href;
         var part = url.substring(url.lastIndexOf('/') + 1);
         setPageTitle(part);
@@ -55,6 +57,13 @@ export default function Screens() {
         setEditPage(null);
         setPopup(null);
         setTileID(null);
+        setPageType(null);
+        setSelectedOrganisation(null);
+        setFindOrganisation(null);
+        setPageID(null);
+        setSelectedOrganisation(null);
+        setFindOrganisation(null);
+        setPageID(null);
         setPageType(null);
         axios.get('/api/pages')
             .then(response => {
@@ -102,7 +111,14 @@ export default function Screens() {
             if (organisation) {
                 const formData = new FormData();
                 formData.append('title', organisation.name);
-                formData.append('path', '/' + organisation.name.toLowerCase());
+                const getPage = pages?.find(page => parseInt(page.id) === parseInt(pageID));
+                if(getPage) {
+                    if(getPage?.path !== '/') {
+                        formData.append('path', getPage.path + '/' + organisation.name.toLowerCase());
+                    } else {
+                        formData.append('path', '/' + organisation.name.toLowerCase());
+                    }
+                }
                 formData.append('illustration_file_name', organisation.logo_file_name);
                 formData.append('page_id', pageID);
 
@@ -111,7 +127,6 @@ export default function Screens() {
                 axios.post('/api/createTile', formData)
                     .then(response => {
                         setPopup('');
-                        getPages();
                         dispatch({
                             type: 'ADD_NOTIFICATION',
                             payload: {
@@ -120,10 +135,6 @@ export default function Screens() {
                                 message: `De keuze tegel '${organisation.name}' is aangemaakt!`,
                             }
                         });
-                        setSelectedOrganisation(null);
-                        setFindOrganisation(null);
-                        setPageID(null);
-                        setPageType(null);
                     })
                     .catch((error) => {
                         console.error(error);
@@ -135,21 +146,25 @@ export default function Screens() {
                                 message: `Er is iets mis gegaan bij het aanmaken!`,
                             }
                         });
-                        setSelectedOrganisation(null);
-                        setFindOrganisation(null);
-                        setPageID(null);
                     });
-
-                axios.post('/api/createPage', {
-                    title: organisation.name,
-                    path: '/' + organisation.name.toLowerCase(),
-                    type: pageType ? pageType : 'tile',
-                })
+                const pageFormData = new FormData();
+                pageFormData.append('title', organisation.name);
+                pageFormData.append('type', pageType);
+                if(getPage) {
+                    if(getPage?.path !== '/') {
+                        pageFormData.append('path', getPage.path + '/' + organisation.name.toLowerCase());
+                    } else {
+                        pageFormData.append('path', '/' + organisation.name.toLowerCase());
+                    }
+                }
+                axios.post('/api/createPage', pageFormData)
                     .then(response => {
                         console.log(response);
+                        getPages();
                     })
                     .catch(error => {
                         console.error(error);
+                        getPages();
                     })
             }
         }
@@ -157,11 +172,19 @@ export default function Screens() {
 
     function handleNewTile(e) {
         e.preventDefault();
-        if (title !== null && path !== null && image !== null) {
+        if (title !== null && image !== null) {
             const formData = new FormData();
             formData.append('title', title);
-            formData.append('path', path);
             formData.append('illustration_file_name', image);
+            const getPage = pages?.find(page => parseInt(page.id) === parseInt(pageID));
+            if(getPage) {
+                if(getPage?.path !== '/') {
+                    formData.append('path', getPage.path + '/' + title.toLowerCase());
+                } else {
+                    formData.append('path', '/' + title.toLowerCase());
+                }
+            }
+
             formData.append('page_id', pageID);
 
             dispatch({
@@ -188,6 +211,7 @@ export default function Screens() {
                 })
                 .catch((error) => {
                     console.error(error);
+                    getPages();
                     dispatch({
                         type: 'ADD_NOTIFICATION',
                         payload: {
@@ -198,10 +222,7 @@ export default function Screens() {
                     });
                 });
 
-            axios.post('/api/createPage', {
-                title: title,
-                path: path,
-            })
+            axios.post('/api/createPage', formData)
                 .then(response => {
                     console.log(response);
                 })
@@ -254,6 +275,7 @@ export default function Screens() {
             })
             .catch(error => {
                 console.error(error);
+                getPages();
                 dispatch({
                     type: 'ADD_NOTIFICATION',
                     payload: {
@@ -271,7 +293,6 @@ export default function Screens() {
 
     function handleEditPage(e) {
         e.preventDefault();
-        console.log(image);
         dispatch({
             type: 'ADD_NOTIFICATION',
             payload: {
@@ -282,10 +303,29 @@ export default function Screens() {
         });
         const formData = new FormData();
         formData.append('title', title);
-        formData.append('path', path);
+        const getPage = pages?.find(page => parseInt(page.id) === parseInt(pageID));
+
+        if(getPage) {
+            if(getPage?.path !== '/') {
+                let lastPartUrl = getPage.path.substr(getPage.path.lastIndexOf('/') - 1);
+                formData.append('path', `${lastPartUrl.path !== undefined ? lastPartUrl.path : '' }` + '/' + title.toLowerCase());
+            } else {
+                if(tileID) {
+                    const getPage = pages?.find(page => parseInt(page.id) === parseInt(tileID));
+                    if(getPage?.path !== '/') {
+                        let lastPartUrl = getPage.path.substr(getPage.path.lastIndexOf('/') - 1);
+                        formData.append('path', `${lastPartUrl.path !== undefined ? lastPartUrl.path : '' }` + '/' + title.toLowerCase());
+                    } else {
+                        formData.append('path', '/' + title.toLowerCase());
+                    }
+                }
+            }
+        }
         formData.append('illustration_file_name', image);
-        formData.append('page_id', pageID);
-        formData.append('tile_id', tileID);
+        formData.append('page_id', pageID ? pageID : null);
+        formData.append('tile_id', tileID ? tileID : null);
+
+        setLoading(true);
 
         axios.post('/api/editPage', formData)
             .then(response => {
@@ -294,7 +334,6 @@ export default function Screens() {
                 setTileID(null);
                 setPageID(null);
                 getPages();
-                setLoading(true);
                 dispatch({
                     type: 'ADD_NOTIFICATION',
                     payload: {
@@ -306,10 +345,8 @@ export default function Screens() {
             })
             .catch(error => {
                 console.error(error);
-                setTileID(null);
-                setPageID(null);
-                setEditPage('');
-                setPopup('');
+                setLoading(false);
+                getPages();
                 dispatch({
                     type: 'ADD_NOTIFICATION',
                     payload: {
@@ -347,6 +384,7 @@ export default function Screens() {
                 });
             })
             .catch(error => {
+                getPages();
                 dispatch({
                     type: 'ADD_NOTIFICATION',
                     payload: {
@@ -370,18 +408,7 @@ export default function Screens() {
     return (
         <AdminPage>
             {alert ?
-                <div className="blackbox">
-                    <div className="alert">
-                        <h1>{alertMSG.title}</h1>
-                        <p>{alertMSG.description}</p>
-                        <div className="btns">
-                            <button className={'btn save'}
-                                    onClick={alertMSG.actionOK}>{alertMSG.actionOKMessage}</button>
-                            <button className={'btn'}
-                                    onClick={alertMSG.actionCancel}>{alertMSG.actionCancelMessage}</button>
-                        </div>
-                    </div>
-                </div>
+                <Alert alertMSG={alertMSG} />
                 : null}
                 {loading === false ?
                     <div className="topitems">
@@ -409,6 +436,7 @@ export default function Screens() {
                                                     setEditPage(page.id);
                                                     setEditTile(null);
                                                     setPageID(page.id);
+                                                    setTileID(null);
                                                 }}>Bewerken
                                                 </button>
                                                 {findOrganisation === page.id ?
@@ -417,7 +445,7 @@ export default function Screens() {
                                                         <p>Kies een organisatie en deze wordt weer gegeven als een
                                                             tegel.</p>
                                                         <div className="organisations">
-                                                            {organisations.map((org, index) => {
+                                                            {organisations?.map((org, index) => {
                                                                 return (
                                                                     <div
                                                                         className={`tile ${selectedOrganisation === org.id ? 'selected' : ''}`}
@@ -455,18 +483,21 @@ export default function Screens() {
                                                         return (
                                                             <div className="edit-tile" key={num}>
                                                                 <div className="edit-items">
-                                                                    <div className="edit-item" onClick={() => {
-                                                                        setPopup(page.id);
-                                                                        setEditPage(null);
-                                                                        setEditTile({
-                                                                            title: tile.title,
-                                                                            path: tile.path,
-                                                                        });
-                                                                        setTileID(tile.id);
-                                                                    }}>
-                                                                        <p>Tegel aanpassen</p>
-                                                                        <img src={'/images/pen-solid.svg'} alt={''}/>
-                                                                    </div>
+                                                                    {organisations?.filter(org => org.name !== tile.title).length >= 1 ?
+                                                                        <div className="edit-item" onClick={() => {
+                                                                            setPopup(page.id);
+                                                                            setEditPage(null);
+                                                                            setEditTile({
+                                                                                title: tile.title,
+                                                                                path: tile.path,
+                                                                            });
+                                                                            setTileID(tile.id);
+                                                                            setPageID(null);
+                                                                        }}>
+                                                                            <p>Tegel aanpassen</p>
+                                                                            <img src={'/images/pen-solid.svg'} alt={''}/>
+                                                                        </div>
+                                                                    : null }
                                                                     <div className="edit-item"
                                                                          onClick={() => handleDisableTile({
                                                                              tile_id: tile.id,
@@ -560,23 +591,17 @@ export default function Screens() {
                                                         <p>Tegel titel</p>
                                                         <input type={'text'} name={'title'}
                                                                defaultValue={editTile?.title}
-                                                               placeholder={'Titel van de tegel'} onChange={(e) => {
-                                                            handleInput([e.target.value, e.target.name])
+                                                               placeholder={'Titel van de tegel'} onChange={(e) =>
+                                                        {
+                                                            handleInput([e.target.value, e.target.name]);
                                                         }} required/>
-                                                    </label>
-                                                    <label>
-                                                        <p>Pad naar tegel</p>
-                                                        <input type={'text'} name={'path'} defaultValue={editTile?.path}
-                                                               placeholder={`Voorbeeld '/tegel' `}
-                                                               onChange={(e) => handleInput([e.target.value, e.target.name])}
-                                                               required/>
                                                     </label>
                                                     <label>
                                                         <p>Illustratie voor de tegel</p>
                                                         <input type={'file'} name={'illustration'}
                                                                accept="image/png, image/gif, image/jpeg, image/svg+xml"
                                                                onChange={(e) => handleInput([e.target.files[0], e.target.name])}
-                                                               required/>
+                                                               required={editTile === '' ? true : false}/>
                                                     </label>
                                                     <div className="btns">
                                                         <button className={'btn save'}
@@ -606,13 +631,6 @@ export default function Screens() {
                                                             handleInput([e.target.value, e.target.name])
                                                             setPageID(page.id);
                                                         }} required/>
-                                                    </label>
-                                                    <label>
-                                                        <p>Pad naar pagina</p>
-                                                        <input type={'text'} name={'path'} defaultValue={page.path}
-                                                               placeholder={`Voorbeeld '/pagina' `}
-                                                               onChange={(e) => handleInput([e.target.value, e.target.name])}
-                                                               required/>
                                                     </label>
                                                     <div className="btns">
                                                         <button className={'btn save'}
