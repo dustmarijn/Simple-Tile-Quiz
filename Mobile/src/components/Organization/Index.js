@@ -4,7 +4,6 @@ import homestyle from '../../../style';
 import AxiosCall from "./AxiosCall";
 
 
-
 export default function Organization(){
 const [loading, setLoading] = useState(true);
 const [pages, setPages] = useState([]);

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
-import {Text, View, Image, StyleSheet} from "react-native";
+import {Text, View, Image, StyleSheet, Linking, Button} from "react-native";
 
-export default function AxiosCall() {
+export default function DetailsAxiosCall() {
     const [loading, setLoading] = useState(true);
     const [organisations, setOrganisations] = useState([]);
 
@@ -12,7 +12,7 @@ export default function AxiosCall() {
     useEffect(() => {
         axios.get('http://10.0.2.2:8000/api/organisations')
             .then((res) => {
-                //console.warn(res.datas    .organisations);
+                //console.warn(res.data.organisations);
                 setOrganisations(res.data.organisations);
                 setLoading(false);
             })
@@ -33,6 +33,10 @@ export default function AxiosCall() {
                         <View key={index}>
                             <Image source={{uri: 'http://10.0.2.2:8000/images/organisationlogo/' + org.logo_file_name}}/>
                             <Text style={styles.header}>{org.name}</Text>
+                            <Text style={styles.text}>{org.email}</Text>
+                            <Text style={styles.text}>{org.phone_number}</Text>
+                            <Text style={styles.text}>{org.website}</Text>
+                            <Button title="Website" onPress={() => {Linking.openURL(org.website).catch( err => console.error("Couldn't load page", err))}}/>
                         </View>)})
                 : <Text>Aan het laden ... </Text> }
         </View>
@@ -73,4 +77,7 @@ const styles = StyleSheet.create({
         elevation: 5,
         height: 180,
     },
+    text:{
+        fontSize: 20
+    }
 });
