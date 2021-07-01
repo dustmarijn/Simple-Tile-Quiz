@@ -4127,23 +4127,45 @@ function Screens() {
       return parseInt(page.id) === parseInt(pageID);
     });
 
-    if (getPage) {
+    if (getPage !== undefined) {
       if ((getPage === null || getPage === void 0 ? void 0 : getPage.path) !== '/') {
-        var lastPartUrl = getPage.path.substr(getPage.path.lastIndexOf('/') - 1);
-        formData.append('path', "".concat(lastPartUrl.path !== undefined ? lastPartUrl.path : '') + '/' + title.toLowerCase());
+        var url = getPage === null || getPage === void 0 ? void 0 : getPage.path;
+        var shortUrl = url.substring(0, url.lastIndexOf("/"));
+        formData.append('path', "".concat(shortUrl !== undefined ? shortUrl : '') + '/' + title.toLowerCase());
       } else {
-        if (tileID) {
-          var _getPage = pages === null || pages === void 0 ? void 0 : pages.find(function (page) {
-            return parseInt(page.id) === parseInt(tileID);
-          });
+        formData.append('path', '/');
+      }
+    } else {
+      if (tileID !== null) {
+        var tileTitle = null;
+        pages === null || pages === void 0 ? void 0 : pages.map(function (page) {
+          var _page$tiles;
 
-          if ((_getPage === null || _getPage === void 0 ? void 0 : _getPage.path) !== '/') {
-            var _lastPartUrl = _getPage.path.substr(_getPage.path.lastIndexOf('/') - 1);
+          if (page !== null && page !== void 0 && (_page$tiles = page.tiles) !== null && _page$tiles !== void 0 && _page$tiles.find(function (tile) {
+            return parseInt(tile.id) === parseInt(tileID);
+          })) {
+            var _page$tiles2;
 
-            formData.append('path', "".concat(_lastPartUrl.path !== undefined ? _lastPartUrl.path : '') + '/' + title.toLowerCase());
-          } else {
-            formData.append('path', '/' + title.toLowerCase());
+            tileTitle = page === null || page === void 0 ? void 0 : (_page$tiles2 = page.tiles) === null || _page$tiles2 === void 0 ? void 0 : _page$tiles2.find(function (tile) {
+              return parseInt(tile.id) === parseInt(tileID);
+            });
           }
+        });
+
+        var _getPage = pages === null || pages === void 0 ? void 0 : pages.find(function (page) {
+          var _tileTitle;
+
+          return page.title === ((_tileTitle = tileTitle) === null || _tileTitle === void 0 ? void 0 : _tileTitle.title);
+        });
+
+        if ((_getPage === null || _getPage === void 0 ? void 0 : _getPage.path) !== '/') {
+          var _url = _getPage === null || _getPage === void 0 ? void 0 : _getPage.path;
+
+          var _shortUrl = _url.substring(0, _url.lastIndexOf("/"));
+
+          formData.append('path', "".concat(_shortUrl !== undefined ? _shortUrl : '') + '/' + title.toLowerCase());
+        } else {
+          formData.append('path', '/' + title.toLowerCase());
         }
       }
     }

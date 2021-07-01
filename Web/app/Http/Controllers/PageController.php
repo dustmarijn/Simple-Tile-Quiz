@@ -93,8 +93,8 @@ class PageController extends Controller
      */
     public function update(Request $request)
     {
-        $page = Page::where('id', $request->page_id)->first();
-        $tile = Tile::where('id', $request->tile_id)->first();
+        $page = Page::where('id', intval($request->page_id))->first();
+        $tile = Tile::where('id', intval($request->tile_id))->first();
         if($page) {
             if(!$tile) {
                 $tile = Tile::where('title', $page->title)->first();
@@ -103,7 +103,9 @@ class PageController extends Controller
                         $tile->title = $request->title;
                     }
                     if($request->path !== 'null' or $request->path !== null) {
-                        $tile->path = str_replace(" ", "-", strtolower($request->path));
+                        if($page->path !== '/') {
+                            $tile->path = str_replace(" ", "-", strtolower($request->path));
+                        }
                     }
                     $tile->save();
                 }
@@ -112,7 +114,9 @@ class PageController extends Controller
                 $page->title = $request->title;
             }
             if($request->path !== 'null' or $request->path !== null) {
-                $page->path = str_replace(" ", "-", strtolower($request->path));
+                if($page->path !== '/') {
+                    $page->path = str_replace(" ", "-", strtolower($request->path));
+                }
             }
             $page->save();
         }
@@ -124,7 +128,9 @@ class PageController extends Controller
                         $page->title = $request->title;
                     }
                     if($request->path !== 'null' or $request->path !== null) {
-                        $page->path = str_replace(" ", "-", strtolower($request->path));
+                        if($page->path !== '/') {
+                            $page->path = str_replace(" ", "-", strtolower($request->path));
+                        }
                     }
                     $page->save();
                 }
@@ -133,7 +139,9 @@ class PageController extends Controller
                 $tile->title = $request->title;
             }
             if($request->path !== 'null' or $request->path !== null) {
-                $tile->path = str_replace(" ", "-", strtolower($request->path));
+                if($page->path !== '/') {
+                    $tile->path = str_replace(" ", "-", strtolower($request->path));
+                }
             }
             if($request->hasFile('illustration_file_name')) {
                 $this->validate($request, [
