@@ -5,7 +5,6 @@ import Svg, {Path, G} from 'react-native-svg';
 
 import HomeScreen from "../../screens/HomeScreen";
 import Tiles from "../Tiles/index";
-import Organization from "../Organization/Index";
 import Logo from "./logo";
 import axios from "axios";
 const Stack = createStackNavigator();

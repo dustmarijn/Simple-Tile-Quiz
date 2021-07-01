@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Tiles from '../../components/Tiles';
 import Organisations from '../../components/Organisations/index';
-import DetailsOrganization from '../../components/Organization/Details';
 import style from "../../../style";;
 import {
     SafeAreaView,
