@@ -1,11 +1,22 @@
 import React, {useState, useEffect} from 'react';
-import AdminPage from "../../components/adminpage";
 import axios from "axios";
+
+// Styles die worden ingeladen.
+import './index.scss';
+
+// Handige componenten die kunnen worden gebruikt.
+import Alert from "../../alert";
+import AdminPage from "../../components/adminpage";
+import LoadSpinner from "../../components/loadspinner";
+
+// Api Provider's die kunnen worden gebruikt.
 import NotificationApi from "../../../../api/NotificationApi";
 
-import './index.scss';
-import Alert from "../../alert";
 
+/**
+ * Deze functie toont de hele organisaties pagina in de admin.
+ * Deze bevat meerdere functies die ook worden beschreven.
+ */
 export default function Organisations() {
     const [loading, setLoading] = useState(true);
     const [organisations, setOrganisations] = useState([]);
@@ -21,6 +32,7 @@ export default function Organisations() {
     const [orgID, setOrgID] = useState(null);
     const [alert, setAlert] = useState(false);
     const [deleting, setDeleting] = useState(false);
+
     const [alertMSG, setAlertMSG] = useState({
         title: 'Bericht',
         description: 'Beschrijving van bericht',
@@ -32,6 +44,10 @@ export default function Organisations() {
 
     const {dispatch, setPageTitle} = NotificationApi();
 
+    /**
+     * Hier worden alle organisaties ingeladen.
+     * Ook wordt hier de titel van de pagina gezet naar 'organisaties'
+     */
     useEffect(() => {
         getOrganisations();
         var url = window.location.href;
@@ -39,6 +55,10 @@ export default function Organisations() {
         setPageTitle(part);
     }, []);
 
+    /**
+     * Deze functie wordt uitgevoerd op het moment dat een input value veranderd in de formulieren.
+     * Dit zorgt ervoor dat bepaalde states worden geupdate.
+     */
     function handleInput(e) {
         if (e[1] === 'name') {
             setName(e[0]);
@@ -60,6 +80,10 @@ export default function Organisations() {
         }
     }
 
+    /**
+     * Deze functie haalt alle organisaties op. Ook zorgt deze functie er voor
+     * dat alle states worden geleegd die nodig zijn om een formulier in te vullen.
+     */
     function getOrganisations() {
         setEditOrg(false);
         setName(null);
@@ -86,6 +110,10 @@ export default function Organisations() {
             })
     }
 
+    /**
+     * Deze functie zorgt er voor dat wanneer een formulier wordt ingevuld er een nieuwe
+     * organisatie wordt aangemaakt. Mits deze de juiste informatie heeft.
+     */
     function handleNewOrg(e) {
         e.preventDefault();
         setLoading(true);
@@ -139,7 +167,11 @@ export default function Organisations() {
             })
     }
 
-
+    /**
+     * Deze functie zorgt er voor dat wanneer er een organisatie wordt aangepast
+     * deze daar mee handeld. Alle informatie die is meegegeven wordt dan in de
+     * database bewerkt. Niet alle velden zijn verplicht.
+     */
     function handleEditOrg(e) {
         e.preventDefault();
         setLoading(true);
@@ -193,6 +225,9 @@ export default function Organisations() {
             })
     }
 
+    /**
+     * Deze functie zorgt er voor dat een organisatie kan worden verwijderd.
+     */
     function handleDeleteOrg(org) {
         console.log(org);
         dispatch({
@@ -233,6 +268,9 @@ export default function Organisations() {
     }
 
 
+    /**
+     * Deze functie zorgt ervoor dat je kan zoeken naar organisatie(s).
+     */
     function handleSearch(text) {
         const searchedOrg = organisations?.filter(org => org.name.toLowerCase().includes(text.toLowerCase()));
         if(searchedOrg) {
@@ -382,15 +420,7 @@ export default function Organisations() {
                                 : null }
                         </>
                             :
-                            <div className="loading">
-                                <div className="lds-ring">
-                                    <div/>
-                                    <div/>
-                                    <div/>
-                                    <div/>
-                                </div>
-                                <h1>Bijna klaar ...</h1>
-                            </div>
+                            <LoadSpinner text={'Organisaties worden opgehaald ...'}/>
                         }
                     </div>
                 </>

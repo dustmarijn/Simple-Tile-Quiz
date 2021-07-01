@@ -1,14 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
-import AdminPage from "../../components/adminpage";
 import axios from "axios";
 
-
+// Styles worden ingeladen.
 import './index.scss';
-import Tile from "../../../../default components/tile";
-import NotificationApi from "../../../../api/NotificationApi";
-import Alert from "../../alert";
 
+// Handige componenten die kunnen worden gebruikt.
+import AdminPage from "../../components/adminpage";
+import Tile from "../../../../default components/tile";
+import Alert from "../../alert";
+import LoadSpinner from "../../components/loadspinner";
+
+// Api Provider's die kunnen worden gebruikt.
+import NotificationApi from "../../../../api/NotificationApi";
+import FindOrganisation from "./findorganisation";
+
+/**
+ * Deze functie toont de pagina van 'Schermen Aanpassen'.
+ * Hier in worden ook alle andere functies beschreven.
+ */
 export default function Screens() {
     const [loading, setLoading] = useState(true);
     const [pages, setPages] = useState([]);
@@ -21,6 +30,7 @@ export default function Screens() {
     const [selectedOrganisation, setSelectedOrganisation] = useState(null);
     const [pageType, setPageType] = useState(null);
     const [filteredPage, setFilteredPage] = useState([]);
+    const [editTile, setEditTile] = useState(null);
 
     const [alertMSG, setAlertMSG] = useState({
         title: 'Bericht',
@@ -30,9 +40,10 @@ export default function Screens() {
         actionCancel: null,
         actionCancelMessage: 'Annuleren',
     });
-    const [editTile, setEditTile] = useState(null);
 
-    const {dispatch, pageTitle, setPageTitle} = NotificationApi();
+
+
+    const {dispatch, setPageTitle} = NotificationApi();
 
     const [title, setTitle] = useState(null);
     const [path, setPath] = useState(null);
@@ -40,6 +51,11 @@ export default function Screens() {
     const [pageID, setPageID] = useState(null);
     const [tileID, setTileID] = useState(null);
 
+    /**
+     * Deze functie haalt alle paginas op en organisaties.
+     * Zo kan gekeken worden of er een organisatie tegel is
+     * en alle andere tegels.
+     */
     useEffect(() => {
         getPages();
         getOrganisations();
@@ -48,6 +64,10 @@ export default function Screens() {
         setPageTitle(part);
     }, []);
 
+    /**
+     * Deze functie haalt alle pagina's op. Ook als er een formulier is ingevuld
+     * maakt hij alle gegevens leeg na dat deze is verstuurd.
+     */
     function getPages() {
         setTitle(null);
         setPath(null);
@@ -80,6 +100,9 @@ export default function Screens() {
             })
     }
 
+    /**
+     * Deze functie haalt de organisatie(s) op.
+     */
     function getOrganisations() {
         axios.get('/api/organisations')
             .then(response => {
@@ -97,6 +120,11 @@ export default function Screens() {
             })
     }
 
+    /**
+     * Deze functie zorgt ervoor dat er een organisatie tegel kan worden aangemaakt.
+     * Hiervoor moet je kunnen kiezen uit een bestaande organisatie. Als deze er niet
+     * zijn, kan je ook geen organisatie tegel aanmaken.
+     */
     function handleOrgTile() {
         if(selectedOrganisation !== null) {
             const organisation = organisations.filter(org => org.id === selectedOrganisation)[0];
@@ -170,6 +198,11 @@ export default function Screens() {
         }
     }
 
+    /**
+     * Deze functie maakt een nieuwe tegel aan bij de bijbehorende pagina. Zo moeten er in het ingevulde
+     * formulier wel alle velden ingevuld zijn. Hiervoor heb je een titel en een plaatje nodig. Ook wordt
+     * er dan automatische een pagina zou worden gemaakt met de naam van de tegel.
+     */
     function handleNewTile(e) {
         e.preventDefault();
         if (title !== null && image !== null) {
@@ -235,6 +268,10 @@ export default function Screens() {
         }
     }
 
+    /**
+     * Deze functie wordt uitgevoerd op het moment dat een input value veranderd in de formulieren.
+     * Dit zorgt ervoor dat bepaalde states worden geupdate.
+     */
     function handleInput(e) {
         if (e[1] === 'title') {
             setTitle(e[0]);
@@ -247,6 +284,10 @@ export default function Screens() {
         }
     }
 
+    /**
+     * Deze functie zorgt er voor dat de geselecteerde tegel wordt verwijderd. Ook de pagina (waar je naar toe gaat
+     * als je op de tegel klikt) wordt ook verwijderd.
+     */
     function handleDeleteTile(tile) {
         dispatch({
             type: 'ADD_NOTIFICATION',
@@ -287,10 +328,17 @@ export default function Screens() {
             })
     }
 
+    /**
+     * Deze functie is eigenlijk het zelfe als de handleEditPage().
+     */
     function handleEditTile(e) {
         handleEditPage(e);
     }
 
+    /**
+     * Deze functie kan tegels en pagina's bewerken en opslaan in de database. Je hoeft niet alle
+     * velden in te vullen van het formulier.
+     */
     function handleEditPage(e) {
         e.preventDefault();
         dispatch({
@@ -369,6 +417,11 @@ export default function Screens() {
     }
 
 
+    /**
+     * Deze functie kan een tegel uitschakelen. Wil je een tegel niet meer laten tonen
+     * dan zorgt dit ervoor dat je de tegel niet meer kan zien op de pagina. Maar hij is
+     * niet verwijderd! Wel kan je deze in de admin weer aanzetten.
+     */
     function handleDisableTile(tile) {
         dispatch({
             type: 'ADD_NOTIFICATION',
@@ -407,6 +460,9 @@ export default function Screens() {
     }
 
 
+    /**
+     * Deze functie zorgt er voor dat je kan zoeken naar pagina's.
+     */
     function handleSearch(text) {
         const searchedPage = pages?.filter(page => page.title.toLowerCase().includes(text.toLowerCase()));
         if(searchedPage) {
@@ -449,44 +505,17 @@ export default function Screens() {
                                                     setTileID(null);
                                                 }}>Bewerken
                                                 </button>
-                                                {findOrganisation === page.id ?
-                                                    <div className="find-organisations">
-                                                        <h1>Organisaties</h1>
-                                                        <p>Kies een organisatie en deze wordt weer gegeven als een
-                                                            tegel.</p>
-                                                        <div className="organisations">
-                                                            {organisations?.map((org, index) => {
-                                                                return (
-                                                                    <div
-                                                                        className={`tile ${selectedOrganisation === org.id ? 'selected' : ''}`}
-                                                                        key={index} onClick={() => {
-                                                                        setPageID(page.id);
-                                                                        setSelectedOrganisation(org.id);
-                                                                        setPageType('organisation');
-                                                                    }}>
-                                                                        <img
-                                                                            src={'/images/organisationlogo/' + org.logo_file_name}
-                                                                            alt={''}/>
-                                                                        <h1>{org.name}</h1>
-                                                                    </div>
-                                                                )
-                                                            })}
-                                                        </div>
-                                                        <div className="btns">
-                                                            <button
-                                                                className={`btn ${selectedOrganisation ? 'use' : 'not-use'} save`}
-                                                                onClick={() => handleOrgTile()}>Tegel gebruiken
-                                                            </button>
-                                                            <button className={'btn'} onClick={() => {
-                                                                setFindOrganisation(null);
-                                                                setSelectedOrganisation(null);
-                                                                setPageID(null);
-                                                                setPageType(null);
-                                                            }}>Annuleren
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    : null}
+                                                <FindOrganisation
+                                                    findOrganisation={findOrganisation}
+                                                    page={page}
+                                                    setPageID={setPageID}
+                                                    setSelectedOrganisation={setSelectedOrganisation}
+                                                    selectedOrganisation={selectedOrganisation}
+                                                    setFindOrganisation={setFindOrganisation}
+                                                    handleOrgTile={handleOrgTile}
+                                                    organisations={organisations}
+                                                    setPageType={setPageType}
+                                                />
                                                 <p className={'give-tiles'}>Keuze tegels die bij dit scherm horen:</p>
                                                 <div className="tiles">
                                                     {page.tiles.map((tile, num) => {
@@ -658,15 +687,7 @@ export default function Screens() {
                     </>
                         : <p className={'not-found'}>Pagina niet gevonden.</p>
                 :
-                    <div className="loading">
-                        <div className="lds-ring">
-                            <div/>
-                            <div/>
-                            <div/>
-                            <div/>
-                        </div>
-                        <h1>Bijna klaar ...</h1>
-                    </div>
+                    <LoadSpinner text={'Pagina\'s en tegels worden opgehaald ...'}/>
                 }
             </div>
         </AdminPage>

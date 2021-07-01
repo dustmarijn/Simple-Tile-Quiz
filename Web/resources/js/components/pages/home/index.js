@@ -1,14 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
-
-// Import components for this adminpage
-import Page from "../../default components/page";
-import Tile from "../../default components/tile";
+import Skeleton from "react-loading-skeleton";
 
 // Style import
 import './index.scss';
-import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
 
+// Componenten die worden ingeladen.
+import Page from "../../default components/page";
+import Tile from "../../default components/tile";
+import Organisation from "../../default components/organisation";
+import SkeletonLoading from "../../default components/skeletonloading";
+
+/**
+ * Op de website op het home scherm wordt deze pagina ingeladen.
+ * Hierop worden keuze tegels getoond op het moment dat het een
+ * pagina is met keuze tegels en anders wordt er een organisatie
+ * getoond met de informatie van de organisatie.
+ */
 export default function Home({title, tiles, organisation}) {
     const [loading, setLoading] = useState(true);
     const [org, setOrg] = useState(null);
@@ -32,31 +40,16 @@ export default function Home({title, tiles, organisation}) {
     return (
         <Page>
             <div className="content">
+                {/* Dit zorgt er voor dat er een grijs blok komt voordat er een titel wordt geladen. */}
                 <h1>{loading ? <Skeleton count={1} width={40 + 'vw'} /> : title}</h1>
 
-                {/* This will return you back to the previous adminpage */}
+                {/* Dit zorgt er voor dat er een terug knop komt als je niet meer op de home pagina bent.*/}
                 {lastPartUrl !== '' ?
                     <button className={'back'} onClick={() => history.goBack()}>Terug</button>
                     : null}
                 <div className="tiles">
                     {loading ?
-                        <>
-                            <div className="img">
-                                <SkeletonTheme color="#e5e5e5" highlightColor="#fff">
-                                    <Skeleton count={1} width={300 + 'px'} height={300 + 'px'} />
-                                </SkeletonTheme>
-                            </div>
-                            <div className="img">
-                                <SkeletonTheme color="#e5e5e5" highlightColor="#fff">
-                                    <Skeleton count={1} width={300 + 'px'} height={300 + 'px'} />
-                                </SkeletonTheme>
-                            </div>
-                            <div className="img">
-                                <SkeletonTheme color="#e5e5e5" highlightColor="#fff">
-                                    <Skeleton count={1} width={300 + 'px'} height={300 + 'px'} />
-                                </SkeletonTheme>
-                            </div>
-                        </>
+                        <SkeletonLoading/>
                     :
                         org === null ?
                             tiles?.map((tile, index) => {
@@ -67,28 +60,7 @@ export default function Home({title, tiles, organisation}) {
                                 )
                             })
                         :
-                        <div className="organisation-content">
-                            <img src={'/images/organisationlogo/' + org?.logo_file_name} className={'logo'} alt={''}/>
-                            <div className="info-org">
-                                <h1>Contact gegevens</h1>
-                                <div className="info">
-                                    <img src={'/images/email.svg'} alt={''}/>
-                                    <span onClick={() => window.open('mailTo:' + org?.email + '?body=')}>{org?.email}</span>
-                                </div>
-                                <div className="info">
-                                    <img src={'/images/phone.svg'} alt={''}/>
-                                    <span onClick={() => window.open('tel:+' + org?.phone_number)}>{org?.phone_number}</span>
-                                </div>
-                                <div className="info">
-                                    <img src={'/images/location.svg'} alt={''}/>
-                                    <span onClick={() => window.open('https://www.google.nl/maps/place/' + org?.location + '/')}>{org?.location}</span>
-                                </div>
-                                <div className="info">
-                                    <img src={'/images/website.svg'} alt={''}/>
-                                    <span onClick={() => window.open(org?.website)}>{org?.website}</span>
-                                </div>
-                            </div>
-                        </div>
+                        <Organisation org={org}/>
                     }
                 </div>
             </div>

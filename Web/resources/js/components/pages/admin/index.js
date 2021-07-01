@@ -1,15 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import NotificationApi from '../../api/NotificationApi';
-import AdminPage from "./components/adminpage";
 import {useHistory} from "react-router-dom";
+import axios from "axios";
 
+// Handige componenten die kunnen worden gebruikt.
+import LoadSpinner from "./components/loadspinner";
+import AdminPage from "./components/adminpage";
+
+// Api Provider's die kunnen worden gebruikt.
+import NotificationApi from '../../api/NotificationApi';
+
+/**
+ * Deze functie laat het overzicht zien van de admin.
+ * Hier in kan je zien hoeveel downloads van de mobiele
+ * app en het aantal organisaties je kan zien.
+ */
 export default function Admin() {
     const [loading, setLoading] = useState(true);
-
     const [organisations, setOrganisations] = useState([]);
-    const {dispatch, setPageTitle} = NotificationApi();
 
+    const {setPageTitle} = NotificationApi();
     const history = useHistory();
 
     useEffect(() => {
@@ -31,8 +40,8 @@ export default function Admin() {
     }
 
     return (
-        <>
-            <AdminPage>
+        <AdminPage>
+            <div className={`${loading === true ? 'pages' : ''}`}>
                 {loading === false ?
                     <div className="flexbox-container">
                         <div className="page">
@@ -53,7 +62,7 @@ export default function Admin() {
                         <div className="page">
                             <h1>Organisaties</h1>
                             <div className="info-text">
-                                <p> Aantal organisaties</p>
+                                <p>Aantal organisaties</p>
                             </div>
                             <div className="info-text normal">
                                 <p>{organisations.length} organisaties</p>
@@ -61,20 +70,10 @@ export default function Admin() {
                             <button className={'btn save mg-top'} onClick={() => history.push('/admin/organisations')}>Bekijken</button>
                         </div>
                     </div>
-                :
-                    <div className="pages">
-                        <div className="loading">
-                            <div className="lds-ring">
-                                <div/>
-                                <div/>
-                                <div/>
-                                <div/>
-                            </div>
-                            <h1>Bijna klaar ...</h1>
-                        </div>
-                    </div>
+                    :
+                    <LoadSpinner text={'Overzicht wordt opgehaald ...'}/>
                 }
-            </AdminPage>
-        </>
+            </div>
+        </AdminPage>
     )
 }

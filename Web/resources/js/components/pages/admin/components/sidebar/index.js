@@ -1,8 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {NavLink} from 'react-router-dom';
+
+// Handige componenten die kunnen worden gebruikt.
 import Logo from "../../../../default components/logo";
+
+// Api Provider's die kunnen worden gebruikt.
 import NotificationApi from "../../../../api/NotificationApi";
 
+/**
+ * Deze functie toont een sidebar in de admin. Deze kan kleiner
+ * of groter worden gemaakt door hem uit te klappen. Hier in staat
+ * ook de navigatie links.
+ */
 export default function Sidebar() {
 
     const {menu} = NotificationApi();

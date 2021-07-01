@@ -1,12 +1,20 @@
 import React, {createContext, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import axios from "axios";
-import Authentication from "../../pages/admin/authentication";
-import NotificationApi from "../../api/NotificationApi";
-import AdminPage from "../../pages/admin/components/adminpage";
 
 export const UserContext = createContext();
 
+// Handige componenten die kunnen worden gebruikt.
+import Authentication from "../../pages/admin/authentication";
+
+// Api Provider's die kunnen worden gebruikt.
+import NotificationApi from "../../api/NotificationApi";
+
+/**
+ * Deze functie is een provider. Deze provider kan overal in de app worden gebruikt
+ * Deze provider zorgt er voor dat je de ingelogde gebruiker kan laten zien. Zo kun
+ * je checken of je in de admin kan gaan of geen toegang hebt tot de admin.
+ */
 export default function UserProvider({children}) {
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(undefined);
@@ -26,6 +34,9 @@ export default function UserProvider({children}) {
     }, [user !== undefined]);
 
 
+    /**
+     * Deze functie logt de gebruiker uit.
+     */
     function logoutUser() {
         localStorage.setItem('auth_token', '');
         history.push('/admin');
@@ -33,8 +44,14 @@ export default function UserProvider({children}) {
         axios.get('/api/logout')
             .then(response => {
             })
+            .catch(error => {
+
+            })
     }
 
+    /**
+     * Deze functie haalt de ingelogde gebruiker op.
+     */
     function getUser() {
         if (localStorage.getItem('auth_token') !== '' || localStorage.getItem('auth_token') !== undefined) {
             let csrf = '';
@@ -81,10 +98,9 @@ export default function UserProvider({children}) {
     return (
         <UserContext.Provider value={{user, setUser, getUser, adminRights, setAdminRights, logoutUser, setLoading, loading}}>
             {adminRights ?
-                <>
-                    {children}
-                </>
-                : <Authentication adminRights={adminRights} setAdminRights={setAdminRights} user={user} setUser={setUser}/>
+                <>{children}</>
+            :
+                <Authentication adminRights={adminRights} setAdminRights={setAdminRights} user={user} setUser={setUser}/>
             }
         </UserContext.Provider>
     )

@@ -1,6 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
+
+// Api Provider's die kunnen worden gebruikt.
 import NotificationApi from "../../../../api/NotificationApi";
 
+
+/**
+ * Deze functie laat een lange bar witte bar zien met de titel
+ * van de huidige pagina waarop u zich bevindt.
+ */
 export default function TitleBar() {
     const {menu, pageTitle} = NotificationApi();
 
