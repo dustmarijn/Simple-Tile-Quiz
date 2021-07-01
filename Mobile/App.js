@@ -25,8 +25,8 @@ const App: () => Node = () => {
             <NavigationContainer>
                 <TabNavigator/>
                 <SafeAreaView>
-                    <ScrollView style={{flex:1}}>
-                    </ScrollView>
+                    <View style={{flex:1}}>
+                    </View>
                 </SafeAreaView>
             </NavigationContainer>
         </>
