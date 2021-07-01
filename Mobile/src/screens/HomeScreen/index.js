@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Tiles from '../../components/Tiles';
-import Organization from "../../components/Organization/Index";
+import Organisations from '../../components/Organisations/index';
 import DetailsOrganization from '../../components/Organization/Details';
 import style from "../../../style";;
 import {
@@ -49,7 +49,8 @@ export default function HomeScreen({navigation, route}) {
 
     return (
         <View style={{flex:1}}>
-            <Tiles navigation={navigation} page={page} organisations={organisations}/>
+             <Tiles navigation={navigation} page={page} organisations={organisations}/>
         </View>
+        //<Organisations organisation={{email:"Wes.hakvoort@gmail.com", name:"Wessel", phone_number:"0616360616", logo_file_name:"adults.svg", location:"Test"}}/>
     )
 }
