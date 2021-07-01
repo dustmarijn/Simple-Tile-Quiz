@@ -1,10 +1,19 @@
 import React, {useState} from 'react';
-import Logo from "../../../default components/logo";
 import axios from "axios";
+
+// Handige componenten die worden ingeladen.
+import Logo from "../../../default components/logo";
+import LoadSpinner from "../components/loadspinner";
+
+// Api Provider's die worden gebruikt.
 import NotificationApi from "../../../api/NotificationApi";
 import UserApi from "../../../api/UserApi";
 
-export default function Authentication({adminRights, setAdminRights, user, setUser}) {
+/**
+ * Deze functie / component zorgt ervoor dat niemand zonder admin rechten
+ * en authenticatie met admin rechten de admin kan betreden.
+ */
+export default function Authentication({setAdminRights, setUser}) {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
@@ -92,15 +101,7 @@ export default function Authentication({adminRights, setAdminRights, user, setUs
                             <button type={'submit'}>Aanmelden</button>
                         </>
                     :
-                        <div className="loading">
-                            <div className="lds-ring">
-                                <div/>
-                                <div/>
-                                <div/>
-                                <div/>
-                                </div>
-                            <h1>Bijna klaar ...</h1>
-                        </div>
+                        <LoadSpinner text={'Bezig met aanmelden ...'}/>
                     }
                 </form>
             </div>

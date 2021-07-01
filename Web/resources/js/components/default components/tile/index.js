@@ -1,8 +1,14 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 
+// Styles worden ingeladen.
 import './index.scss';
 
+/**
+ * Deze functie zorgt ervoor dat er een keuze tegel komt met de
+ * juiste informatie, zoals een titel, plaatje en een onClick
+ * event.
+ */
 export default function Tile({title, illustration, path, onClick, className}) {
     const history = useHistory()
 

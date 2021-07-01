@@ -1,12 +1,17 @@
 import React, {useReducer, createContext, useState} from 'react';
-import Notification from "../../pages/admin/components/notification";
-
 export const NotificationContext = createContext();
 
+// Handige componenten die kunnen worden gebruikt.
+import Notification from "../../pages/admin/components/notification";
+
+/**
+ * Deze functie is een provider. Deze provider kan overal in de app worden gebruikt
+ * Deze provider zorgt er voor dat je notificaties kan laten zien. Ook kan je hier
+ * mee de sidebar van de admin breeder of smaller maken.
+ */
 export default function NotificationProvider(props) {
     const [menu, setMenu] = useState(true);
     const [pageTitle, setPageTitle] = useState('');
-    const {children} = props;
     const [state, dispatch] = useReducer((state, action) => {
         switch(action.type) {
             case "ADD_NOTIFICATION":
@@ -17,6 +22,8 @@ export default function NotificationProvider(props) {
                 return state;
         }
     }, []);
+
+    const {children} = props;
 
     return (
         <NotificationContext.Provider value={{dispatch, menu, setMenu, pageTitle, setPageTitle}}>

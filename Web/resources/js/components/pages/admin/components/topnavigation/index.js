@@ -1,7 +1,19 @@
 import React, {useEffect, useState} from 'react';
+
+// Api Provider's die kunnen worden gebruikt.
 import UserApi from "../../../../api/UserApi";
 import NotificationApi from "../../../../api/NotificationApi";
 
+// Handige componenten die kunnen worden gebruikt.
+import Menu from "./menu";
+import UserContent from "./usercontent";
+import UserDropdown from "./userdropdown";
+
+/**
+ * Deze functie laat de bovenste balk in de admin zien. Deze admin zorgt ervoor
+ * dat je de naam van de admin, de sidebar breeder of smaller kan maken en op je
+ * account kan klikken.
+ */
 export default function Topnavigation() {
     const [userDropdown, setUserDropdown] = useState(false);
     const {user, logoutUser} = UserApi();
@@ -19,29 +31,12 @@ export default function Topnavigation() {
         <>
             <div className="topnavigation">
                 <div className="title">
-                    <div className="menu" onClick={() => setMenu(!menu)}>
-                        <div className="line"/>
-                        <div className="line"/>
-                        <div className="line"/>
-                    </div>
+                    <Menu setMenu={setMenu} menu={menu}/>
                     <h1>TeamStopcontact</h1>
                 </div>
-                <div className="usercontent" onClick={() => setUserDropdown(!userDropdown)}>
-                    <div className="useravatar">
-                        <p>{username}</p>
-                        <div className="status"/>
-                    </div>
-                </div>
+                <UserContent setUserDropdown={setUserDropdown} userDropdown={userDropdown} username={username}/>
             </div>
-            {userDropdown ?
-                <div className="userDropdown">
-                    <h1>{user?.name}</h1>
-                    <p>{user?.email}</p>
-                    <div className="btns">
-                        <button className={'btn'} onClick={() => logoutUser()}>Uitloggen</button>
-                    </div>
-                </div>
-            : null }
+            <UserDropdown userDropdown={userDropdown} user={user} logoutUser={logoutUser}/>
         </>
     )
 }
