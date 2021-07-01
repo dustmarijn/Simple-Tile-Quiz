@@ -305,19 +305,29 @@ export default function Screens() {
         formData.append('title', title);
         const getPage = pages?.find(page => parseInt(page.id) === parseInt(pageID));
 
-        if(getPage) {
+        if(getPage !== undefined) {
             if(getPage?.path !== '/') {
-                let lastPartUrl = getPage.path.substr(getPage.path.lastIndexOf('/') - 1);
-                formData.append('path', `${lastPartUrl.path !== undefined ? lastPartUrl.path : '' }` + '/' + title.toLowerCase());
+                let url = getPage?.path;
+                let shortUrl = url.substring(0,url.lastIndexOf("/"))
+                formData.append('path', `${shortUrl !== undefined ? shortUrl : '' }` + '/' + title.toLowerCase());
             } else {
-                if(tileID) {
-                    const getPage = pages?.find(page => parseInt(page.id) === parseInt(tileID));
-                    if(getPage?.path !== '/') {
-                        let lastPartUrl = getPage.path.substr(getPage.path.lastIndexOf('/') - 1);
-                        formData.append('path', `${lastPartUrl.path !== undefined ? lastPartUrl.path : '' }` + '/' + title.toLowerCase());
-                    } else {
-                        formData.append('path', '/' + title.toLowerCase());
+                formData.append('path', '/');
+            }
+        } else {
+            if(tileID !== null) {
+                let tileTitle = null;
+                pages?.map((page) => {
+                    if(page?.tiles?.find(tile => parseInt(tile.id) === parseInt(tileID))) {
+                        tileTitle = page?.tiles?.find(tile => parseInt(tile.id) === parseInt(tileID));
                     }
+                })
+                const getPage = pages?.find(page => page.title === tileTitle?.title);
+                if(getPage?.path !== '/') {
+                    let url = getPage?.path;
+                    let shortUrl = url.substring(0,url.lastIndexOf("/"))
+                    formData.append('path', `${shortUrl !== undefined ? shortUrl : '' }` + '/' + title.toLowerCase());
+                } else {
+                    formData.append('path', '/' + title.toLowerCase());
                 }
             }
         }

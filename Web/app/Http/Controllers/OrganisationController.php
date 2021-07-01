@@ -181,7 +181,7 @@ class OrganisationController extends Controller
                 }
                 return response(['succesMessage' => 'Organisatie en bijbehorende pagina\'s zijn verwijderd.'], 200);
             } else {
-                return response(['errorMessage' => 'Pagina van de organisatie kon niet worden gevonden'], 500);
+                return response(['errorMessage' => 'Organisatie is verwijderd, maar de pagina van de organisatie kon niet worden gevonden'], 200);
             }
         } else {
             return response(['errorMessage' => 'Organisatie kon niet worden gevonden.'], 500);
