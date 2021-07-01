@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import NotificationApi from '../../api/NotificationApi';
-import Authentication from "./authentication";
 import AdminPage from "./components/adminpage";
+import {useHistory} from "react-router-dom";
 
 export default function Admin() {
     const [loading, setLoading] = useState(true);
 
     const [organisations, setOrganisations] = useState([]);
     const {dispatch, setPageTitle} = NotificationApi();
+
+    const history = useHistory();
 
     useEffect(() => {
         getOrganisations();
@@ -56,8 +58,7 @@ export default function Admin() {
                             <div className="info-text normal">
                                 <p>{organisations.length} organisaties</p>
                             </div>
-                            <br/>
-                            <br/>
+                            <button className={'btn save mg-top'} onClick={() => history.push('/admin/organisations')}>Bekijken</button>
                         </div>
                     </div>
                 :
