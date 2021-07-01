@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, ScrollView, Button, Alert, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import axios from "axios";
 import Tile from "./Tile";
+import Organisation from '../Organisations';
 
 export default function Tiles({navigation, page, organisations}){
     const [loading, setLoading] = useState(true);
@@ -16,13 +16,18 @@ export default function Tiles({navigation, page, organisations}){
         <ScrollView>
             <Text style={styles.header}>{page?.title}</Text>
             {loading === false ?
-                <View style={styles.tiles}>
-                    {page?.tiles?.map((tile, index) => {
-                        return (
-                            <Tile organisations={organisations} key={index} title={tile.title} illustration={tile.illustration_file_name} onPress={() => navigation.navigate(tile.path)} />
-                        )
-                    })}
-                </View>
+                page?.type === "tile" ?
+                        <View style={styles.tiles}>
+                            {page?.tiles?.map((tile, index) => {
+                                return (
+                                    <Tile organisations={organisations} key={index} title={tile.title} illustration={tile.illustration_file_name} onPress={() => navigation.navigate(tile.path)} />
+                                )
+                            })}
+                        </View>
+                :
+                    <View style={styles.tiles}>
+                        <Organisation organisation={organisations?.find(org => org.name === page.title)}/>
+                    </View>
             : <Text>Laden ...</Text> }
         </ScrollView>
     );
