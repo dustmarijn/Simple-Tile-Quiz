@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Image, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Button, Image, Linking, Platform, TouchableOpacity, StyleSheet, Text, View} from "react-native";
 import {SvgUri} from "react-native-svg";
+import { Icon } from 'react-native-elements'
 
 export default function Organisation({organisation}){
     const [loading, setLoading] = useState(true);
@@ -13,7 +14,34 @@ export default function Organisation({organisation}){
         setLoading(false);
     }, [organisation !== undefined])
 
-    return(
+    /**
+     *  Functie bekijkt wat voor OS het is en stuurd door naar bel app met telefoon nummer er in gecopieerd.
+     */
+    let phoneNumber ='';
+    const phoneCall = ()=>{
+        if (Platform.OS === 'android')
+        {
+            phoneNumber = `tel:${organisation?.phone_number}`;
+        }else{
+            phoneNumber = `telprompt:${organisation?.phone_number}`;
+        }
+        Linking.openURL(phoneNumber);
+    };
+
+    /**
+     * open mail app en maakt alles klaar voor verzenden.
+     */
+
+    let url = `mailto:${organisation?.email}`;
+    const mailTo = async () => {
+        const canOpen = await Linking.canOpenURL(url);
+        if (!canOpen){
+            throw new Error('rovided URL can not be handled');
+        }
+        return Linking.openURL(url);
+    };
+
+return(
         <>
                 {loading === false ?
                     <>
@@ -38,8 +66,8 @@ export default function Organisation({organisation}){
                                 uri={organisation === undefined ? image.source : `http://10.0.2.2:8000/images/organisationlogo/${organisation?.logo_file_name}`}
                             />}
                             <View>
-                                <SvgUri source={require('../../assets/Icons/email.svg')} /> <Text style={styles.text}>{organisation?.email}</Text>
-                                <Text style={styles.text}>{organisation?.phone_number}</Text>
+                                <TouchableOpacity onPress={mailTo}><Text style={styles.text}><Icon name="envelope" type="font-awesome"/> {organisation?.email}</Text></TouchableOpacity>
+                                <TouchableOpacity onPress={phoneCall}><Text style={styles.text}><Icon name="phone" type="font-awesome"/> {organisation?.phone_number}</Text></TouchableOpacity>
                                 <Button title="Website" onPress={() => {Linking.openURL(`${organisation?.website}`).catch( err => console.error("Couldn't load page", err))}}/>
                             </View>
                     </>
