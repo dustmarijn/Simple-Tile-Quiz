@@ -40,8 +40,8 @@ export default function Admin() {
     }
 
     return (
-        <>
-            <AdminPage>
+        <AdminPage>
+            <div className={`${loading === true ? 'pages' : ''}`}>
                 {loading === false ?
                     <div className="flexbox-container">
                         <div className="page">
@@ -70,10 +70,10 @@ export default function Admin() {
                             <button className={'btn save mg-top'} onClick={() => history.push('/admin/organisations')}>Bekijken</button>
                         </div>
                     </div>
-                :
+                    :
                     <LoadSpinner text={'Overzicht wordt opgehaald ...'}/>
                 }
-            </AdminPage>
-        </>
+            </div>
+        </AdminPage>
     )
 }
