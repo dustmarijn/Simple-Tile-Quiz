@@ -52,5 +52,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingBottom: 50,
         flexDirection: 'column',
+    },
+    image: {
+        marginTop: 15,
+        height: 100,
+        width: 100,
+    },
+    appButtonContainer: {
+        textAlign: 'center',
+        flex:1,
+        alignItems:'center',
+        backgroundColor: 'white',
+        borderRadius: 5,
+        marginLeft: 30,
+        marginRight: 30,
+        marginBottom: 25,
+        padding:5,
+        elevation: 5,
+        height: 180,
     }
 });
