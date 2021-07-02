@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {Button} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Svg, {Path, G} from 'react-native-svg';
-
 import HomeScreen from "../../screens/HomeScreen";
-import Tiles from "../Tiles/index";
 import Logo from "./logo";
 import axios from "axios";
+
 const Stack = createStackNavigator();
 
 export default function StackNavigator({defaultStack}) {
     const [loading, setLoading] = useState(true);
     const [pages, setPages] = useState([]);
-
+    /**
+     * haalt alle data op die nodig is voor de stack.navigator
+     */
     useEffect(() => {
         axios.get('http://10.0.2.2:8000/api/pages')
             .then((res) => {
@@ -35,6 +34,9 @@ export default function StackNavigator({defaultStack}) {
         headerMode: 'screen',
         cardStyle: { backgroundColor: '#f6f5fb' },
     }
+    /**
+     * Stack.Navigator maakt navigatie mogelijk door voor elke page.path een stack.screen aan temaken
+     */
     return (
         <>
             {loading === false ?
