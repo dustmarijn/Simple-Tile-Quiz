@@ -1,15 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Tiles from '../../components/Tiles';
-import Organisations from '../../components/Organisations/index';
-import style from "../../../style";;
-import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    StatusBar
-} from 'react-native';
+import {View,} from 'react-native';
 import axios from "axios";
 
 export default function HomeScreen({navigation, route}) {
@@ -17,7 +8,9 @@ export default function HomeScreen({navigation, route}) {
     const [pages, setPages] = useState([]);
     const [organisations, setOrganisations] = useState([]);
     const [page, setPage] = useState([]);
-
+    /**
+     * 2 axioscalls voor alle data die nodig is zodat de call maar 1 keer gedaan hoefd te worden.
+     */
     useEffect(() => {
         axios.get('http://10.0.2.2:8000/api/pages')
             .then((res) => {
@@ -37,7 +30,6 @@ export default function HomeScreen({navigation, route}) {
             })
     }, [loading === true]);
 
-
     useEffect(() => {
         const findPage = pages?.find((e) => e.path === route.name);
         if(findPage) {
@@ -45,11 +37,12 @@ export default function HomeScreen({navigation, route}) {
             console.log(page)
         }
     }, [pages.length !== 0]);
-
+    /**
+     * de data wordt door gegeven aan alle onderliggende componets
+     */
     return (
         <View style={{flex:1}}>
              <Tiles navigation={navigation} page={page} organisations={organisations}/>
         </View>
-        //<Organisations organisation={{email:"Wes.hakvoort@gmail.com", name:"Wessel", phone_number:"0616360616", logo_file_name:"adults.svg", location:"Test"}}/>
     )
 }
