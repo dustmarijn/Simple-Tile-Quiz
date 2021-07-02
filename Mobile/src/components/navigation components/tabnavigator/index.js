@@ -1,16 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements'
 import React from 'react';
-import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    useColorScheme,
-    View,
-    Image,
-} from 'react-native';
+import {View} from 'react-native';
 
 import StackNavigator from "../../stacknavigator";
 
@@ -18,6 +9,9 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
     return (
+        /**
+         * config voor alle tab.navigator options
+         */
         <Tab.Navigator tabBarOptions={{
             showLabel: false,
             style: {
