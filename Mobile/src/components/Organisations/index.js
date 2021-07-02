@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Image, Linking, Platform, TouchableOpacity, StyleSheet, Text, View} from "react-native";
-import {SvgUri} from 'react-native-svg';
+import {SvgCssUri } from "react-native-svg";
 import { Icon } from 'react-native-elements'
 
 export default function Organisation({organisation}){
@@ -69,7 +69,7 @@ export default function Organisation({organisation}){
                                 style={{ width: 100 + '%', height: 75 + '%' }}
                             />
                             :
-                            <SvgUri
+                            <SvgCssUri
                                 width={200}
                                 height={125}
                                 uri={organisation === undefined ? image.source : `http://10.0.2.2:8000/images/organisationlogo/${organisation?.logo_file_name}`}
