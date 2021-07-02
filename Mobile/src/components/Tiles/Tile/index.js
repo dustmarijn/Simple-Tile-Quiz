@@ -56,5 +56,31 @@ const styles = StyleSheet.create({
         bottom: 25,
         marginTop: 15,
         fontSize: 20,
-    }
+    },
+    image: {
+        marginTop: 15,
+        height:  50,
+        width: 100,
+    },
+    appButtonContainer: {
+        textAlign: 'center',
+        flex:1,
+        alignItems:'center',
+        backgroundColor: 'white',
+        borderRadius: 5,
+        marginLeft: 30,
+        marginRight: 30,
+        marginBottom: 30,
+        padding:5,
+        elevation: 5,
+        height: 200,
+        width: 75 + '%',
+    },
+    header: {
+        marginTop: 10,
+        marginBottom: 10,
+        color: 'black',
+        textAlign: 'center',
+        fontSize: 25,
+    },
 });
