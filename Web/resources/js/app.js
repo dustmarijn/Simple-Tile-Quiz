@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import ReactDOM from "react-dom";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-
-// Import pages
-import Home from "./components/pages/home";
 import axios from "axios";
-import Admin from "./components/pages/admin";
+
+// Handige componenten die kunnen worden gebruikt.
+import Home from "./components/pages/home";
+
 
 export default function App() {
     const [loading, setLoading] = useState(true);
