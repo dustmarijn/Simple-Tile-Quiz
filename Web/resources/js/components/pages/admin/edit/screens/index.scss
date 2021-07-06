@@ -523,5 +523,12 @@
 }
 
 .search.margin-left-null {
-    left: 1vw;
+    margin-left: 0px;
+}
+
+.not-found {
+    position: relative;
+    width: calc(100% - 20px);
+    margin-left: 0px;
+    padding: 10px 0;
 }

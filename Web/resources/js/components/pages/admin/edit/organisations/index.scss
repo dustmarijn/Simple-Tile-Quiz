@@ -141,6 +141,7 @@
 
 .not-found {
     position: relative;
-    width: calc(100%);
+    width: calc(100% - 20px);
+    margin-left: 25px;
     padding: 10px 0;
 }

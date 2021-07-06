@@ -10,6 +10,7 @@ import Page from "../../default components/page";
 import Tile from "../../default components/tile";
 import Organisation from "../../default components/organisation";
 import SkeletonLoading from "../../default components/skeletonloading";
+import {ReactSVG} from "react-svg";
 
 /**
  * Op de website op het home scherm wordt deze pagina ingeladen.
@@ -40,6 +41,7 @@ export default function Home({title, tiles, organisation}) {
     return (
         <Page>
             <div className="content">
+                <img onClick={() => window.location.href = 'https://www.samenzwolle.nl/'} src={'/images/logo.svg'} alt={''} className={'logo'}/>
                 {/* Dit zorgt er voor dat er een grijs blok komt voordat er een titel wordt geladen. */}
                 <h1>{loading ? <Skeleton count={1} width={40 + 'vw'} /> : title}</h1>
 

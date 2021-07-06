@@ -171,18 +171,23 @@ class OrganisationController extends Controller
         $org = Organisation::where('id', intval($request->id))->first();
         if($org) {
             $page = Page::where('title', $org->name)->first();
-            $tile = Tile::where('title', $org->name)->first();
+            $tiles = Tile::all()->where('title', $org->name);
             $org->delete();
+            if($tiles) {
+                foreach($tiles as $tile) {
+                    $tile->delete();
+                }
+            }
             if($page) {
-                $tile->delete();
+                foreach($tiles as $tile) {
+                    $tile->delete();
+                }
                 $page->tiles()->delete();
                 if($page->id !== 1) {
                     $page->delete();
                 }
-                return response(['succesMessage' => 'Organisatie en bijbehorende pagina\'s zijn verwijderd.'], 200);
-            } else {
-                return response(['errorMessage' => 'Organisatie is verwijderd, maar de pagina van de organisatie kon niet worden gevonden'], 200);
             }
+            return response(['succesMessage' => 'Organisatie en bijbehorende pagina\'s zijn verwijderd.'], 200);
         } else {
             return response(['errorMessage' => 'Organisatie kon niet worden gevonden.'], 500);
         }
