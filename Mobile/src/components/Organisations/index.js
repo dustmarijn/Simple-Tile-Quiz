@@ -3,6 +3,7 @@ import {Button, Image, Linking, Platform, TouchableOpacity, StyleSheet, Text, Vi
 import {SvgUri} from 'react-native-svg';
 import { Icon } from 'react-native-elements'
 
+
 export default function Organisation({organisation}){
     const [loading, setLoading] = useState(true);
     const [image, setImage] = useState(null);
@@ -47,6 +48,7 @@ export default function Organisation({organisation}){
         }
         return Linking.openURL(url);
     };
+
     /**
      *De return van de functie waar door de details van organisaties te zien zijn.
      */
@@ -77,7 +79,7 @@ export default function Organisation({organisation}){
                             <View>
                                 <TouchableOpacity onPress={mailTo}><Text style={styles.text}><Icon name="envelope" type="font-awesome"/> {organisation?.email}</Text></TouchableOpacity>
                                 <TouchableOpacity onPress={phoneCall}><Text style={styles.text}><Icon name="phone" type="font-awesome"/> {organisation?.phone_number}</Text></TouchableOpacity>
-                                <Button title="Website" onPress={Website}/>
+                                <View style={styles.button}><Button title="Website" onPress={Website} color="#f6227d"/></View>
                             </View>
                     </>
                     : <Text>Laden ...</Text>}
@@ -91,20 +93,6 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center',
         fontSize: 25,
-    },
-    LeesvoorButton:{
-        backgroundColor: 'white',
-        height: 20,
-        width: 75,
-        padding: 10,
-        margin: 20,
-        color:'black',
-        fontSize: 10
-    },
-    LeesvoorText:{
-        fontSize: 5,
-        color:'black',
-        textAlign: 'center',
     },
     appButtonContainer: {
         textAlign: 'center',
@@ -120,6 +108,10 @@ const styles = StyleSheet.create({
         height: 180,
     },
     text:{
-        fontSize: 20
+        fontSize: 20,
+        margin: 10
+    },
+    button:{
+        marginTop: 10
     }
 });
