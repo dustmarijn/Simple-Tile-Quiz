@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Tiles from '../../components/Tiles';
 import {View,} from 'react-native';
 import axios from "axios";
+import config from '../../../App.config';
 
 export default function HomeScreen({navigation, route}) {
     const [loading, setLoading] = useState(true);
@@ -12,14 +13,14 @@ export default function HomeScreen({navigation, route}) {
      * 2 axioscalls voor alle data die nodig is zodat de call maar 1 keer gedaan hoefd te worden.
      */
     useEffect(() => {
-        axios.get('http://10.0.2.2:8000/api/pages')
+        axios.get(`${config}/api/pages`)
             .then((res) => {
                 setPages(res.data.pages);
             })
             .catch(error => {
                 console.error(error);
             });
-        axios.get('http://10.0.2.2:8000/api/organisations')
+        axios.get(`${config}/api/organisations`)
             .then((res) => {
                 setOrganisations(res.data.organisations);
                 setLoading(false);
