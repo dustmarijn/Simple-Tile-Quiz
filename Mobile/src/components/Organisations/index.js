@@ -10,7 +10,7 @@ export default function Organisation({organisation}){
     const [org, setOrg] = useState(null);
 
     useEffect(() => {
-        setImage({ext: organisation?.logo_file_name.split('.').pop(), source: `http://10.0.2.2:8000/images/organisation?.logo_file_names/${organisation?.logo_file_name}`})
+        setImage({ext: organisation?.logo_file_name.split('.').pop(), source: `${config}/images/organisation?.logo_file_names/${organisation?.logo_file_name}`})
         setOrg(organisation);
         setLoading(false);
     }, [organisation !== undefined])
@@ -60,7 +60,7 @@ export default function Organisation({organisation}){
                         {image.ext !== 'svg' ?
                             <Image
                                 source={{
-                                    uri: organisation === undefined ? image.source : `http://10.0.2.2:8000/images/organisationlogo/${organisation?.logo_file_name}`,
+                                    uri: organisation === undefined ? image.source : `${config}/images/organisationlogo/${organisation?.logo_file_name}`,
                                     method: 'POST',
                                     headers: {
                                         Pragma: 'no-cache',
@@ -74,7 +74,7 @@ export default function Organisation({organisation}){
                             <SvgCssUri
                                 width={200}
                                 height={125}
-                                uri={organisation === undefined ? image.source : `http://10.0.2.2:8000/images/organisationlogo/${organisation?.logo_file_name}`}
+                                uri={organisation === undefined ? image.source : `${config}/images/organisationlogo/${organisation?.logo_file_name}`}
                             />}
                             <View>
                                 <TouchableOpacity onPress={mailTo}><Text style={styles.text}><Icon name="envelope" type="font-awesome"/> {organisation?.email}</Text></TouchableOpacity>
