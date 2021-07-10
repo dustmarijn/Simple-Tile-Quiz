@@ -26,6 +26,7 @@ export default function Organisation({org}) {
                     <img src={'/images/website.svg'} alt={''}/>
                     <span onClick={() => window.open(org?.website)}>{org?.website}</span>
                 </div>
+                <button className={'btn save'} onClick={() => window.open(org?.website)}>Open website</button>
             </div>
         </div>
     )

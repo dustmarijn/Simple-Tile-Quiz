@@ -69,4 +69,4 @@ export default function App() {
 }
 
 
-ReactDOM.render(<App />, document.getElementById('application'));
+ReactDOM.render(<App/>, document.getElementById('application'));

@@ -492,11 +492,11 @@ export default function Screens() {
                             if(page.type !== 'organisation') {
                                 return (
                                     <div
-                                        className={`page ${page.title.replace(/\s+/g, '-').toLowerCase()} ${page.able_to_use === '0' ? 'disabled' : 'enabled'}`}
+                                        className={`page ${page.title.replace(/\s+/g, '-').toLowerCase()} ${page.able_to_use === 0 ? 'disabled' : 'enabled'}`}
                                         key={index}>
                                         <h1>{page.title}</h1>
                                         <p className={'path'}>Pad naar het scherm: <span>{page.path}</span></p>
-                                        {page.able_to_use !== '0' ?
+                                        {page.able_to_use !== 0 ?
                                             <>
                                                 <button className={'btn save mg-top'} onClick={() => {
                                                     setEditPage(page.id);
@@ -522,7 +522,7 @@ export default function Screens() {
                                                         return (
                                                             <div className="edit-tile" key={num}>
                                                                 <div className="edit-items">
-                                                                    {organisations?.filter(org => org.name !== tile.title).length >= 1 ?
+                                                                    {!organisations?.find(org => org.name === tile.title) ?
                                                                         <div className="edit-item" onClick={() => {
                                                                             setPopup(page.id);
                                                                             setEditPage(null);
@@ -540,11 +540,11 @@ export default function Screens() {
                                                                     <div className="edit-item"
                                                                          onClick={() => handleDisableTile({
                                                                              tile_id: tile.id,
-                                                                             able_to_use: tile.able_to_use !== '0' ? 'disable' : 'enable',
+                                                                             able_to_use: tile.able_to_use !== 0 ? 'disable' : 'enable',
                                                                          })}>
-                                                                        <p>{tile.able_to_use !== '0' ? "Tegel uitzetten" : "Tegel aanzetten"}</p>
+                                                                        <p>{tile.able_to_use !== 0 ? "Tegel uitzetten" : "Tegel aanzetten"}</p>
                                                                         <img
-                                                                            src={tile.able_to_use !== '0' ? '/images/disable.svg' : '/images/enable.svg'}
+                                                                            src={tile.able_to_use !== 0 ? '/images/disable.svg' : '/images/enable.svg'}
                                                                             alt={''}/>
                                                                     </div>
                                                                     <div className="edit-item remove" onClick={() => {
@@ -573,7 +573,7 @@ export default function Screens() {
 
                                                                 </div>
                                                                 <Tile
-                                                                    className={`${tile.id} ${tile.able_to_use !== '0' ? 'enabled' : 'disabled'} ${deleting === tile.id ? 'shake' : ''}`}
+                                                                    className={`${tile.id} ${tile.able_to_use !== 0 ? 'enabled' : 'disabled'} ${deleting === tile.id ? 'shake' : ''}`}
                                                                     onClick={() => document.getElementsByClassName(`${tile.title.replace(/\s+/g, '-').toLowerCase()}`)[0].scrollIntoView({block: 'center'})}
                                                                     title={tile.title}
                                                                     illustration={tile.illustration_file_name}
