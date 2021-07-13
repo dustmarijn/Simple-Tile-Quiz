@@ -57,13 +57,13 @@ class TileController extends Controller
                     if ($request->page_id) {
 
                         $tile->illustration_file_name = $filename;
-                        $tile->able_to_use = "true";
+                        $tile->able_to_use = "1";
                         $tile->page_id = intval($request->page_id); // Sets the id from the relation adminpage.
                         $page = Page::where('id', intval($request->page_id))->first();
                         if($page->path !== '/') {
-                            $tile->path = str_replace(" ", "-", strtolower($request->path));
+                            $tile->path = str_replace([" ", '(', ')', '[', ']', '<', '>'], "-", strtolower($request->path));
                         } else {
-                            $tile->path = '/' . str_replace(" ", "-", strtolower($request->title));
+                            $tile->path = '/' . str_replace([" ", '(', ')', '[', ']', '<', '>'], "-", strtolower($request->title));
                         }
                         $tile->save(); // Saves the tile in the database.
 

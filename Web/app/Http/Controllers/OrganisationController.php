@@ -116,10 +116,20 @@ class OrganisationController extends Controller
     {
         $org = Organisation::where('id', intval($request->id))->first();
         if($org) {
-            $tile = Tile::where('title', $org->name)->first();
+            $tiles = Tile::all()->where('title', $org->name);
+            $pages = Page::all()->where('title', $org->name);
             if($request->name !== 'null') {
                 $org->name = $request->name;
-                $tile->title = $request->name;
+                if($tiles) {
+                    foreach($tiles as $tile) {
+                        $tile->title = $request->name;
+                    }
+                }
+                if($pages) {
+                    foreach($pages as $page) {
+                        $page->title = $request->name;
+                    }
+                }
             }
             if($request->hasFile('logo_file_name')) {
                 $this->validate($request, [
@@ -137,7 +147,11 @@ class OrganisationController extends Controller
                     $file->move($path, $filename);
                 }
                 $org->logo_file_name = $filename;
-                $tile->illustration_file_name = $filename;
+                if($tiles) {
+                    foreach($tiles as $tile) {
+                        $tile->illustration_file_name = $filename;
+                    }
+                }
             }
             if($request->phone !== 'null') {
                 $org->phone_number = $request->phone;
@@ -151,7 +165,26 @@ class OrganisationController extends Controller
             if($request->website !== 'null') {
                 $org->website = $request->website;
             }
-            $tile->save();
+            if($tiles) {
+                foreach($tiles as $tile) {
+                    $path = dirname($tile->path);
+                    $newPath = $path . '/' . str_replace([" ", '(', ')', '[', ']', '<', '>'], "-", strtolower($request->name));
+
+                    $tile->path = $newPath;
+
+                    $tile->save();
+                }
+            }
+            if($pages) {
+                foreach($pages as $page) {
+                    $path = dirname($page->path);
+                    $newPath = $path . '/' . str_replace([" ", '(', ')', '[', ']', '<', '>'], "-", strtolower($request->name));
+
+                    $page->path = $newPath;
+
+                    $page->save();
+                }
+            }
             $org->save();
 
             return response(['succesMessage' => 'Organisatie is aangepast en opgeslagen!'], 200);

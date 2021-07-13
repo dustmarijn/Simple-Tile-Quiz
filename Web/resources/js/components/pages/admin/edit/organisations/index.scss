@@ -1,10 +1,17 @@
-.pages img:not(.edit-tile .edit-items img, .delete-org):not(.tile img) {
+.pages img:not(.edit-tile .edit-items img, .delete-org):not(.tile img, .search img) {
     position: relative;
     left: 20px;
     width: auto;
     height: 50px;
     background-size: cover;
     margin-top: 25px;
+}
+
+.organisation.editing {
+    position: relative;
+    min-width: 300px;
+    max-width: 750px;
+    width: 100%;
 }
 
 .pages .page p .website {
@@ -116,11 +123,12 @@
     flex-direction: row;
 }
 
-.search img {
+.search img, .find-organisations .search img {
     position: relative;
     width: 20px;
     height: 20px;
     background-size: cover;
+    object-fit: cover;
     filter: invert(40%);
     margin-right: 10px;
 }

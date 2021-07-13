@@ -306,11 +306,11 @@ export default function Organisations() {
                                 <>
                                     {filteredOrgs?.map((org, index) => {
                                         return (
-                                            <div className={`page organisation ${deleting === org.id ? 'shake' : ''}`} key={index}>
+                                            <div className={`page organisation ${deleting === org.id ? 'shake' : ''} ${editOrg === org.id ? 'editing' : ''}`} key={index}>
                                                 {editOrg !== org.id ?
                                                     <>
                                                         <img src={'/images/organisationlogo/' + org.logo_file_name} alt={''}/>
-                                                        <button className={'btn save mg-top'} onClick={() => {setEditOrg(org.id);setOrgID(org.id)}}>Bewerken</button>
+                                                        <button className={'btn save mg-top'} onClick={() => {setEditOrg(org.id);setOrgID(org.id);handleSearch(org.name)}}>Bewerken</button>
                                                         <h1>{org.name}</h1>
                                                         <p>Telefoon nummer: <span>{org.phone_number}</span></p>
                                                         <p>E-mail adres: <span>{org.email}</span></p>
@@ -370,7 +370,7 @@ export default function Organisations() {
                                                         </label>
                                                         <div className="btns">
                                                             <button className={'btn save'}>Opslaan</button>
-                                                            <button className={'btn'} onClick={() => setEditOrg(false)}>Annuleren</button>
+                                                            <button className={'btn'} onClick={() => {setEditOrg(false);handleSearch('')}}>Annuleren</button>
                                                         </div>
                                                     </form>
                                                 }
@@ -419,9 +419,9 @@ export default function Organisations() {
                                 </div>
                                 : null }
                         </>
-                            :
-                            <LoadSpinner text={'Organisaties worden opgehaald ...'}/>
-                        }
+                    :
+                        <LoadSpinner text={'Organisaties worden opgehaald ...'}/>
+                    }
                     </div>
                 </>
         </AdminPage>

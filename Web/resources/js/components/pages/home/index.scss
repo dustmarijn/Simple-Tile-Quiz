@@ -26,7 +26,15 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
+    animation: glow-in 0.3s;
 }
+
+@keyframes glow-in {
+    0% {
+        opacity: 0;
+    }
+}
+
 .back {
     position: absolute;
     left: 10vw;
@@ -60,6 +68,8 @@
     position: relative;
     min-width: 100px;
     max-width: 200px;
+    left: 0;
+    margin-left: 0;
     height: auto;
     background-size: cover;
 }
@@ -99,6 +109,26 @@
     height: 20px;
     background-size: cover;
     margin-right: 10px;
+}
+
+.organisation-content .btn.save {
+    position: relative;
+    width: auto;
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #f6227d;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.2s;
+}
+
+.organisation-content .btn.save:hover {
+    filter: brightness(90%);
+    transition: 0.2s;
 }
 
 .logo {
@@ -149,6 +179,8 @@
         max-width: 150px;
         margin-top: 15px;
         margin-bottom: 15px;
+        left: 0;
+        margin-left: 0;
         height: auto;
         background-size: cover;
     }

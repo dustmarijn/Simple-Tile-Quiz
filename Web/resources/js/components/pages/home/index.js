@@ -56,7 +56,7 @@ export default function Home({title, tiles, organisation}) {
                         org === null ?
                             tiles?.map((tile, index) => {
                                 return (
-                                    tile.able_to_use !== '0' ?
+                                    tile.able_to_use !== 0 ?
                                         <Tile key={index} title={tile.title} illustration={tile.illustration_file_name} path={tile.path}/>
                                     : null
                                 )

@@ -34,7 +34,7 @@ class PageController extends Controller
             $page->title = $request->title; // Title of the adminpage.
             if (!Page::where('path', $request->path)->first()) {
 
-                $page->path = str_replace(" ", "-", $request->path); // Sets the path of the adminpage to the requested path.
+                $page->path = str_replace([" ", '(', ')', '[', ']', '<', '>'], "-", $request->path); // Sets the path of the adminpage to the requested path.
 
                 if($request->type) {
                     $page->type = $request->type; // Sets the type of the page (Tile or Organisation).
@@ -65,13 +65,13 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Request $request)
     {
         $page = Page::where('id', intval($request->id))->first();;
 
-        return response(['adminpage' => $page, 'mobilePage' => $page])->header('Content-Type', 'text/plain');
+        return response()->json(['adminpage' => $page, 'mobilePage' => $page]);
     }
 
     /**
@@ -104,7 +104,7 @@ class PageController extends Controller
                     }
                     if($request->path !== 'null' or $request->path !== null) {
                         if($page->path !== '/') {
-                            $tile->path = str_replace(" ", "-", strtolower($request->path));
+                            $tile->path = str_replace([" ", '(', ')', '[', ']', '<', '>'], "-", strtolower($request->path));
                         }
                     }
                     $tile->save();
@@ -115,7 +115,7 @@ class PageController extends Controller
             }
             if($request->path !== 'null' or $request->path !== null) {
                 if($page->path !== '/') {
-                    $page->path = str_replace(" ", "-", strtolower($request->path));
+                    $page->path = str_replace([" ", '(', ')', '[', ']', '<', '>'], "-", strtolower($request->path));
                 }
             }
             $page->save();
@@ -129,7 +129,7 @@ class PageController extends Controller
                     }
                     if($request->path !== 'null' or $request->path !== null) {
                         if($page->path !== '/') {
-                            $page->path = str_replace(" ", "-", strtolower($request->path));
+                            $page->path = str_replace([" ", '(', ')', '[', ']', '<', '>'], "-", strtolower($request->path));
                         }
                     }
                     $page->save();
@@ -140,7 +140,7 @@ class PageController extends Controller
             }
             if($request->path !== 'null' or $request->path !== null) {
                 if($page->path !== '/') {
-                    $tile->path = str_replace(" ", "-", strtolower($request->path));
+                    $tile->path = str_replace([" ", '(', ')', '[', ']', '<', '>'], "-", strtolower($request->path));
                 }
             }
             if($request->hasFile('illustration_file_name')) {
