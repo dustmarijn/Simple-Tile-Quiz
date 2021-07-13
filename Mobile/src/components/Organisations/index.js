@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import config from '../../../App.config';
 import {Button, Image, Linking, Platform, TouchableOpacity, StyleSheet, Text, View} from "react-native";
 import {SvgCssUri } from "react-native-svg";
 import { Icon } from 'react-native-elements'
