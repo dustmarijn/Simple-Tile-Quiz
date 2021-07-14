@@ -1,0 +1,534 @@
+.pages {
+    position: relative;
+    width: calc(100% - 5vw);
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    padding: 0 2.5vw;
+}
+
+.pages .loading {
+    position: absolute;
+    top: 0;
+    margin-top: 0;
+    left: 2.5vw;
+    width: calc(100% - 5vw);
+    height: calc(100vh - 60px - 50px);
+}
+
+.page {
+    position: relative;
+    width: calc(100% - 20px);
+    padding: 10px;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+    background-color: white;
+    margin-top: 50px;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+.page:last-child {
+    margin-bottom: 50px;
+}
+
+.page:first-child {
+    margin-top: 25px;
+}
+
+.page.disabled, .tile.disabled, .page.disabled .btn, .page.disabled .tiles .new-tile {
+    cursor: not-allowed;
+    user-select: none;
+    background-color: #f9f9f9;
+    filter: grayscale(200%);
+}
+
+.page h1 {
+    font-size: 20px;
+    margin: 5px 20px;
+    margin-top: 20px;
+}
+
+.page .give-tiles {
+    padding-top: 15px;
+    margin-bottom: -25px;
+    width: 100%;
+    border-top: 2px solid #e5e5e5;
+}
+
+.page p{
+    color: black;
+    font-size: 16px;
+    margin: 5px 20px;
+}
+
+.page p span {
+    font-weight: bold;
+}
+
+.page .tiles {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+
+.page .tiles .tile {
+    position: relative;
+    width: 250px;
+    height: 250px;
+}
+
+.page .tiles .tile:last-child {
+    margin-bottom: 25px;
+}
+
+.edit-tile {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 25px;
+}
+
+.edit-items {
+    position: absolute;
+    top: 0;
+    left: 100px;
+    width: 300px;
+    padding: 0px 0;
+    height: auto;
+    background-color: rgba(226, 226, 226, 0.95);
+    display: none;
+    box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.15);
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    border-radius: 7px;
+    z-index: 5;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.edit-items .edit-item {
+    position: relative;
+    width: calc(100% - 40px);
+    height: 30px;
+    padding: 7px 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.95);
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+    color: black;
+    border-bottom: 1px solid #e5e5e5;
+    cursor: pointer;
+}
+
+.edit-items .edit-item:hover {
+    background-color: #f9f9f9;
+}
+
+.edit-items .edit-item:hover:focus {
+    background-color: #e5e5e5;
+}
+
+.edit-items .edit-item:last-child {
+    margin-top: 5px;
+    border: 0;
+}
+
+.edit-items .edit-item:nth-child(2) {
+    margin-top: 0px;
+    border: 0;
+}
+
+.edit-items .edit-item p {
+    font-size: 16px;
+    font-weight: 500;
+    width: 40ch;
+    margin: auto 0px;
+}
+
+.edit-items .remove p {
+    color: red;
+}
+
+.edit-items .edit-item.remove {
+    margin-top: 5px;
+    border: 0;
+}
+
+.edit-tile:hover .tile {
+    box-shadow: 0px 1px 0px 3px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);
+    display: flex;
+    transition: 0.2s;
+}
+
+.edit-tile:hover .edit-items {
+    display: flex;
+    animation: pop-in 0.3s;
+}
+
+.edit-tile:hover:focus-within .edit-items:hover:focus-within .edit-item {
+    display: none;
+}
+
+@keyframes pop-in {
+    0% {
+        transform: scale(0);
+        left: 0;
+        padding: 10px;
+        opacity: 0;
+        top: 0;
+    }
+}
+
+.edit-tile .tiles .tile:hover:focus {
+    transform: scale(1);
+    transition: 0.2s;
+}
+
+@keyframes come-in {
+    0% {
+        opacity: 0;
+    }
+}
+
+.edit-tile .edit-item img {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-size: cover;
+    margin: 0;
+}
+
+.edit-tile .item-btn:nth-child(1) {
+    margin-right: 15px;
+}
+
+.page .tiles .edit-items .new-tile {
+    position: relative;
+    min-width: 250px;
+    width: 100%;
+    min-height: 250px;
+    height: 100%;
+    max-width: 250px;
+    max-height: 250px;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    margin: 25px;
+    transition: 0.2s;
+}
+
+.page .tiles .new-tile:hover {
+    background-color: white;
+    border-color: black;
+    transition: 0.2s;
+}
+
+.page .tiles .new-tile:hover:focus {
+    background-color: white;
+    border-color: black;
+    transition: 0.2s;
+}
+
+.page .tiles .new-tile .plus {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    border-radius: 75px;
+    border: 3px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.page .tiles .new-tile h1 {
+    position: absolute;
+    bottom: 25px;
+}
+
+.page .tiles .new-tile .plus .line {
+    position: absolute;
+    width: 35px;
+    height: 3px;
+    background-color: black;
+    border-radius: 5px;
+    transform: rotate(0deg);
+}
+
+.page .tiles .new-tile .plus .line:nth-child(2) {
+    transform: rotate(90deg);
+}
+
+.popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 20px);
+    padding: 10px;
+    height: calc(100% - 20px);
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    z-index: 99999;
+}
+
+.popup h1 {
+    margin: 20px 20px;
+    font-size: 20px;
+}
+
+.popup form, .page form {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.popup form label p, .page form label p {
+    margin-top: 20px;
+}
+
+.popup form label, .page form label {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.popup form label input, .page form input {
+    position: relative;
+    width: 50%;
+    height: 30px;
+    padding: 5px 10px;
+    margin: 0 20px;
+    background-color: white;
+    box-shadow: inset 0px 3px 7px -2px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+}
+.popup form label input[type="file"], .page form label input[type="file"] {
+    background-color: transparent;
+    box-shadow: 0 0 0 0 black;
+    border: 0;
+    padding: 0;
+    width: auto;
+}
+
+.popup form .btns , .page form .btns {
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    margin-top: 25px;
+    margin-left: 20px;
+}
+
+.btn {
+    position: relative;
+    width: auto;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border: 0;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn.save {
+    background-color: #f6227d;
+    color: white;
+    margin-right: 25px;
+}
+
+.btn.mg-top {
+    margin: 20px;
+}
+
+
+.blackbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    z-index: 50000;
+}
+
+.alert {
+    position: relative;
+    width: 90vw;
+    max-width: 500px;
+    height: auto;
+    padding: 40px 10px;
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    z-index: 10000;
+}
+
+.alert h1 {
+    position: relative;
+    width: auto;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.alert p {
+    position: relative;
+    width: 300px;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.alert .btns {
+    position: relative;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
+}
+
+.tile.shake, .page.shake {
+    animation: shake 1s linear infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); opacity: 1}
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); opacity: 0.3 }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.find-organisations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 25px 10px;
+    height: calc(100% - 50px);
+    width: calc(100% - 20px);
+    background-color: rgba(255, 255, 255, 1);
+    z-index: 300000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+}
+
+.find-organisations h1 {
+    margin-bottom: 5px;
+    font-size: 30px;
+}
+
+.find-organisations p {
+    font-size: 16px;
+    margin-top: 0;
+}
+
+.find-organisations .organisations {
+    position: relative;
+    width: calc(100% - 50px);
+    padding: 10px 10px;
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.find-organisations .organisations .tile {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.find-organisations .organisations .tile h1 {
+    font-size: 16px;
+}
+
+.find-organisations .btns {
+    position: relative;
+    margin-left: 20px;
+}
+
+.btn.not-use {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.search.margin-left-null {
+    margin-left: 0px;
+}
+
+.not-found {
+    position: relative;
+    width: calc(100% - 20px);
+    margin-left: 0px;
+    padding: 10px 0;
+}

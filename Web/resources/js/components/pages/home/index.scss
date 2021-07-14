@@ -1,0 +1,220 @@
+.content {
+    position: relative;
+    width: calc(100vw - 20vw);
+    height: auto;
+    padding: 10vh 10vw;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content h1:not(.tile h1, .organisation-content .info-org h1) {
+    font-size: 40px;
+    margin-top: 50px;
+}
+
+.tiles {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    animation: glow-in 0.3s;
+}
+
+@keyframes glow-in {
+    0% {
+        opacity: 0;
+    }
+}
+
+.back {
+    position: absolute;
+    left: 10vw;
+    top: calc(10vh + 55px);
+    width: auto;
+    background-color: #fff;
+    border: 0;
+    border-radius: 4px;
+    padding: 10px 20px;
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: 0.2s;
+
+}
+.back:hover {
+    box-shadow: 0px 0px 0px 2px #f6227d, 0px 6px 7px -2px rgba(0, 0, 0, 0.15);
+}
+
+.organisation-content {
+    position: relative;
+    width: calc(100vw - 10vw);
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-direction: column;
+}
+
+.organisation-content .logo {
+    position: relative;
+    min-width: 100px;
+    max-width: 200px;
+    left: 0;
+    margin-left: 0;
+    height: auto;
+    background-size: cover;
+}
+
+.organisation-content .info-org h1 {
+    font-size: 25px;
+    margin-top: 50px;
+}
+
+.organisation-content .info-org .info span {
+    color: #1f6fb2;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.organisation-content .info-org .info span:hover {
+    text-decoration: underline;
+}
+
+.organisation-content .info-org .info {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.organisation-content .info-org .info img {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    margin-right: 10px;
+}
+
+.organisation-content .btn.save {
+    position: relative;
+    width: auto;
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #f6227d;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.3);
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.2s;
+}
+
+.organisation-content .btn.save:hover {
+    filter: brightness(90%);
+    transition: 0.2s;
+}
+
+.logo {
+    position: absolute;
+    top: 15px;
+    left: 2.5vw;
+    width: 125px;
+    height: 50px;
+    z-index: 100;
+    margin: 0;
+    background-size: cover;
+}
+
+
+@media only screen and (max-width: 767px) {
+    .content h1:not(.tile h1, .organisation-content .info-org h1) {
+        text-align: center;
+        font-size: 25px;
+        margin-top: 25px;
+        margin-bottom: 0px;
+    }
+
+    .tiles {
+        margin-top: 25px;
+    }
+
+    .back {
+        position: absolute;
+        left: 20px;
+        top: 25px;
+        padding: 7px 15px;
+    }
+
+    .organisation-content {
+        position: relative;
+        width: calc(100vw - 10vw);
+        height: auto;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: center;
+        flex-direction: column;
+    }
+
+    .organisation-content .logo {
+        position: relative;
+        min-width: 100px;
+        max-width: 150px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        left: 0;
+        margin-left: 0;
+        height: auto;
+        background-size: cover;
+    }
+
+    .organisation-content .info-org {
+        position: relative;
+        left: 10px;
+        margin-top: 25px;
+        width: calc(100vw - 20px);
+        display: flex;
+        justify-content: flex-start;
+        align-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .organisation-content .info-org h1 {
+        font-size: 18px;
+    }
+
+    .organisation-content .info-org .info {
+        margin: 10px 0px;
+    }
+
+    .organisation-content .info-org .info span {
+        font-size: 16px;
+    }
+
+
+    .logo {
+        position: absolute;
+        width: 30vw;
+        left: calc(50vw - 15vw);
+    }
+
+}
+
